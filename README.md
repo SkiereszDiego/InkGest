@@ -1,15 +1,16 @@
 <details>
 <summary>Elevator Pitch</summary>
-    **PARA O(A)** proprietários de estúdios, gerentes e artistas  
-    **QUE TEM** necessidade de gerenciar reservas, clientes, estoque e melhorando a eficiência e a satisfação do cliente  
-    **O(A)** InkGEST  
-    **E UM(A)** aplicação web para gerenciar especificamente estúdios de tatuagem   
-    **QUE** melhora a eficiência do negócio, liberando mais tempo para os artistas se concentrarem em seu trabalho  
-    **AO CONTRARIO DE** outros software de gerenciamento ele possui funcionalidades personalizadas para o mercado de estúdio de tatuagem.  
-    **O PRODUTO** se destaca com o diferencial de um sistema de gift card exclusivo, aumentando a receita e a fidelidade do cliente.
 
-    Pesquisa
-    alem do discovery foi feito uma pesquisa no reddit e algumas coisas ficaram se destacando nos comentarios....
+ **PARA O(A)** proprietários de estúdios, gerentes e artistas  
+ **QUE TEM** necessidade de gerenciar reservas, clientes, estoque e melhorando a eficiência e a satisfação do cliente  
+ **O(A)** InkGEST  
+ **E UM(A)** aplicação web para gerenciar especificamente estúdios de tatuagem   
+ **QUE** melhora a eficiência do negócio, liberando mais tempo para os artistas se concentrarem em seu trabalho  
+ **AO CONTRARIO DE** outros software de gerenciamento ele possui funcionalidades personalizadas para o mercado de estúdio de tatuagem.  
+ **O PRODUTO** se destaca com o diferencial de um sistema de gift card exclusivo, aumentando a receita e a fidelidade do cliente.
+
+ Pesquisa
+ alem do discovery foi feito uma pesquisa no reddit e algumas coisas ficaram se destacando nos comentarios....
 </details>
 
 # Inkgest Tattoo Studio Management System
@@ -79,26 +80,24 @@ inkgest/
 │   │   ├── db.js                
 │   │   ├── jwt.js    
 │   ├── controllers/
-│   │   ├── auth.js              
-│   │   ├── giftCards.js         
-│   │   └── users.js 
+│   │   ├── auth.js                      
+│   │   └── inventory.js 
 │   ├── middleware/              
 │   │   ├── auth.js  
-│   ├── models/
-│   │   ├── giftCard.js          
-│   │   └── user.js   
+│   ├── models/       
+│   │   └── inventory.js   
 │   ├── routes/
-│   │   ├── auth.js              
-│   │   ├── giftCards.js         
-│   │   ├── users.js     
+│   │   ├── auth.js                  
+│   │   ├── inventory.js     
 │   ├── index.js
 │   ├── package.json
 │   └── ...
 ├── tests/                        
 │   ├── giftCards.test.js        
 │   ├── payments.test.js         
-│   └── users.test.js  
+│   └── inventory.test.js  
 ├── .env
+├── app.js  
 └── ...
 ```
 
