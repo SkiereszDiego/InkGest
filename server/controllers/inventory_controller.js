@@ -32,9 +32,9 @@ exports.createItem = async (req, res) => {
     //receber o produto
     const inventoryRequest = req.body;
     //validar os dados
-    if(inventoryRequest && inventoryRequest.nome && inventoryRequest.preco){
+    if(inventoryRequest && inventoryRequest.name && inventoryRequest.price){
         //se OK, cadastro os produtoss e retorno 201
-        const inventoryNovo = new Inventory(produtoRequest);
+        const inventoryNovo = new Inventory(inventoryRequest);
 
         try{ 
             const inventorySalvo = await inventoryNovo.save();
@@ -47,7 +47,7 @@ exports.createItem = async (req, res) => {
     else{
         //senao retorna 400
         return res.status(400).json({
-            Erro: "Nome e/ou preco sao obrigatorios"
+            Erro: "Name e/ou price sao obrigatorios"
         });
     }
 }
@@ -56,9 +56,9 @@ exports.updateItemById = async (req, res) => {
     const id = req.params.id;
     const inventoryAlterar = req.body;
 
-    if(!inventoryAlterar || !inventoryAlterar.nome || !inventoryAlterar.preco){
+    if(!inventoryAlterar || !inventoryAlterar.name || !inventoryAlterar.price){
         return res.status(400).json({
-            Erro: "Nome e/ou preco sao obrigatorios"
+            Erro: "Name e/ou price sao obrigatorios"
         });
     }
 
