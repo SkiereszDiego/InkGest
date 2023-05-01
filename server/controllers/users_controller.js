@@ -1,4 +1,5 @@
 const User = require("../model/users_model");
+const jwt = require("jsonwebtoken")
 
 
 exports.list = async (req, res) => {
@@ -16,9 +17,12 @@ exports.getUserById = async (req, res) => {
 
     try{ 
 
-        const userEncontrado = await User.findById(id);
-        if(userEncontrado){ 
-            return res.json(userEncontrado);
+        let userEncontrado = await User.findById(id);
+        if(userEncontrado){
+            // Cria uma nova instância do objeto de usuário sem o campo "password"
+            const user = userEncontrado.toObject();
+            delete user.password;
+            return res.json(user);
         }
         else {
             return res.status(404).json({ Erro: "Usuario nao encontrado"});
@@ -41,7 +45,13 @@ exports.createUser = async (req, res) => {
             return res.status(201).json(userSalvo);
         }
         catch(err) { 
-            res.status(500).json({Erro:err});
+            if (err.code === 11000 && err.keyValue.email) {
+                return res.status(400).json({
+                    Erro: "Este endereço de email já está sendo usado"
+                });
+            } else {
+                res.status(500).json({Erro:err});
+            }
         }
     }
     else{
@@ -91,4 +101,54 @@ exports.deleteUserById = async (req, res) => {
         res.status(500).json({Erro:err});
     }            
 
+}
+
+
+exports.getUserByEmail = async (req, res) => { 
+    if(req.query && req.query.email){
+        try{ 
+            let userEncontrado = await User.findOne({email: req.query.email});
+            if(userEncontrado){
+                // Cria uma nova instância do objeto de usuário sem o campo "password"
+                const user = userEncontrado.toObject();
+                delete user.password;
+                return res.json(user);
+            }
+            else {
+                return res.status(404).json({ Erro: "Usuario nao encontrado"});
+            }
+        } catch(err) {
+            res.status(500).json({Erro:err});
+        }             
+    }
+    else{
+        return res.status(400).json({
+            Erro: "Email é obrigatorio"
+        });
+    }
+}
+
+exports.validateLogin = async (req, res) => {
+    // Ao fazer o POST ele vai verificar se tem essas 3 info
+    if(req.body && req.body.email && req.body.password){
+        try{
+            let userEncontrado = await User.findOne({email: req.body.email});
+            // Verifica se o usuario encontrado esta mandando a mesma senha que esta no body
+            if(userEncontrado && userEncontrado.password == req.body.password){
+                const token = jwt.sign({
+                    id: userEncontrado.id
+                    // name: userEncontrado.name
+                }, 'S3cret2023', {expiresIn: "1h"});
+                res.status(201).json({token: token})
+            }
+            else{
+                return res.status(401).json({ Erro: "Usuário ou senha inválidos."});
+            }
+        } catch(err) {
+            res.status(500).json({Erro:err});
+        }    
+    }
+    else{
+        return res.status(401).json({ Erro: "Usuário ou senha inválidos."});
+    }
 }

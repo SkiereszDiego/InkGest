@@ -3,8 +3,10 @@ const mongoose = require ('mongoose')
 
 const routeInventory = require('./routes/inventory_route')
 const routeUser = require('./routes/users_route')
+const routeLogin = require('./routes/login_route')
 
 const logMiddleware = require('./middleware/log_middleware');
+const loginMidleware = require('./middleware/login_middleware');
 
 
 const app = express();
@@ -30,10 +32,16 @@ app.use(express.urlencoded({extended:true}));
 app.use(logMiddleware);
 
 // Roteamento
-app.use('/api/inventory', routeInventory);
-// app.use('/api/inventory', logMiddleware, routeInventory);
+
+app.use('/api/login', routeLogin);
 
 app.use('/api/users', routeUser);
+
+app.use(loginMidleware.validateToken)
+
+app.use('/api/inventory', routeInventory);
+// Se quiser aplicar o middleware apenas para produtos
+// app.use('/api/inventory', loginMidleware.validateToken, routeInventory);
 
 // Inicia o servidor
 app.listen(PORTA, () => {
