@@ -80,26 +80,24 @@ inkgest/
 │   │   ├── db.js                
 │   │   ├── jwt.js    
 │   ├── controllers/
-│   │   ├── auth.js              
-│   │   ├── giftCards.js         
-│   │   └── users.js 
+│   │   ├── auth.js                      
+│   │   └── inventory.js 
 │   ├── middleware/              
 │   │   ├── auth.js  
-│   ├── models/
-│   │   ├── giftCard.js          
-│   │   └── user.js   
+│   ├── models/       
+│   │   └── inventory.js   
 │   ├── routes/
-│   │   ├── auth.js              
-│   │   ├── giftCards.js         
-│   │   ├── users.js     
+│   │   ├── auth.js                  
+│   │   ├── inventory.js     
 │   ├── index.js
 │   ├── package.json
 │   └── ...
 ├── tests/                        
 │   ├── giftCards.test.js        
 │   ├── payments.test.js         
-│   └── users.test.js  
+│   └── inventory.test.js  
 ├── .env
+├── app.js  
 └── ...
 ```
 
