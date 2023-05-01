@@ -1,5 +1,6 @@
 const User = require("../model/users_model");
 const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
 
 
 exports.list = async (req, res) => {
@@ -39,6 +40,10 @@ exports.createUser = async (req, res) => {
     if(userRequest && userRequest.name && userRequest.email && userRequest.password){
         //se OK, cadastro os usuarios e retorno 201
         const userNovo = new User(userRequest);
+
+        console.log("Senha antes:", userNovo.password);
+        userNovo.password = await bcrypt.hash(userRequest.password, 10);
+        console.log("Senha depois bcrypt:", userNovo.password);
 
         try{ 
             const userSalvo = await userNovo.save();
@@ -133,8 +138,11 @@ exports.validateLogin = async (req, res) => {
     if(req.body && req.body.email && req.body.password){
         try{
             let userEncontrado = await User.findOne({email: req.body.email});
+            
+            const validatePassword = await bcrypt.compare(req.body.password, userEncontrado.password)
             // Verifica se o usuario encontrado esta mandando a mesma senha que esta no body
-            if(userEncontrado && userEncontrado.password == req.body.password){
+            // if(userEncontrado && userEncontrado.password == req.body.password){
+                if(userEncontrado && validatePassword){
                 const token = jwt.sign({
                     id: userEncontrado.id
                     // name: userEncontrado.name
