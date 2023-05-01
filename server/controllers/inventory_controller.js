@@ -47,7 +47,7 @@ exports.createItem = async (req, res) => {
     else{
         //senao retorna 400
         return res.status(400).json({
-            Erro: "Name e/ou price sao obrigatorios"
+            Erro: "Name e/ou price são obrigatorios"
         });
     }
 }
@@ -58,7 +58,7 @@ exports.updateItemById = async (req, res) => {
 
     if(!inventoryAlterar || !inventoryAlterar.name || !inventoryAlterar.price){
         return res.status(400).json({
-            Erro: "Name e/ou price sao obrigatorios"
+            Erro: "Name e/ou price são obrigatorios"
         });
     }
 
@@ -68,7 +68,7 @@ exports.updateItemById = async (req, res) => {
             return res.json(inventoryAtualizado);
         }
         else {
-            return res.status(404).json({ Erro: "Produto nao encontrado"});
+            return res.status(404).json({ Erro: "Produto não encontrado"});
         }
     } catch(err) {
         res.status(500).json({Erro:err});
@@ -80,12 +80,12 @@ exports.deleteItemById = async (req, res) => {
     const id = req.params.id;
 
     try{ 
-        const inventoryDeletado = await Produto.findByIdAndDelete(id);
+        const inventoryDeletado = await Inventory.findByIdAndDelete(id);
         if(inventoryDeletado){ 
             return res.json(inventoryDeletado);
         }
         else {
-            return res.status(404).json({ Erro: "Produto nao encontrado"});
+            return res.status(404).json({ Erro: "Item não encontrado"});
         }
     } catch(err) {
         res.status(500).json({Erro:err});
