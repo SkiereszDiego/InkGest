@@ -61,7 +61,8 @@ Here's a breakdown of the project structure:
 inkgest/
 ├── client/
 │   ├── public/
-│   │   ├── index.html            
+│   │   ├── app.html            
+│   │   ├── app.html            
 │   │   └── ...
 │   ├── src/
 │   │   ├── components/
@@ -93,7 +94,10 @@ inkgest/
 │   ├── package.json
 │   └── ...
 ├── tests/                        
-│   ├── giftCards.test.js        
+│   ├── giftCards.test.js
+│   ├── inventory.test.js      
+│   ├── giftCards.test.js
+│   ├── inventory.test.js      
 │   ├── payments.test.js         
 │   └── inventory.test.js  
 ├── .env
@@ -104,7 +108,8 @@ inkgest/
 ### Frontend
 The frontend is built using ??React?? and is located in the client directory. The directory structure is as follows:
 
-- public/: contains the index.html file and other public assets
+- public/: contains the app.html file and other public assets
+- public/: contains the app.html file and other public assets
 - src/: contains the React components and application logic
     - components/: contains the reusable React components used throughout the application
     - App.js: the root component of the application
@@ -115,7 +120,8 @@ The backend is built using Node.js and Express, and communicates with the MongoD
 - controllers/: contains the controllers that handle requests and responses
 - models/: contains the Mongoose models for the MongoDB collections
 - routes/: contains the Express routes for the API endpoints
-- index.js: the main entry point for the backend application
+- app.js: the main entry point for the backend application
+- app.js: the main entry point for the backend application
 </details>
 
 ## Features
