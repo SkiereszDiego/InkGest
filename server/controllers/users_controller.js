@@ -146,7 +146,7 @@ exports.validateLogin = async (req, res) => {
                 const token = jwt.sign({
                     id: userEncontrado.id
                     // name: userEncontrado.name
-                }, 'S3cret2023', {expiresIn: "1h"});
+                }, 's3cret2023', {expiresIn: "1h"});
                 res.status(201).json({token: token})
             }
             else{
