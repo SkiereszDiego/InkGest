@@ -9,7 +9,7 @@ const routeCliente = require('./routes/client_route');
 
 
 const logMiddleware = require('./middleware/log_middleware');
-// const loginMidleware = require('./middleware/login_middleware');
+const loginMidleware = require('./middleware/login_middleware');
 
 
 const PORTA = 3000;
@@ -35,15 +35,18 @@ app.use(logMiddleware);
 
 // Roteamento
 app.use('/api/login', routeLogin);
-app.use('/api/users', routeUser);
 
+// Middleware para autenticação de usuários
 // app.use(loginMidleware.validateToken)
 
-app.use('/api/inventory', routeInventory);
+// Rotas de usuários 
+app.use('/api/users', loginMidleware.validateToken('user'), routeUser);
+
+app.use('/api/inventory', loginMidleware.validateToken('admin'), routeInventory);
 // Se quiser aplicar o middleware apenas para produtos
 // app.use('/api/inventory', loginMidleware.validateToken, routeInventory);
 
-app.use('/api/client', routeCliente);
+app.use('/api/client', loginMidleware.validateToken('user'), routeCliente);
 
 // Inicia o servidor
 app.listen(PORTA, () => {
