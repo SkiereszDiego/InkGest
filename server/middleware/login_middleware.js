@@ -10,7 +10,7 @@ exports.validateToken = (req, res, next) => {
     else{
         try{
             // Verificar o payload, tem que ser igual ao que esta no controller validateLogin - S3cret2023 -
-            const payload = jwt.verify(token, 'S3cret2023');
+            const payload = jwt.verify(token, 's3cret2023');
             if(payload) {
                 console.log("Payload: ", payload);
                 next();
