@@ -108,7 +108,6 @@ exports.deleteUserById = async (req, res) => {
 
 }
 
-
 exports.getUserByEmail = async (req, res) => { 
     if(req.query && req.query.email){
         try{ 
@@ -144,10 +143,12 @@ exports.validateLogin = async (req, res) => {
             // if(userEncontrado && userEncontrado.password == req.body.password){
                 if(userEncontrado && validatePassword){
                 const token = jwt.sign({
-                    id: userEncontrado.id
+                    id: userEncontrado.id,
                     // name: userEncontrado.name
-                }, 's3cret2023', {expiresIn: "1h"});
-                res.status(201).json({token: token})
+                    role: userEncontrado.role // adicionando o role ao token
+                }, 's3cret2023', {expiresIn: "2h"});
+
+                return res.status(200).json({token: token});
             }
             else{
                 return res.status(401).json({ Erro: "Usuário ou senha inválidos."});
@@ -160,3 +161,4 @@ exports.validateLogin = async (req, res) => {
         return res.status(401).json({ Erro: "Usuário ou senha inválidos."});
     }
 }
+
