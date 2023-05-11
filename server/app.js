@@ -52,3 +52,6 @@ app.use('/api/client', loginMidleware.validateToken('user'), routeCliente);
 app.listen(PORTA, () => {
     console.log(`Servidor iniciado na porta ${PORTA}`);
 })
+
+// Export the Express API
+module.exports = app;
