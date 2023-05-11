@@ -53,5 +53,9 @@ app.listen(PORTA, () => {
     console.log(`Servidor iniciado na porta ${PORTA}`);
 })
 
+app.get('/', (req, res) => {
+    res.send('Hey this is my API running 🥳')
+})
+
 // Export the Express API
 module.exports = app;
