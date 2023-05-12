@@ -8,7 +8,7 @@
 
 ## [Realese Planning](planejamento-da-release.md)
 
-## [Desenvolvimento da Solução](desenvolvimento-da-solucao.md)
+## [Solution Development](desenvolvimento-da-solucao.md)
 
 </details>
 
