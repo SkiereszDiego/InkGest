@@ -15,17 +15,12 @@ Elevator Pitch
  Pesquisa
  alem do discovery foi feito uma pesquisa no reddit e algumas coisas ficaram se destacando nos comentarios....
   
-## [Canva of the product](canvas-do-produto.md)
+## [Canva MVP](canvas-do-produto.md)
 
 ## [Realese Planning](planejamento-da-release.md)
 
-## [Representação da Arquitetura](representacao-da-arquitetura.md) 
-
 ## [Desenvolvimento da Solução](desenvolvimento-da-solucao.md)
 
-## [Testes e Validação](testes.md)
-
-## [POSTMORTEM](postmortem.md)
 </details>
 
 
