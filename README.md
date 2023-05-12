@@ -4,17 +4,14 @@
 
 Elevator Pitch
 
- **PARA O(A)** proprietários de estúdios, gerentes e artistas  
- **QUE TEM** necessidade de gerenciar reservas, clientes, estoque e melhorando a eficiência e a satisfação do cliente  
- **O(A)** InkGEST  
- **E UM(A)** aplicação web para gerenciar especificamente estúdios de tatuagem   
- **QUE** melhora a eficiência do negócio, liberando mais tempo para os artistas se concentrarem em seu trabalho  
- **AO CONTRARIO DE** outros software de gerenciamento ele possui funcionalidades personalizadas para o mercado de estúdio de tatuagem.  
- **O PRODUTO** se destaca com o diferencial de um sistema de gift card exclusivo, aumentando a receita e a fidelidade do cliente.
-
- Pesquisa
- alem do discovery foi feito uma pesquisa no reddit e algumas coisas ficaram se destacando nos comentarios....
-  
+ **FOR studio owners, managers, and artists
+ **WHO NEED to manage bookings, customers, inventory, and improve efficiency and customer satisfaction
+ **INKGEST
+ **IS A web application specifically designed for tattoo studios or individual artists
+ **THAT improves business efficiency, freeing up more time for artists to focus on their work
+ **UNLIKE other management software, it has customized functionalities for the tattoo studio market.
+ **THE PRODUCT stands out with a unique gift card system, and inventory control, increasing revenue and customer loyalty.
+ 
 ## [Canva MVP](canvas-do-produto.md)
 
 ## [Realese Planning](planejamento-da-release.md)
