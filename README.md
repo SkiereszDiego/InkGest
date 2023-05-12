@@ -15,9 +15,9 @@ Elevator Pitch
  Pesquisa
  alem do discovery foi feito uma pesquisa no reddit e algumas coisas ficaram se destacando nos comentarios....
   
-## [Canvas do Produto](canvas-do-produto.md)
+## [Canva of the produc](canvas-do-produto.md)
 
-## [Planejamento da Release](planejamento-da-release.md)
+## [Realese Planning](planejamento-da-release.md)
 
 ## [Representação da Arquitetura](representacao-da-arquitetura.md) 
 
