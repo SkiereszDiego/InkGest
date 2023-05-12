@@ -9,6 +9,8 @@
 ## [Realese Planning](planejamento-da-release.md)
 
 ## [Solution Development](desenvolvimento-da-solucao.md)
+ 
+## [Test and Validation](validation.md)
 
 </details>
 
