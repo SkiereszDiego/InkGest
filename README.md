@@ -100,7 +100,9 @@ inkgest/
 │   ├── package.json
 │   └── ...
 ├── LICENSE
-├── README.md  
+├── README.md 
+ 
+```
 
 ### Frontend
 The frontend will be built using Angular and will be located in the client directory. The directory structure is as follows:
