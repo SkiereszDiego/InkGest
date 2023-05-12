@@ -1,6 +1,7 @@
 ## Documentation and Artifacts
 <details>
 <summary>Click to expand</summary>
+ 
 ## [Elevator Pitch](elevator_pitch.md)
  
 ## [Canva MVP](canvas-do-produto.md)
