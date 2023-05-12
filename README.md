@@ -1,5 +1,8 @@
+## Documentação e Artefato
 <details>
-<summary>Elevator Pitch</summary>
+<summary>Click to expand</summary>
+
+Elevator Pitch
 
  **PARA O(A)** proprietários de estúdios, gerentes e artistas  
  **QUE TEM** necessidade de gerenciar reservas, clientes, estoque e melhorando a eficiência e a satisfação do cliente  
@@ -11,7 +14,20 @@
 
  Pesquisa
  alem do discovery foi feito uma pesquisa no reddit e algumas coisas ficaram se destacando nos comentarios....
+  
+## [Canvas do Produto](canvas-do-produto.md)
+
+## [Planejamento da Release](planejamento-da-release.md)
+
+## [Representação da Arquitetura](representacao-da-arquitetura.md) 
+
+## [Desenvolvimento da Solução](desenvolvimento-da-solucao.md)
+
+## [Testes e Validação](testes.md)
+
+## [POSTMORTEM](postmortem.md)
 </details>
+
 
 # Inkgest Tattoo Studio Management System
 This is a web-based management system for a tattoo studio. It allows customers to register, view available products, and make appointments, while also providing staff with tools for managing inventory, scheduling appointments, and more.
@@ -59,51 +75,35 @@ Here's a breakdown of the project structure:
 
 ```
 inkgest/
-├── client/
-│   ├── public/
-│   │   ├── app.html                   
-│   │   └── ...
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Login.js          
-│   │   │   ├── SignUp.js         
-│   │   │   ├── Home.js
-│   │   │   ├── UserList.js
-│   │   │   ├── ProductList.js        
-│   │   │   ├── GiftCards.js      
-│   │   │   ├── PurchaseCard.js   
-│   │   │   └── RedeemCard.js    
-│   │   ├── App.js                
-│   │   └── ...
 ├── server/
 │   ├── config/                  
-│   │   ├── db.js                
-│   │   ├── jwt.js    
+│   │   └── db.js                
 │   ├── controllers/
-│   │   ├── auth.js                      
-│   │   └── inventory.js 
+│   │   ├── client_controller.js                      
+│   │   ├── inventory_controller.js
+│   │   └── users_controller.js
 │   ├── middleware/              
-│   │   ├── auth.js  
+│   │   ├── log_middleware.js
+│   │   └── login_middleware.js 
 │   ├── models/       
-│   │   └── inventory.js   
+│   │   ├── anamnese_model.js
+│   │   ├── client_model.js
+│   │   ├── inventory_model.js
+│   │   └── users_model.js  
 │   ├── routes/
-│   │   ├── auth.js                  
-│   │   ├── inventory.js     
-│   ├── index.js
+│   │   ├── client_route.js                  
+│   │   ├── inventory_route.js
+│   │   ├── login_route.js
+│   │   └── users_route.js
+│   ├── .env
+│   ├── app.js
 │   ├── package.json
 │   └── ...
-├── tests/                        
-│   ├── giftCards.test.js
-│   ├── inventory.test.js        
-│   ├── payments.test.js         
-│   └── inventory.test.js  
-├── .env
-├── app.js  
-└── ...
-```
+├── LICENSE
+├── README.md  
 
 ### Frontend
-The frontend is built using ??React?? and is located in the client directory. The directory structure is as follows:
+The frontend will be built using Angular and will be located in the client directory. The directory structure is as follows:
 
 - public/: contains the app.html file and other public assets
 - src/: contains the React components and application logic
@@ -120,6 +120,7 @@ The backend is built using Node.js and Express, and communicates with the MongoD
 </details>
 
 ## Features
+
 <details>
 <summary>Click to expand</summary>
 
@@ -137,7 +138,6 @@ Staff can manage the inventory of products, including viewing product informatio
 
 ### Gift Card System
 Customers can purchase gift cards, which can be redeemed for products or services at the studio. Staff can view gift card balances and redeem gift cards as payment for appointments and purchases.
-
 </details>
 
 ## License
