@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+
 import { AgendaComponent } from '../agenda/agenda.component';
 
 
@@ -9,7 +11,8 @@ import { AgendaComponent } from '../agenda/agenda.component';
     AgendaComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ButtonModule 
   ],
   exports: [
     AgendaComponent
