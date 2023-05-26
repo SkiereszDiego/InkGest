@@ -10,6 +10,9 @@ import { ClientsComponent } from '../clients/clients.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    ClientsComponent
   ]
 })
 export class ClientsModule { }

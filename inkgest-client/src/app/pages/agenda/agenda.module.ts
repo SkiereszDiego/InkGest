@@ -10,6 +10,9 @@ import { AgendaComponent } from '../agenda/agenda.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    AgendaComponent
   ]
 })
 export class AgendaModule { }
