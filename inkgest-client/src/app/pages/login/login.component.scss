@@ -1,0 +1,49 @@
+
+.login-component {
+    background: var(--blue-500);
+    min-height: 100%;
+    display: flex;
+}
+
+.login-container {
+width: 100%;
+max-width: 37.75rem;
+margin: auto;
+background: var(--gray-100);
+display: flex;
+
+.left {
+    flex: 1;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+    margin: auto;
+
+    .gitlab-icon {
+    fill: none;
+    }
+    .app-title {
+    display: flex;
+    align-items: center;
+    font-size: 4rem;
+    flex-shrink: 0;
+    color: var(--blue-500);
+    }
+
+    h1, h2, h3 {
+    color: var(--blue-500);
+    }
+}
+
+.right {
+    flex: 1;
+    background: var(--blue-500);
+    display: none;
+}
+
+// @media (min-width: $breakpoint-lg) {
+//   .right {
+//     display: flex;
+    // }
+}
+//}
+

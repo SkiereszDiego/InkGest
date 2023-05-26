@@ -5,18 +5,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { RippleModule } from 'primeng/ripple';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderModule } from './templates/header/header.module';
+import { ProfileControlComponent } from './pages/profile-control/profile-control.component';
+import { TableModule } from './components/table/table.module';
+import { RouterModule } from '@angular/router';
+import { SideNavModule } from './templates/side-nav/side-nav.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    ProfileControlComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RippleModule
+    RippleModule,
+    HeaderModule,
+    RouterModule,
+    TableModule,
+    SideNavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

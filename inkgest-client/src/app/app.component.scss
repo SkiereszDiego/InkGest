@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* altura total da tela */
+}
+
+.content {
+    flex: 1; /* ocupa todo o espaço disponível na altura */
+    display: flex;
+}
+
+.page-content {
+    flex: 1; /* ocupa todo o espaço disponível na largura */
+    padding: 20px; /* espaçamento interno */
+}
