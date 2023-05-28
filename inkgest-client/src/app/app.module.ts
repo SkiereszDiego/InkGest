@@ -6,16 +6,17 @@ import { AppComponent } from './app.component';
 
 import { RippleModule } from 'primeng/ripple';
 import { HeaderModule } from './templates/header/header.module';
-import { ProfileControlComponent } from './pages/profile-control/profile-control.component';
 import { TableModule } from './components/table/table.module';
 import { RouterModule } from '@angular/router';
 import { SideNavModule } from './templates/side-nav/side-nav.module';
+import { SearchModule } from './components/search/search.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileControlComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +25,9 @@ import { SideNavModule } from './templates/side-nav/side-nav.module';
     HeaderModule,
     RouterModule,
     TableModule,
-    SideNavModule
+    SideNavModule,
+    SearchModule ,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

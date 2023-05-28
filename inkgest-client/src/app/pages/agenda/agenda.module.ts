@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { CustomButtonModule } from 'src/app/components/custom-button/custom-button.module';
 
 import { AgendaComponent } from '../agenda/agenda.component';
-
-
+import { SearchModule } from 'src/app/components/search/search.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,9 @@ import { AgendaComponent } from '../agenda/agenda.component';
   ],
   imports: [
     CommonModule,
-    ButtonModule 
+    CustomButtonModule,
+    FlexLayoutModule,
+    SearchModule
   ],
   exports: [
     AgendaComponent

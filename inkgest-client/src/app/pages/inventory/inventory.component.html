@@ -1,1 +1,18 @@
-<div class="page-title ">Controle de Estoque</div>
+<div fxLayout="column" fxLayoutGap="40px">
+    <div class="page-title">Controle de Estoque</div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="18rem">
+        <div fxLayout="row" fxLayoutAlign="start start">
+        <app-search (searchTextChanged)="onSearchTextChanged($event)"></app-search>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="15px">
+        <app-custom-button label="Adicionar" buttonClass="p-button-raised p-button-text p-button-success custom-small-button"></app-custom-button>
+        <app-custom-button label="Editar" buttonClass="p-button-raised p-button-text custom-small-button"></app-custom-button>
+        </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <!-- Componente de tabela -->
+    </div>
+</div>
+
