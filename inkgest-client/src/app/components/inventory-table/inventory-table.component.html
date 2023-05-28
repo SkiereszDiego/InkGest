@@ -1,0 +1,39 @@
+<p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+        <th>Categorias</th>
+        <th>Subcategorias</th>
+        <th>Material</th>
+        <th>Data Compra</th>
+        <th>Validade</th>
+        <th>Alertas</th>
+        <th>Quantidades</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr [ngClass]="{
+        'low-stock': isLowStock(product.quantidades),
+        'near-expiration': isNearExpiration(product.validade)
+        }">
+        <td>{{ product.categorias }}</td>
+        <td>{{ product.subcategorias }}</td>
+        <td>{{ product.material }}</td>
+        <td>{{ product.dataCompra }}</td>
+        <td>{{ product.validade }}</td>
+        <td>
+            <ng-container *ngIf="isLowStock(product.quantidades); else expirationAlert">
+            <p-tag value="Baixo estoque, repor." severity="warning" class="inventory-alert"></p-tag>
+            </ng-container>
+            <ng-template #expirationAlert>
+            <ng-container *ngIf="isNearExpiration(product.validade); else defaultAlert">
+                <p-tag value="Próximo do Vencimento" severity="danger" class="inventory-alert"></p-tag>
+            </ng-container>
+            <ng-template #defaultAlert>
+                <p-tag value=""></p-tag>
+            </ng-template>
+            </ng-template>
+        </td>
+        <td>{{ product.quantidades }}</td>
+        </tr>
+    </ng-template>
+</p-table>

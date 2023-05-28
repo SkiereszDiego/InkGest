@@ -5,13 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { RippleModule } from 'primeng/ripple';
-import { HeaderModule } from './templates/header/header.module';
+import { HeaderModule } from './templates/header/Header.module';
 import { TableModule } from './components/table/table.module';
 import { RouterModule } from '@angular/router';
 import { SideNavModule } from './templates/side-nav/side-nav.module';
 import { SearchModule } from './components/search/search.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ProductService } from './shared/services/product.service';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SearchModule ,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
