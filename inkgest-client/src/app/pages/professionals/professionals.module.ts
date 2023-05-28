@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfessionalsComponent } from '../professionals/professionals.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { CustomButtonModule } from 'src/app/components/custom-button/custom-button.module';
 
 
 
@@ -9,7 +11,9 @@ import { ProfessionalsComponent } from '../professionals/professionals.component
     ProfessionalsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CustomButtonModule,
+    FlexLayoutModule
   ]
 })
 export class ProfessionalsModule { }

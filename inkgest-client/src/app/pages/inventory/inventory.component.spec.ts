@@ -1,15 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { InventoryComponent } from './inventory.component';
 
 describe('InventoryComponent', () => {
   let component: InventoryComponent;
   let fixture: ComponentFixture<InventoryComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [InventoryComponent]
-    });
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(InventoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -18,4 +20,11 @@ describe('InventoryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should update searchText on searchTextChanged event', () => {
+    const searchText = 'example';
+    component.onSearchTextChanged(searchText);
+    expect(component.searchText).toBe(searchText);
+  });
 });
+

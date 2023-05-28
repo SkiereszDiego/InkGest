@@ -5,4 +5,10 @@ $font-family: "Roboto", sans-serif;
 body {
   background-color: #f0f0f0;
   font-family: $font-family;
+  margin: 0;
+}
+
+.custom-autocomplete .p-inputtext {
+  width: 25rem;
+  padding: 0.5rem;
 }

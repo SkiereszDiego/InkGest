@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HeaderComponent } from './Header.component';
+import { HeaderComponent } from './header.component';
 import { PrimeIcons } from 'primeng/api';
-
+import { CustomButtonModule } from '../../components/custom-button/custom-button.module';
 
 @NgModule({
   declarations: [
     HeaderComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CustomButtonModule
   ],
   exports: [
     HeaderComponent
   ],
   providers: [
-  PrimeIcons
+    PrimeIcons
   ]
 })
 export class HeaderModule { }
