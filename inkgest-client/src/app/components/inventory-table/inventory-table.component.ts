@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductService } from '../../shared/services/product.service';
 
 interface Product {
@@ -16,7 +16,8 @@ interface Product {
   templateUrl: './inventory-table.component.html',
   styleUrls: ['./inventory-table.component.scss']
 })
-export class InventoryTableComponent implements OnInit {
+export class InventoryTableComponent {
+  @Input() editMode: boolean = false;
   products: Product[] = [];
 
   constructor(private productService: ProductService) {}
@@ -52,5 +53,15 @@ export class InventoryTableComponent implements OnInit {
       }));
       return mappedData;
     });
+  }
+
+  incrementQuantity(product: Product): void {
+    product.quantidades++;
+  }
+
+  decrementQuantity(product: Product): void {
+    if (product.quantidades > 0) {
+      product.quantidades--;
+    }
   }
 }

@@ -1,26 +1,27 @@
-<p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="products" [tableStyle]="{ 'min-width': '50rem', 'font-size': '12px' }">
     <ng-template pTemplate="header">
         <tr>
         <th>Categorias</th>
-        <th>Subcategorias</th>
+        <th [style]="{'max-width': '5rem'}">Sub categorias</th>
         <th>Material</th>
         <th>Data Compra</th>
         <th>Validade</th>
         <th>Alertas</th>
         <th>Quantidades</th>
+        <th *ngIf="editMode"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
         <tr [ngClass]="{
-        'low-stock': isLowStock(product.quantidades),
-        'near-expiration': isNearExpiration(product.validade)
+            'low-stock': isLowStock(product.quantidades),
+            'near-expiration': isNearExpiration(product.validade)
         }">
         <td>{{ product.categorias }}</td>
         <td>{{ product.subcategorias }}</td>
         <td>{{ product.material }}</td>
         <td>{{ product.dataCompra }}</td>
         <td>{{ product.validade }}</td>
-        <td>
+        <td [style]="{'min-width': '5rem'}">
             <ng-container *ngIf="isLowStock(product.quantidades); else expirationAlert">
             <p-tag value="Baixo estoque, repor." severity="warning" class="inventory-alert"></p-tag>
             </ng-container>
@@ -33,7 +34,26 @@
             </ng-template>
             </ng-template>
         </td>
-        <td>{{ product.quantidades }}</td>
+        <td>
+            <div class="quantity-container" *ngIf="editMode; else displayQuantity">
+            <p-inputNumber
+                *ngIf="product"
+                [(ngModel)]="product.quantidades"
+                [showButtons]="true"
+                buttonLayout="horizontal"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+                [step]="1"
+                incrementButtonClass="p-button-success custom-xs-button"
+                decrementButtonClass="p-button-danger custom-xs-button"
+                inputStyleClass="custom-input-number p-inputnumber-sm"
+                [style]="{'font-size': '12px'}"
+            ></p-inputNumber>
+            </div>
+            <ng-template #displayQuantity>
+            {{ product.quantidades }}
+            </ng-template>
+        </td>
         </tr>
     </ng-template>
 </p-table>

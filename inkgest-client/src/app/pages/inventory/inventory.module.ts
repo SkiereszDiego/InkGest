@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CustomButtonModule } from 'src/app/components/custom-button/custom-button.module';
 import { SearchModule } from 'src/app/components/search/search.module';
 import { InventoryTableModule } from '../../components/inventory-table/inventory-table.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { InventoryTableModule } from '../../components/inventory-table/inventory
     CustomButtonModule,
     FlexLayoutModule,
     SearchModule,
+    FormsModule,
     InventoryTableModule
   ],
   exports: [

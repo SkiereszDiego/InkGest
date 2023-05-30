@@ -7,9 +7,22 @@ import { Component } from '@angular/core';
 })
 export class InventoryComponent {
   searchText: string = '';
+  editMode: boolean = false;
+  originalEditMode: boolean = false;
 
   onSearchTextChanged(searchText: string): void {
     this.searchText = searchText;
-    // Chame aqui a função que atualiza a tabela ou execute a lógica de filtragem de dados
+    // Chame a função para atualizar a tabela ou executar a lógica de filtragem de dados aqui
+  }
+
+  toggleEditMode(): void {
+    this.originalEditMode = this.editMode;
+    this.editMode = !this.editMode;
+  }
+
+  saveChanges(): void {
+    // Lógica para salvar as alterações
+
+    this.editMode = this.originalEditMode;
   }
 }
