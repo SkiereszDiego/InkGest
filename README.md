@@ -4,11 +4,11 @@
  
 ## [Elevator Pitch](elevator_pitch.md)
  
-## [Canva MVP](canvas-do-produto.md)
+## [Canva MVP](canvas-mvp.md)
 
-## [Realese Planning](planejamento-da-release.md)
+## [Realese Planning]release_planning.md)
 
-## [Solution Development](desenvolvimento-da-solucao.md)
+## [Solution Development](solution_development.md)
  
 ## [Test and Validation](validation.md)
 
