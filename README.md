@@ -6,7 +6,7 @@
  
 ## [Canva MVP](canvas-mvp.md)
 
-## [Realese Planning]release_planning.md)
+## [Realese Planning](release_planning.md)
 
 ## [Solution Development](solution_development.md)
  
