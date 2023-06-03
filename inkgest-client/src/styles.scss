@@ -10,12 +10,26 @@ body {
 
 .custom-autocomplete .p-inputtext {
   width: 25rem;
-  padding: 0.5rem;
+  padding: 0.4rem;
 }
 
 .inventory-alert {
   margin: 0;
-  padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
+}
+
+.quantity-container {
+  display: flex;
+  transform: scale(0.8);
+  padding: 8px;
+}
+
+td.quantity-cell {
+  min-width: 10rem;
+}
+
+
+.custom-input-number .p-inputnumber .p-inputnumber-input {
+  width: 60px; /* Defina o tamanho desejado para o campo de entrada */
 }

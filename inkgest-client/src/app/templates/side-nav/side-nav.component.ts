@@ -15,7 +15,6 @@ export class SideNavComponent {
 public dashboardPath: any = Path.DASHBOARD;
 public agendaPath: any = Path.AGENDA;
 public clientsPath: any = Path.CLIENTS;
-public profileControlPath: any = Path.PROFILE_CONTROL;
 public professionalsPath: any = Path.PROFESSIONALS;
 public inventoryPath: any = Path.INVENTORY;
 

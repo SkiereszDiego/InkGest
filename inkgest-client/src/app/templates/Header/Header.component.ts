@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Path } from 'src/app/shared/enums/path';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  public newSessionPath: any = Path.NEW_SESSION;
+  public profileControlPath: any = Path.PROFILE_CONTROL;
+  
+  constructor(private router: Router) {}
 
+  navigateToNewSession() {
+    this.router.navigate([this.newSessionPath]);
+  }
+
+  navigateToProfileControl() {
+    this.router.navigate([this.profileControlPath]);
+  }
 }
+
