@@ -5,5 +5,6 @@ export const enum Path {
     PROFILE_CONTROL = 'profile-control',
     PROFESSIONALS ='professionals',
     INVENTORY = 'inventory',
+    NEW_SESSION = 'new-session',
     LOGIN = 'login'
 }

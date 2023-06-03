@@ -34,7 +34,7 @@
             </ng-template>
             </ng-template>
         </td>
-        <td>
+        <td class="quantity-cell">
             <div class="quantity-container" *ngIf="editMode; else displayQuantity">
             <p-inputNumber
                 *ngIf="product"
@@ -44,10 +44,9 @@
                 incrementButtonIcon="pi pi-plus"
                 decrementButtonIcon="pi pi-minus"
                 [step]="1"
-                incrementButtonClass="p-button-success custom-xs-button"
-                decrementButtonClass="p-button-danger custom-xs-button"
+                incrementButtonClass="p-button-success"
+                decrementButtonClass="p-button-danger"
                 inputStyleClass="custom-input-number p-inputnumber-sm"
-                [style]="{'font-size': '12px'}"
             ></p-inputNumber>
             </div>
             <ng-template #displayQuantity>

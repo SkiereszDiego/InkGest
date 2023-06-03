@@ -3,12 +3,13 @@
         <span class="logo-text">InkGest</span>
     </div>
     <div class="header-icons">
-        <app-custom-button label="Nova Sessão" buttonClass="p-button-info custom-small-button"></app-custom-button>
+        <button class="p-button p-button-info custom-small-button" (click)="navigateToNewSession()">Nova Sessão</button>
         <span class="header-icon">
         <!-- <i class="pi pi-cog"></i> -->
         </span>
-        <span class="header-icon">
-        <i class="pi pi-user"></i>
+        <span class="header-icon" (click)="navigateToProfileControl()">
+            <i class="pi pi-user"></i>
         </span>
     </div>
 </header>
+
