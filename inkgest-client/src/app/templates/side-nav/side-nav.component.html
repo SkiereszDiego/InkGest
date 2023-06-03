@@ -1,0 +1,24 @@
+<div class="side-nav">
+    <ul class="nav-items">
+        <li class="nav-item" [class.active]="selectedItem === 'dashboard'" (click)="selectedItem = 'dashboard'; navigateTo(dashboardPath)">
+            <i class="pi pi-chart-line"></i>
+            <span class="nav-label">Dashboard</span>
+        </li>
+        <li class="nav-item" [class.active]="selectedItem === 'agenda'" (click)="selectedItem = 'agenda'; navigateTo(agendaPath)">
+            <i class="pi pi-calendar"></i>
+            <span class="nav-label">Agenda</span>
+        </li>
+        <li class="nav-item" [class.active]="selectedItem === 'clients'" (click)="selectedItem = 'clients'; navigateTo(clientsPath)">
+            <i class="pi pi-users"></i>
+            <span class="nav-label">Clientes</span>
+        </li>
+        <li class="nav-item" [class.active]="selectedItem === 'profissionais'" (click)="selectedItem = 'profissionais'; navigateTo(professionalsPath)">
+            <i class="pi pi-briefcase"></i>
+            <span class="nav-label">Profissionais</span>
+        </li>
+        <li class="nav-item" [class.active]="selectedItem === 'controle-estoque'" (click)="selectedItem = 'controle-estoque'; navigateTo(inventoryPath)">
+            <i class="pi pi-shopping-cart"></i>
+            <span class="nav-label">Controle de Estoque</span>
+        </li>
+    </ul>
+</div>

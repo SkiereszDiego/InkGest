@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+$font-family: "Roboto", sans-serif;
+
+body {
+  background-color: #f0f0f0;
+  font-family: $font-family;
+  margin: 0;
+}
+
+.custom-autocomplete .p-inputtext {
+  width: 25rem;
+  padding: 0.4rem;
+}
+
+.inventory-alert {
+  margin: 0;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.quantity-container {
+  display: flex;
+  transform: scale(0.8);
+  padding: 8px;
+}
+
+td.quantity-cell {
+  min-width: 10rem;
+}
+
+
+.custom-input-number .p-inputnumber .p-inputnumber-input {
+  width: 60px; /* Defina o tamanho desejado para o campo de entrada */
+}

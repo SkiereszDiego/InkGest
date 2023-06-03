@@ -1,0 +1,4 @@
+<div class="search">
+    <p-autoComplete [(ngModel)]="searchText" [suggestions]="filteredItems" (completeMethod)="search($event)" placeholder="Digite o termo de pesquisa"  class="custom-autocomplete"></p-autoComplete>
+    <app-custom-button label="Filtrar" buttonClass="p-button-raised p-button-text p-button-info custom-filter-button"></app-custom-button>
+</div>
