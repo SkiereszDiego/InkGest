@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ClientsComponent } from '../clients/clients.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CustomButtonModule } from 'src/app/components/custom-button/custom-button.module';
+import { TableModule } from '../../components/table/table.module';
 
 
 
@@ -13,7 +14,8 @@ import { CustomButtonModule } from 'src/app/components/custom-button/custom-butt
   imports: [
     CommonModule,
     CustomButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    TableModule,
   ],
   exports: [
     ClientsComponent
