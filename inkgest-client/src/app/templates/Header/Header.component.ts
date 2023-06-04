@@ -13,12 +13,8 @@ export class HeaderComponent {
   
   constructor(private router: Router) {}
 
-  navigateToNewSession() {
-    this.router.navigate([this.newSessionPath]);
-  }
-
-  navigateToProfileControl() {
-    this.router.navigate([this.profileControlPath]);
+  navigateTo(path: string) {
+    this.router.navigate([path]);
   }
 }
 

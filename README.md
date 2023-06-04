@@ -7,15 +7,9 @@
 ## [Canva MVP](canvas-mvp.md)
 
 ## [Realese Planning](release_planning.md)
-<<<<<<< Updated upstream
 
 ## [Solution Development](solution_development.md)
  
-=======
-
-## [Solution Development](solution_development.md)
-
->>>>>>> Stashed changes
 ## [Test and Validation](validation.md)
 
 </details>
