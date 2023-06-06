@@ -1,2 +1,59 @@
-<div class="page-title ">Nova Sessão</div>
+<app-page-title pageTitle="Nova Sessão"></app-page-title>
+
+<app-page-subtitle pageSubTitle="Selecione o cliente"></app-page-subtitle>
+
+<form [formGroup]="formGroup">
+  <div class="client-search">
+    <i class="search-icon pi pi-search"></i>
+    <p-autoComplete
+      formControlName="name"
+      field="name"
+      [suggestions]="filteredClients"
+      (completeMethod)="filterClient($event)"
+      (onSelect)="selectClient($event)"
+      (onClear)="unselectClient()"
+      [showClear]="true"
+      [size]="46"
+      placeholder="Selecione o cliente"
+      [required]="true"
+    ></p-autoComplete>
+  </div>
+
+  <div
+    class="user-complement-info toggle-user-complement-info"
+  >
+    <textarea
+      rows="3"
+      cols="55"
+      pInputTextarea
+      [autoResize]="true"
+      formControlName="information"
+    ></textarea>
+  </div>
+
+  <div
+    class="user-complement-info toggle-user-complement-info"
+  >
+    <p-checkbox
+      [binary]="true"
+      inputId="continuation-of-tattoo-session"
+      formControlName="continuation"
+    ></p-checkbox>
+    <label
+      for="continuation-of-tattoo-session"
+    >
+      Continuação de sessão anterior
+    </label>
+  </div>
+</form>
+
+<p-button
+  label="Começar Sessão"
+  [disabled]="!formGroup.valid"
+  (onClick)="updateClientInfo()"
+></p-button>
+
+
+
+
 

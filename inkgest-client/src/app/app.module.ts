@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { HttpClientModule } from '@angular/common/http';
 import { RippleModule } from 'primeng/ripple';
 import { HeaderModule } from './templates/header/header.module';
 import { TableModule } from './components/table/table.module';
@@ -21,6 +21,7 @@ import { ProductService } from './shared/services/product.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     RippleModule,
     HeaderModule,
     RouterModule,
