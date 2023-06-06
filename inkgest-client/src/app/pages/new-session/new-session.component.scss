@@ -1,1 +1,32 @@
-@import '../../app.component.scss';
+.client-search {
+  position: relative;
+}
+
+:host ::ng-deep .p-autocomplete .p-inputtext {
+  padding-left: 8%;
+}
+
+:host ::ng-deep .p-autocomplete-clearable .p-autocomplete-clear-icon {
+  position: absolute;
+  right: -6%;
+}
+
+.toggle-user-complement-info {
+  display: none;
+}
+
+:host ::ng-deep .p-inputtextarea,
+:host ::ng-deep .p-checkbox {
+  margin-top: 12px;
+}
+
+:host ::ng-deep .p-button {
+  margin-top: 18px;
+}
+
+.search-icon {
+  position: absolute;
+  z-index: 2;
+  top: calc(50% - 6px);
+  left: .8%;
+}
