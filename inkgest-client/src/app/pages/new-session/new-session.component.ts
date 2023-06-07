@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-session',
@@ -15,6 +15,34 @@ export class NewSessionComponent {
     {'name': 'Allana', 'information': ''},
   ]
 
+  inventoryList: any[] = [
+    {
+      "_id": 1,
+      "category": "Agulhas",
+      "subcategory": "RL",
+      "description": "Agulha muito bonita e muita linda e muita errado",
+    },
+    {
+      "_id": 3,
+      "category": "Agulhas",
+      "subcategory": "RL",
+      "description": "Agulha bonita",
+    },
+    {
+      "_id": 4,
+      "category": "Tintas",
+      "subcategory": "RL",
+      "description": "Agulha bonita",
+    },
+    {
+      "_id": 2,
+      "category": "Descartáveis",
+      "subcategory": "RL",
+      "description": "Cartucho de agulhas para traçado",
+    }
+  ]
+
+  inv: any
   formGroup!: FormGroup;
   filteredClients!: any[];
 
@@ -25,7 +53,10 @@ export class NewSessionComponent {
       name: new FormControl('', [ Validators.required ]),
       information: new FormControl(''),
       continuation: new FormControl(false),
+      inventory: new FormArray([])
     });
+
+    this.inv = this.formGroup.get("inventory") as FormArray
   }
 
   filterClient(event: any) {
@@ -78,4 +109,28 @@ export class NewSessionComponent {
 
     return el
   }
+
+  addMaterial(id: number, value2: any, material: string) {
+    console.log('[event]', id, value2, material)
+
+    const control = new FormControl({
+      '_id': id,
+      'value': value2
+    })
+
+    // After added one
+    this.formGroup.value.inventory.find((el: any) => {
+      if (el._id == id) {
+        el.value = value2
+        console.log('[E IGUAL]', el.value)
+      }
+
+      return
+    })
+
+    // Add first element at list
+    this.inv.push(control)
+
+  }
+
 }
