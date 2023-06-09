@@ -47,9 +47,9 @@ export class NewSessionComponent {
   ];
 
   inv: FormArray<any> = new FormArray<any>([]);
-
   formGroup!: FormGroup;
   filteredClients!: any[];
+  categories: string[] = [];
 
   constructor() { }
 
@@ -62,6 +62,8 @@ export class NewSessionComponent {
     });
 
     this.inv = this.formGroup.get("inventory") as FormArray<any>;
+
+    this.categories = Array.from(new Set(this.inventoryList.map(item => item.category)));
   }
 
   filterClient(event: any) {

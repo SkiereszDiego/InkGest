@@ -1,87 +1,77 @@
 <app-page-title pageTitle="Nova Sessão"></app-page-title>
 
 <form [formGroup]="formGroup">
-  <section
-    class="new-session-container"
-  >
+  <section class="new-session-container">
     <div>
       <app-page-subtitle pageSubTitle="Selecione o cliente"></app-page-subtitle>
 
+      <div class="client-search">
+        <i class="search-icon pi pi-search"></i>
+        <p-autoComplete
+          formControlName="name"
+          field="name"
+          [suggestions]="filteredClients"
+          (completeMethod)="filterClient($event)"
+          (onSelect)="selectClient($event)"
+          (onClear)="unselectClient()"
+          [showClear]="true"
+          [size]="46"
+          placeholder="Selecione o cliente"
+          [required]="true"
+        ></p-autoComplete>
+      </div>
 
-        <div class="client-search">
-          <i class="search-icon pi pi-search"></i>
-          <p-autoComplete
-            formControlName="name"
-            field="name"
-            [suggestions]="filteredClients"
-            (completeMethod)="filterClient($event)"
-            (onSelect)="selectClient($event)"
-            (onClear)="unselectClient()"
-            [showClear]="true"
-            [size]="46"
-            placeholder="Selecione o cliente"
-            [required]="true"
-          ></p-autoComplete>
-        </div>
+      <div class="user-complement-info toggle-user-complement-info">
+        <textarea
+          rows="3"
+          cols="55"
+          pInputTextarea
+          [autoResize]="true"
+          formControlName="information"
+        ></textarea>
+      </div>
 
-        <div
-          class="user-complement-info toggle-user-complement-info"
-        >
-          <textarea
-            rows="3"
-            cols="55"
-            pInputTextarea
-            [autoResize]="true"
-            formControlName="information"
-          ></textarea>
-        </div>
-
-        <div
-          class="user-complement-info toggle-user-complement-info"
-        >
-          <p-checkbox
-            [binary]="true"
-            inputId="continuation-of-tattoo-session"
-            formControlName="continuation"
-          ></p-checkbox>
-          <label
-            for="continuation-of-tattoo-session"
-          >
-            Continuação de sessão anterior
-          </label>
-        </div>
-
+      <div class="user-complement-info toggle-user-complement-info">
+        <p-checkbox
+          [binary]="true"
+          inputId="continuation-of-tattoo-session"
+          formControlName="continuation"
+        ></p-checkbox>
+        <label for="continuation-of-tattoo-session">Continuação de sessão anterior</label>
+      </div>
     </div>
     <div>
       <app-page-subtitle pageSubTitle="Selecione o material a ser utilizado na sessão"></app-page-subtitle>
-      <span>Agulha</span>
-      <ul *ngFor="let item of inventoryList" style="padding-left: 0px;">
-        <li *ngIf="item.category == 'Agulhas'" class="select-item-container">
-          <div>
-            {{ item.description }}
-          </div>
-          <div>
-            <p-inputNumber
-              [showButtons]="true"
-              buttonLayout="horizontal"
-              inputId="horizontal"
-              spinnerMode="horizontal"
-              [step]="1"
-              decrementButtonClass="p-button-danger"
-              incrementButtonClass="p-button-success"
-              incrementButtonIcon="pi pi-plus"
-              decrementButtonIcon="pi pi-minus"
-              (onInput)="addMaterial(item._id, $event.value, item.description)"
-            ></p-inputNumber>
-          </div>
+      <ul *ngFor="let category of categories" class="category-list">
+        <li class="category-item-container">
+          <div class="category-name"><strong>{{ category }}</strong></div>
+          <ul class="description-list">
+            <ng-container *ngFor="let item of inventoryList">
+              <li *ngIf="item.category === category" class="select-item-container">
+                <div class="description">{{ item.description }}</div>
+                <div class="quantity-controls">
+                  <p-inputNumber
+                    [showButtons]="true"
+                    buttonLayout="horizontal"
+                    inputId="horizontal"
+                    spinnerMode="horizontal"
+                    [step]="1"
+                    decrementButtonClass="p-button-danger"
+                    incrementButtonClass="p-button-success"
+                    incrementButtonIcon="pi pi-plus"
+                    decrementButtonIcon="pi pi-minus"
+                    (onInput)="addMaterial(item._id, $event.value, item.description)"
+                  ></p-inputNumber>
+                </div>
+              </li>
+            </ng-container>
+          </ul>
         </li>
       </ul>
     </div>
   </section>
 </form>
 
-<p-button
-  label="Começar Sessão"
-  
-  (onClick)="updateClientInfo()"
-></p-button>
+<div class="start-session-container">
+  <p-button label="Começar Sessão" (onClick)="updateClientInfo()"></p-button>
+</div>
