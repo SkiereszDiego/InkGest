@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
-
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -23,6 +23,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextareaModule,
     CheckboxModule,
     ButtonModule,
+    InputNumberModule,
     ReactiveFormsModule,
     FormsModule,
     PageTitleModule,
