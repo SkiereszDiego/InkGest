@@ -1,0 +1,52 @@
+<app-page-title pageTitle="Adicionar novo item"></app-page-title>
+
+<div class="form-container">
+    <div class="form-row">
+        <div class="form-label">Nome</div>
+        <div class="form-input">
+            <input type="text" placeholder="Digite o nome do item" [(ngModel)]="nome" (ngModelChange)="formatarNome($event)">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-label">Categoria</div>
+        <div class="form-input">
+            <p-dropdown [options]="categorias" [(ngModel)]="categoria" [virtualScroll]="true" [styleClass]="'custom-dropdown'"></p-dropdown>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-label">Subcategoria</div>
+        <div class="form-input">
+            <input type="text" placeholder="Digite a subcategoria" [(ngModel)]="subcategoria">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-label">Descrição</div>
+        <div class="form-input">
+            <input type="text" placeholder="Descrição do item" [(ngModel)]="descricao">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-label">Preço</div>
+        <div class="form-input">
+            <input type="text" placeholder="R$ 0,00" [(ngModel)]="preco" (ngModelChange)="formatarPreco($event)">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-label">Data de compra</div>
+        <div class="form-input">
+            <p-calendar [(ngModel)]="dataCompra" placeholder="dd/mm/aaaa"></p-calendar>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-label">Data de validade</div>
+        <div class="form-input">
+            <p-calendar [(ngModel)]="dataValidade" placeholder="dd/mm/aaaa"></p-calendar>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-label">Quantidade</div>
+        <div class="form-input">
+            <input type="number" placeholder="Digite a quantidade" [(ngModel)]="quantidade">
+        </div>
+    </div>
+</div>

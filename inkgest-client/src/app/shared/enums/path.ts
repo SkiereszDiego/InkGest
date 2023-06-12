@@ -6,5 +6,6 @@ export const enum Path {
     PROFESSIONALS ='professionals',
     INVENTORY = 'inventory',
     NEW_SESSION = 'new-session',
+    ADD_ITEM = 'add-item',
     LOGIN = 'login'
 }
