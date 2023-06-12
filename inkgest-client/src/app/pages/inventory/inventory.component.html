@@ -6,7 +6,7 @@
             <app-search (searchTextChanged)="onSearchTextChanged($event)"></app-search>
         </div>
         <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="15px">
-            <app-custom-button *ngIf="!editMode" label="Adicionar" buttonClass="p-button-raised p-button-text p-button-success custom-small-button"></app-custom-button>
+            <app-custom-button *ngIf="!editMode" label="Adicionar" buttonClass="p-button-raised p-button-text p-button-success custom-small-button"(click)="navigateTo(addItemPath)"></app-custom-button>
             <app-custom-button *ngIf="editMode" label="Salvar Edição" buttonClass="p-button-raised p-button-text p-button-success custom-small-button" (click)="saveChanges()"></app-custom-button>
             <app-custom-button *ngIf="!editMode" label="Editar" buttonClass="p-button-raised p-button-text custom-small-button" (click)="toggleEditMode()"></app-custom-button>
         </div>
