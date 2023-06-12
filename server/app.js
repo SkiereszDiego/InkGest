@@ -8,11 +8,12 @@ const routeLogin = require('./routes/login_route');
 const routeCliente = require('./routes/client_route');
 
 const logMiddleware = require('./middleware/log_middleware');
-const loginMidleware = require('./middleware/login_middleware');
+const corsMiddleware = require('./middleware/cors');
+const loginMiddleware = require('./middleware/login_middleware');
 
 const PORTA = 3000;
 
-// Configuração da conexão com o Mongo
+// Configuração da conexão com o MongoDB
 mongoose.connect(require('./config/db').url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -31,21 +32,24 @@ app.use(express.json());
 // Middleware para análise de corpos de requisição codificados
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware para log de requisições para todas rotas. Serve para todos que estão abaixo dele no código
+// Middleware do CORS
+app.use(corsMiddleware);
+
+// Middleware para log de requisições para todas as rotas. Serve para todos que estão abaixo dele no código
 app.use(logMiddleware);
 
 // Roteamento
 app.use('/api/login', routeLogin);
 
 // Middleware para autenticação de usuários
-// app.use(loginMidleware.validateToken)
+// app.use(loginMiddleware.validateToken)
 
 // Rotas de usuários
-app.use('/api/users', loginMidleware.validateToken('user'), routeUser);
+app.use('/api/users', loginMiddleware.validateToken('user'), routeUser);
 
 app.use('/api/inventory', routeInventory);
 // Se quiser aplicar o middleware apenas para produtos
-// app.use('/api/inventory', loginMidleware.validateToken, routeInventory);
+// app.use('/api/inventory', loginMiddleware.validateToken, routeInventory);
 
 app.use('/api/client', routeCliente);
 
