@@ -1,37 +1,28 @@
-import { Component, Input } from '@angular/core';
-import { ProductService } from '../../shared/services/product.service';
-
-interface Product {
-  categorias: string;
-  subcategorias: string;
-  material: string;
-  dataCompra: string;
-  validade: string;
-  alertas: string;
-  quantidades: number;
-}
+import { Component, Input, OnInit } from '@angular/core';
+import { InventoryItem } from '../../models/inventory-item.model';
+import { InventoryService } from '../../shared/services/inventory.service';
 
 @Component({
   selector: 'app-inventory-table',
   templateUrl: './inventory-table.component.html',
   styleUrls: ['./inventory-table.component.scss']
 })
-export class InventoryTableComponent {
-  @Input() editMode: boolean = false;
-  products: Product[] = [];
+export class InventoryTableComponent implements OnInit {
+  @Input() editMode = false;
+  inventory: InventoryItem[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private inventoryService: InventoryService) {}
 
   ngOnInit(): void {
-    this.fetchProductsFromBackend().then((data: Product[]) => {
-      this.products = data;
-    });
+    this.fetchInventoryFromBackend();
   }
 
+  // Verifica se a quantidade está baixa
   isLowStock(quantity: number): boolean {
     return quantity < 5;
   }
 
+  // Verifica se está próximo da data de validade
   isNearExpiration(expirationDate: string): boolean {
     const today = new Date();
     const expiration = new Date(expirationDate);
@@ -39,29 +30,24 @@ export class InventoryTableComponent {
     return daysDifference <= 7;
   }
 
-  private fetchProductsFromBackend(): Promise<Product[]> {
-    // Simulating an asynchronous call to the ProductService to get product data
-    return this.productService.getProducts().then((data) => {
-      const mappedData: Product[] = data.map((item) => ({
-        categorias: item.category,
-        subcategorias: item.subcategory,
-        material: item.description,
-        dataCompra: item.purchase_date,
-        validade: item.expiry_date,
-        alertas: '',
-        quantidades: item.quantity
-      }));
-      return mappedData;
+  // Obtém o inventário do backend
+  private fetchInventoryFromBackend(): void {
+    this.inventoryService.getInventory().subscribe((data: InventoryItem[]) => {
+      console.log('Data recebida do backend:', data);
+      this.inventory = data;
+      console.log('Inventory items:', this.inventory);
     });
   }
 
-  incrementQuantity(product: Product): void {
-    product.quantidades++;
+  // Incrementa a quantidade de um item
+  incrementQuantity(item: InventoryItem): void {
+    item.quantity++;
   }
 
-  decrementQuantity(product: Product): void {
-    if (product.quantidades > 0) {
-      product.quantidades--;
+  // Decrementa a quantidade de um item
+  decrementQuantity(item: InventoryItem): void {
+    if (item.quantity > 0) {
+      item.quantity--;
     }
   }
 }
