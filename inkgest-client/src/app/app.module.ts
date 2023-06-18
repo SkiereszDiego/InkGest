@@ -12,6 +12,7 @@ import { SideNavModule } from './templates/side-nav/side-nav.module';
 import { SearchModule } from './components/search/search.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductService } from './shared/services/product.service';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -30,7 +31,10 @@ import { ProductService } from './shared/services/product.service';
     SearchModule ,
     BrowserAnimationsModule
   ],
-  providers: [ProductService],
+  providers: [
+    ProductService,
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

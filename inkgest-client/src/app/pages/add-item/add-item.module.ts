@@ -5,6 +5,8 @@ import { PageTitleModule } from 'src/app/components/page-title/page-title.module
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
+import { CustomButtonModule } from 'src/app/components/custom-button/custom-button.module';
+import { ToastModule } from 'primeng/toast'; 
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { CalendarModule } from 'primeng/calendar';
     PageTitleModule,
     DropdownModule,
     FormsModule,
-    CalendarModule
+    CalendarModule,
+    CustomButtonModule,
+    ToastModule 
   ],
   exports: [
     AddItemComponent

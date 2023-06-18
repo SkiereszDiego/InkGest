@@ -19,8 +19,8 @@
             <td>{{ product.category }}</td>
             <td>{{ product.subcategory }}</td>
             <td>{{ product.description }}</td>
-            <td>{{ product.purchase_date }}</td>
-            <td>{{ product.expiry_date }}</td>
+            <td>{{ product.purchase_date | date:'yyyy-MM-dd' }}</td>
+            <td>{{ product.expiry_date | date:'yyyy-MM-dd' }}</td>
             <td [style]="{'min-width': '5rem'}">
                 <ng-container *ngIf="isLowStock(product.quantity); else expirationAlert">
                     <p-tag value="Baixo estoque, repor." severity="warning" class="inventory-alert"></p-tag>

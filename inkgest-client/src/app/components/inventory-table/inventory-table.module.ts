@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { InventoryTableComponent } from './inventory-table.component';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
@@ -18,14 +18,14 @@ import { InputNumberModule } from 'primeng/inputnumber';
     exports: [
         InventoryTableComponent
     ],
-    providers: [ProductService],
+    providers: [ProductService, DatePipe ],
     imports: [
         CommonModule,
         TableModule,
         TagModule,
         FormsModule,
         InputNumberModule,
-        CustomButtonModule
+        CustomButtonModule,
     ]
 })
 export class InventoryTableModule { }
