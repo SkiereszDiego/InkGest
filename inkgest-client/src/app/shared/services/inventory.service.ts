@@ -19,4 +19,13 @@ export class InventoryService {
 
     return this.http.get<InventoryItem[]>(this.apiUrl, { headers });
   }
+
+  createItem(item: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
+    });
+
+    return this.http.post(this.apiUrl, item, { headers });
+  }
 }

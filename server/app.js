@@ -39,13 +39,14 @@ app.use(corsMiddleware);
 app.use(logMiddleware);
 
 // Roteamento
-app.use('/api/login', routeLogin);
+// app.use('/api/login', routeLogin);
 
 // Middleware para autenticação de usuários
 // app.use(loginMiddleware.validateToken)
 
 // Rotas de usuários
-app.use('/api/users', loginMiddleware.validateToken('user'), routeUser);
+// app.use('/api/users', loginMiddleware.validateToken('user'), routeUser);
+app.use('/api/users', routeUser);
 
 app.use('/api/inventory', routeInventory);
 // Se quiser aplicar o middleware apenas para produtos

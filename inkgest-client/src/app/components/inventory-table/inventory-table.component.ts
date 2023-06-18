@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { InventoryItem } from '../../models/inventory-item.model';
 import { InventoryService } from '../../shared/services/inventory.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-inventory-table',
@@ -11,18 +12,16 @@ export class InventoryTableComponent implements OnInit {
   @Input() editMode = false;
   inventory: InventoryItem[] = [];
 
-  constructor(private inventoryService: InventoryService) {}
+  constructor(private inventoryService: InventoryService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.fetchInventoryFromBackend();
   }
 
-  // Verifica se a quantidade está baixa
   isLowStock(quantity: number): boolean {
     return quantity < 5;
   }
 
-  // Verifica se está próximo da data de validade
   isNearExpiration(expirationDate: string): boolean {
     const today = new Date();
     const expiration = new Date(expirationDate);
@@ -30,21 +29,28 @@ export class InventoryTableComponent implements OnInit {
     return daysDifference <= 7;
   }
 
-  // Obtém o inventário do backend
   private fetchInventoryFromBackend(): void {
-    this.inventoryService.getInventory().subscribe((data: InventoryItem[]) => {
+    this.inventoryService.getInventory().subscribe((data: any[]) => {
       console.log('Data recebida do backend:', data);
-      this.inventory = data;
+      this.inventory = data.map(item => ({
+        ...item,
+        purchase_date: new Date(item.purchase_date),
+        expiry_date: new Date(item.expiry_date)
+      }));
       console.log('Inventory items:', this.inventory);
     });
   }
+  
 
-  // Incrementa a quantidade de um item
+  private formatDate(date: string): string {
+    const formattedDate = new Date(date);
+    return this.datePipe.transform(formattedDate, 'yyyy-MM-dd') || '';
+  }
+
   incrementQuantity(item: InventoryItem): void {
     item.quantity++;
   }
 
-  // Decrementa a quantidade de um item
   decrementQuantity(item: InventoryItem): void {
     if (item.quantity > 0) {
       item.quantity--;
