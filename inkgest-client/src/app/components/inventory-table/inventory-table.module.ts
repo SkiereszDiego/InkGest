@@ -9,8 +9,6 @@ import { CustomButtonModule } from "../custom-button/custom-button.module";
 import { InputNumberModule } from 'primeng/inputnumber';
 
 
-
-
 @NgModule({
     declarations: [
         InventoryTableComponent
