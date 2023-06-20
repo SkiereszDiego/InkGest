@@ -7,6 +7,7 @@ import { ProductService } from '../../shared/services/product.service';
 import { FormsModule } from '@angular/forms';
 import { CustomButtonModule } from "../custom-button/custom-button.module";
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -26,6 +27,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
         FormsModule,
         InputNumberModule,
         CustomButtonModule,
+        ButtonModule
     ]
 })
 export class InventoryTableModule { }
