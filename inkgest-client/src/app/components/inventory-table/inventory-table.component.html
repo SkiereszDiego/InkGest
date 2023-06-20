@@ -9,6 +9,7 @@
             <th>Alertas</th>
             <th>Quantidades</th>
             <th *ngIf="editMode"></th>
+            <th>Ações</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
@@ -52,6 +53,10 @@
                 <ng-template #displayQuantity>
                     {{ product.quantity }}
                 </ng-template>
+            </td>
+            <td class="actions-cell">
+                <p-button icon="pi pi-pencil" styleClass="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised"></p-button>
+                <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised"></p-button>
             </td>
         </tr>
     </ng-template>
