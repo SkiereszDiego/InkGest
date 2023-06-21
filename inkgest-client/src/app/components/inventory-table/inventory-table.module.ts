@@ -8,9 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { CustomButtonModule } from "../custom-button/custom-button.module";
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
-
-
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
     declarations: [
@@ -19,7 +19,10 @@ import { ButtonModule } from 'primeng/button';
     exports: [
         InventoryTableComponent
     ],
-    providers: [ProductService, DatePipe ],
+    providers: [
+        ProductService,
+        DatePipe
+    ],
     imports: [
         CommonModule,
         TableModule,
@@ -27,7 +30,10 @@ import { ButtonModule } from 'primeng/button';
         FormsModule,
         InputNumberModule,
         CustomButtonModule,
-        ButtonModule
+        ButtonModule,
+        ConfirmDialogModule,
+        ToastModule,
+        DialogModule
     ]
 })
 export class InventoryTableModule { }

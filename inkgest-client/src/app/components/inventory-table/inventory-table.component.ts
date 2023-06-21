@@ -2,17 +2,24 @@ import { Component, Input, OnInit } from '@angular/core';
 import { InventoryItem } from '../../models/inventory-item.model';
 import { InventoryService } from '../../shared/services/inventory.service';
 import { DatePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-inventory-table',
   templateUrl: './inventory-table.component.html',
-  styleUrls: ['./inventory-table.component.scss']
+  styleUrls: ['./inventory-table.component.scss'],
+  providers: [MessageService]
 })
 export class InventoryTableComponent implements OnInit {
   @Input() editMode = false;
   inventory: InventoryItem[] = [];
+  showConfirmDialog = false;
 
-  constructor(private inventoryService: InventoryService, private datePipe: DatePipe) {}
+  constructor(
+    private inventoryService: InventoryService,
+    private datePipe: DatePipe,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.fetchInventoryFromBackend();
@@ -40,7 +47,6 @@ export class InventoryTableComponent implements OnInit {
       console.log('Inventory items:', this.inventory);
     });
   }
-  
 
   private formatDate(date: string): string {
     const formattedDate = new Date(date);
@@ -55,5 +61,41 @@ export class InventoryTableComponent implements OnInit {
     if (item.quantity > 0) {
       item.quantity--;
     }
+  }
+
+  confirmDelete(item: InventoryItem): void {
+    this.showConfirmDialog = true;
+  }
+
+  deleteItem(item: InventoryItem): void {
+    console.log('Deleting item:', item); // Verificar o item antes da exclusão
+    console.log('Item ID:', item._id); // Verificar o ID do item
+  
+    const itemId = item._id; // Armazenar o ID do item em uma variável separada para verificar
+  
+    this.inventoryService.deleteItem(itemId).subscribe(
+      () => {
+        console.log('Item deleted successfully.'); // Indicar que o item foi excluído com sucesso
+        this.inventory = this.inventory.filter(i => i._id !== itemId);
+        this.showToast('Item deletado com sucesso.', 'success');
+        this.showConfirmDialog = false;
+      },
+      (error) => {
+        console.error('Error deleting item:', error); // Indicar um erro ao excluir o item
+        this.showToast('Erro ao deletar item.', 'error');
+      }
+    );
+  }
+  
+  
+
+  showToast(message: string, severity: string): void {
+    const toast: any = {
+      severity: severity,
+      summary: message,
+      life: 3000
+    };
+
+    this.messageService.add(toast);
   }
 }
