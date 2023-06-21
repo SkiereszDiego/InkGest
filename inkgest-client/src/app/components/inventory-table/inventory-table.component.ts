@@ -86,8 +86,6 @@ export class InventoryTableComponent implements OnInit {
       }
     );
   }
-  
-  
 
   showToast(message: string, severity: string): void {
     const toast: any = {
