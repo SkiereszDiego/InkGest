@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 
 const InventorySchema = new mongoose.Schema({
-    id: { type: String },
-    name: { type: String },
+    name: { type: String, required: true },
+    category: { type: String, required: true },
+    subcategory: { type: String, required: true },
     description: { type: String },
     price: { type: Number },
-    quantity: { type: Number }
+    purchase_date: { type: Date },
+    quantity: { type: Number, default: 0 },
+    expiry_date: { type: Date }
 }, {
     versionKey: false,
     collection: "inventory"

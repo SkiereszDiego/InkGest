@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Path } from 'src/app/shared/enums/path';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
@@ -9,6 +11,14 @@ export class InventoryComponent {
   searchText: string = '';
   editMode: boolean = false;
   originalEditMode: boolean = false;
+
+  public addItemPath: any = Path.ADD_ITEM;
+
+  constructor(private router: Router) {}
+
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
 
   onSearchTextChanged(searchText: string): void {
     this.searchText = searchText;

@@ -9,6 +9,7 @@ import { ProfessionalsComponent } from './pages/professionals/professionals.comp
 import { Path } from './shared/enums/path';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { NewSessionComponent } from './pages/new-session/new-session.component';
+import { AddItemComponent } from './pages/add-item/add-item.component';
 
 
 export const routes: Routes = [
@@ -70,6 +71,12 @@ export const routes: Routes = [
     component: NewSessionComponent, // Specify the new component
     loadChildren: () =>
       import('./pages/new-session/new-session.module').then((m) => m.NewSessionModule) // Import the new module
+  },
+  {
+    path: Path.ADD_ITEM, 
+    component: AddItemComponent, 
+    loadChildren: () =>
+      import('./pages/add-item/add-item.module').then((m) => m.AddItemModule)
   }
 
 ]

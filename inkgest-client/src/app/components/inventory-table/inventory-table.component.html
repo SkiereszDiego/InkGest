@@ -1,58 +1,70 @@
-<p-table [value]="products" [tableStyle]="{ 'min-width': '50rem', 'font-size': '12px' }">
+<p-table [value]="inventory" [style]="{ 'min-width': '50rem', 'font-size': '12px' }">
     <ng-template pTemplate="header">
         <tr>
-        <th>Categorias</th>
-        <th [style]="{'max-width': '5rem'}">Sub categorias</th>
-        <th>Material</th>
-        <th>Data Compra</th>
-        <th>Validade</th>
-        <th>Alertas</th>
-        <th>Quantidades</th>
-        <th *ngIf="editMode"></th>
+            <th>Categorias</th>
+            <th [style]="{'max-width': '5rem'}">Sub categorias</th>
+            <th>Material</th>
+            <th>Data Compra</th>
+            <th>Validade</th>
+            <th>Alertas</th>
+            <th>Quantidades</th>
+            <th *ngIf="editMode"></th>
+            <th>Ações</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
         <tr [ngClass]="{
-            'low-stock': isLowStock(product.quantidades),
-            'near-expiration': isNearExpiration(product.validade)
+            'low-stock': isLowStock(product.quantity),
+            'near-expiration': isNearExpiration(product.expiry_date)
         }">
-        <td>{{ product.categorias }}</td>
-        <td>{{ product.subcategorias }}</td>
-        <td>{{ product.material }}</td>
-        <td>{{ product.dataCompra }}</td>
-        <td>{{ product.validade }}</td>
-        <td [style]="{'min-width': '5rem'}">
-            <ng-container *ngIf="isLowStock(product.quantidades); else expirationAlert">
-            <p-tag value="Baixo estoque, repor." severity="warning" class="inventory-alert"></p-tag>
-            </ng-container>
-            <ng-template #expirationAlert>
-            <ng-container *ngIf="isNearExpiration(product.validade); else defaultAlert">
-                <p-tag value="Próximo do Vencimento" severity="danger" class="inventory-alert"></p-tag>
-            </ng-container>
-            <ng-template #defaultAlert>
-                <p-tag value=""></p-tag>
-            </ng-template>
-            </ng-template>
-        </td>
-        <td class="quantity-cell">
-            <div class="quantity-container" *ngIf="editMode; else displayQuantity">
-            <p-inputNumber
-                *ngIf="product"
-                [(ngModel)]="product.quantidades"
-                [showButtons]="true"
-                buttonLayout="horizontal"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-                [step]="1"
-                incrementButtonClass="p-button-success"
-                decrementButtonClass="p-button-danger"
-                inputStyleClass="custom-input-number p-inputnumber-sm"
-            ></p-inputNumber>
-            </div>
-            <ng-template #displayQuantity>
-            {{ product.quantidades }}
-            </ng-template>
-        </td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.subcategory }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.purchase_date | date:'dd-MM-yyyy' }}</td>
+            <td>{{ product.expiry_date | date:'dd-MM-yyyy' }}</td>
+            <td [style]="{'min-width': '5rem'}">
+                <ng-container *ngIf="isLowStock(product.quantity); else expirationAlert">
+                    <p-tag value="Baixo estoque, repor." severity="warning" class="inventory-alert"></p-tag>
+                </ng-container>
+                <ng-template #expirationAlert>
+                    <ng-container *ngIf="isNearExpiration(product.expiry_date); else defaultAlert">
+                        <p-tag value="Próximo do Vencimento" severity="danger" class="inventory-alert"></p-tag>
+                    </ng-container>
+                    <ng-template #defaultAlert>
+                        <p-tag value=""></p-tag>
+                    </ng-template>
+                </ng-template>
+            </td>
+            <td class="quantity-cell">
+                <div class="quantity-container" *ngIf="editMode; else displayQuantity">
+                    <p-inputNumber
+                        *ngIf="product"
+                        [(ngModel)]="product.quantity"
+                        [showButtons]="true"
+                        buttonLayout="horizontal"
+                        incrementButtonIcon="pi pi-plus"
+                        decrementButtonIcon="pi pi-minus"
+                        [step]="1"
+                        incrementButtonClass="p-button-success"
+                        decrementButtonClass="p-button-danger"
+                        inputStyleClass="custom-input-number p-inputnumber-sm"
+                    ></p-inputNumber>
+                </div>
+                <ng-template #displayQuantity>
+                    {{ product.quantity }}
+                </ng-template>
+            </td>
+            <td class="actions-cell">
+                <p-button icon="pi pi-pencil" styleClass="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised"></p-button>
+                <p-toast></p-toast>
+                <p-dialog header="Deletar" [(visible)]="showConfirmDialog" [modal]="true" [responsive]="true" [style]="{ width: '50vw' }">
+                    <p-footer>
+                        <button type="button" pButton icon="pi pi-times" label="Não" class="p-button-danger" (click)="showConfirmDialog = false"></button>
+                        <button type="button" pButton icon="pi pi-check" label="Sim" class="p-button-success" (click)="deleteItem(product)"></button>
+                    </p-footer>
+                </p-dialog>
+                <p-button (click)="confirmDelete(product)" icon="pi pi-trash" styleClass="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised"></p-button>
+            </td>         
         </tr>
     </ng-template>
 </p-table>

@@ -1,31 +1,28 @@
-import { Component, Input } from '@angular/core';
-import { ProductService } from '../../shared/services/product.service';
-
-interface Product {
-  categorias: string;
-  subcategorias: string;
-  material: string;
-  dataCompra: string;
-  validade: string;
-  alertas: string;
-  quantidades: number;
-}
+import { Component, Input, OnInit } from '@angular/core';
+import { InventoryItem } from '../../models/inventory-item.model';
+import { InventoryService } from '../../shared/services/inventory.service';
+import { DatePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-inventory-table',
   templateUrl: './inventory-table.component.html',
-  styleUrls: ['./inventory-table.component.scss']
+  styleUrls: ['./inventory-table.component.scss'],
+  providers: [MessageService]
 })
-export class InventoryTableComponent {
-  @Input() editMode: boolean = false;
-  products: Product[] = [];
+export class InventoryTableComponent implements OnInit {
+  @Input() editMode = false;
+  inventory: InventoryItem[] = [];
+  showConfirmDialog = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private inventoryService: InventoryService,
+    private datePipe: DatePipe,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
-    this.fetchProductsFromBackend().then((data: Product[]) => {
-      this.products = data;
-    });
+    this.fetchInventoryFromBackend();
   }
 
   isLowStock(quantity: number): boolean {
@@ -39,29 +36,64 @@ export class InventoryTableComponent {
     return daysDifference <= 7;
   }
 
-  private fetchProductsFromBackend(): Promise<Product[]> {
-    // Simulating an asynchronous call to the ProductService to get product data
-    return this.productService.getProducts().then((data) => {
-      const mappedData: Product[] = data.map((item) => ({
-        categorias: item.category,
-        subcategorias: item.subcategory,
-        material: item.description,
-        dataCompra: item.purchase_date,
-        validade: item.expiry_date,
-        alertas: '',
-        quantidades: item.quantity
+  private fetchInventoryFromBackend(): void {
+    this.inventoryService.getInventory().subscribe((data: any[]) => {
+      console.log('Data recebida do backend:', data);
+      this.inventory = data.map(item => ({
+        ...item,
+        purchase_date: new Date(item.purchase_date),
+        expiry_date: new Date(item.expiry_date)
       }));
-      return mappedData;
+      console.log('Inventory items:', this.inventory);
     });
   }
 
-  incrementQuantity(product: Product): void {
-    product.quantidades++;
+  private formatDate(date: string): string {
+    const formattedDate = new Date(date);
+    return this.datePipe.transform(formattedDate, 'yyyy-MM-dd') || '';
   }
 
-  decrementQuantity(product: Product): void {
-    if (product.quantidades > 0) {
-      product.quantidades--;
+  incrementQuantity(item: InventoryItem): void {
+    item.quantity++;
+  }
+
+  decrementQuantity(item: InventoryItem): void {
+    if (item.quantity > 0) {
+      item.quantity--;
     }
+  }
+
+  confirmDelete(item: InventoryItem): void {
+    this.showConfirmDialog = true;
+  }
+
+  deleteItem(item: InventoryItem): void {
+    console.log('Deleting item:', item); // Verificar o item antes da exclusão
+    console.log('Item ID:', item._id); // Verificar o ID do item
+  
+    const itemId = item._id; // Armazenar o ID do item em uma variável separada para verificar
+  
+    this.inventoryService.deleteItem(itemId).subscribe(
+      () => {
+        console.log('Item deleted successfully.'); // Indicar que o item foi excluído com sucesso
+        this.inventory = this.inventory.filter(i => i._id !== itemId);
+        this.showToast('Item deletado com sucesso.', 'success');
+        this.showConfirmDialog = false;
+      },
+      (error) => {
+        console.error('Error deleting item:', error); // Indicar um erro ao excluir o item
+        this.showToast('Erro ao deletar item.', 'error');
+      }
+    );
+  }
+
+  showToast(message: string, severity: string): void {
+    const toast: any = {
+      severity: severity,
+      summary: message,
+      life: 3000
+    };
+
+    this.messageService.add(toast);
   }
 }

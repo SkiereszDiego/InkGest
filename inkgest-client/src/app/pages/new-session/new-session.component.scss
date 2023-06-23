@@ -1,1 +1,89 @@
-@import '../../app.component.scss';
+.new-session-container {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr;
+}
+
+.client-search {
+  position: relative;
+}
+
+:host ::ng-deep .p-autocomplete .p-inputtext {
+  padding-left: 8%;
+}
+
+:host ::ng-deep .p-autocomplete-clearable .p-autocomplete-clear-icon {
+  position: absolute;
+  right: -6%;
+}
+
+.toggle-user-complement-info {
+  display: none;
+}
+
+:host ::ng-deep .p-inputtextarea,
+:host ::ng-deep .p-checkbox {
+  margin-top: 12px;
+}
+
+:host ::ng-deep .p-button {
+  margin-top: 18px;
+}
+
+.search-icon {
+  position: absolute;
+  z-index: 2;
+  top: calc(50% - 6px);
+  left: 1.8%;
+}
+
+.select-item-container {
+  display: flex;
+  align-items: center;
+  max-height: 40px;
+  gap: 24px;
+}
+
+:host ::ng-deep .p-inputnumber .p-inputnumber-input {
+  height: 40px;
+  width: 54px;
+}
+
+:host ::ng-deep .p-button-danger,
+:host ::ng-deep .p-button-success {
+  height: 40px;
+  margin-top: 0px;
+}
+
+.category-list,
+.description-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.category-item-container {
+  margin-bottom: 16px;
+}
+
+.category-name {
+  font-weight: bold;
+}
+
+.select-item-container {
+  margin-bottom: 12px;
+}
+
+.description {
+  margin-right: 12px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.start-session-container {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+}
