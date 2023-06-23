@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { InventoryService } from '../../shared/services/inventory.service';
+import { InventoryItem } from '../../models/inventory-item.model';
 
 @Component({
   selector: 'app-new-session',
   templateUrl: './new-session.component.html',
   styleUrls: ['./new-session.component.scss']
 })
-export class NewSessionComponent {
+export class NewSessionComponent implements OnInit {
+  inventory: InventoryItem[] = [];
+  formGroup!: FormGroup;
+  filteredClients!: any[];
+  categories: string[] = [];
 
   clients: any[] = [
     { 'name': 'Allan', 'information': 'Alergia a stress' },
@@ -15,69 +22,35 @@ export class NewSessionComponent {
     { 'name': 'Allana', 'information': 'Diabetes' },
   ];
 
-  inventoryList: any[] = [
-    {
-      "_id": 1,
-      "category": "Agulhas",
-      "subcategory": "RL",
-      "description": "Agulha traçado 3RL",
-      "quantity": 10
-    },
-    {
-      "_id": 3,
-      "category": "Agulhas",
-      "subcategory": "RS",
-      "description": "Agulha sombra 9RS",
-      "quantity": 5
-    },
-    {
-      "_id": 4,
-      "category": "Tintas",
-      "subcategory": "Preta",
-      "description": "Eletric Ink Tribal",
-      "quantity": 8
-    },
-    {
-      "_id": 2,
-      "category": "Descartáveis",
-      "subcategory": "RL",
-      "description": "Cartucho de agulhas para traçado",
-      "quantity": 3
-    }
-  ];
-
-  inv: FormArray<any> = new FormArray<any>([]);
-  formGroup!: FormGroup;
-  filteredClients!: any[];
-  categories: string[] = [];
-
-  constructor() { }
+  constructor(
+    private inventoryService: InventoryService,
+  ) {}
 
   ngOnInit() {
     this.formGroup = new FormGroup({
       name: new FormControl('', [Validators.required]),
       information: new FormControl(''),
       continuation: new FormControl(false),
-      inventory: this.inv
+      inventory: new FormArray([])
     });
 
-    this.inv = this.formGroup.get("inventory") as FormArray<any>;
+    this.fetchInventoryFromBackend();
+  }
 
-    this.categories = Array.from(new Set(this.inventoryList.map(item => item.category)));
+  private fetchInventoryFromBackend(): void {
+    this.inventoryService.getInventory().subscribe((data: InventoryItem[]) => {
+      console.log('Data received from the backend:', data);
+      this.inventory = data;
+      console.log('Inventory items:', this.inventory);
+      this.categories = Array.from(new Set(this.inventory.map(item => item.category)));
+    });
   }
 
   filterClient(event: any) {
-    let filtered: any[] = [];
     let query = event.query;
-
-    for (let i = 0; i < this.clients.length; i++) {
-      let client = this.clients[i];
-      if (client.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(client);
-      }
-    }
-
-    this.filteredClients = filtered;
+    this.filteredClients = this.clients.filter(client =>
+      client.name.toLowerCase().startsWith(query.toLowerCase())
+    );
   }
 
   // TODO: TEMP CODE
@@ -108,16 +81,14 @@ export class NewSessionComponent {
   }
 
   getUserInfoEl() {
-    let el = Array.from(
+    return Array.from(
       document.getElementsByClassName(
         'user-complement-info'
       ) as HTMLCollectionOf<HTMLElement>
     );
-
-    return el;
   }
 
-  addMaterial(id: number, value2: any, material: string) {
+  addMaterial(id: string, value2: any, material: string) {
     const inventoryArray = this.formGroup.get('inventory') as FormArray<any>;
 
     // Find the item in the inventory array
@@ -145,7 +116,7 @@ export class NewSessionComponent {
     }
   }
 
-  getMaxQuantity(id: number): number {
+  getMaxQuantity(id: string): number {
     const items = (this.formGroup.get('inventory') as FormArray<any>).controls;
     let totalQuantity = 0;
 
@@ -155,7 +126,7 @@ export class NewSessionComponent {
       }
     }
 
-    const selectedItem = this.inventoryList.find((item) => item._id === id);
+    const selectedItem = this.inventory.find((item) => item._id === id);
     return selectedItem ? selectedItem.quantity : totalQuantity;
   }
 
@@ -167,7 +138,6 @@ export class NewSessionComponent {
     const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
 
     // Open the modal with the selected client name and inventory copy
-    // ... (code to open modal)
 
     console.log('Selected Client:', selectedClient);
     console.log('Inventory Copy:', inventoryCopy);
