@@ -67,8 +67,8 @@ export const routes: Routes = [
         .then((m) => m.InventoryModule)
   },
   {
-    path: Path.NEW_SESSION, // Add the new route path
-    component: NewSessionComponent, // Specify the new component
+    path: Path.NEW_SESSION, 
+    component: NewSessionComponent,
     loadChildren: () =>
       import('./pages/new-session/new-session.module').then((m) => m.NewSessionModule) // Import the new module
   },
