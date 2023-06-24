@@ -46,7 +46,7 @@
         <li class="category-item-container">
           <div class="category-name"><strong>{{ category }}</strong></div>
           <ul class="description-list">
-            <ng-container *ngFor="let item of inventoryList">
+            <ng-container *ngFor="let item of inventory">
               <li *ngIf="item.category === category" class="select-item-container">
                 <div class="description">{{ item.description }}</div>
                 <div class="quantity-controls">
@@ -60,7 +60,7 @@
                     incrementButtonClass="p-button-success"
                     incrementButtonIcon="pi pi-plus"
                     decrementButtonIcon="pi pi-minus"
-                    (onInput)="addMaterial(item._id, $event.value, item.description)"
+                    (onInput)="item._id && $event.value && item.description ? addMaterial(item._id, $event.value, item.description) : null"
                   ></p-inputNumber>
                 </div>
               </li>
