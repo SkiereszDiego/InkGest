@@ -19,12 +19,14 @@ export class NewSessionComponent implements OnInit, OnDestroy {
   displayModal: boolean = false;
   timer: string = '0:00:00';
   timerSubscription: Subscription | undefined;
+  selectedClient: any = {};
+
 
   clients: any[] = [
-    { 'name': 'Allan', 'information': 'Alergia a stress' },
-    { 'name': 'Diego', 'information': 'Alergia a zinco' },
-    { 'name': 'Alvaro', 'information': 'Hepatite' },
-    { 'name': 'Allana', 'information': 'Diabetes' },
+    { 'name': 'Allan Foppa', 'information': 'Alergia a stress' },
+    { 'name': 'Diego Skieresz', 'information': 'Alergia a zinco' },
+    { 'name': 'Alvaro Maia', 'information': 'Hepatite' },
+    { 'name': 'Allana Soares', 'information': 'Diabetes' },
   ];
 
   constructor(private inventoryService: InventoryService) {}
@@ -38,6 +40,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     });
 
     this.fetchInventoryFromBackend();
+
   }
 
   ngOnDestroy(): void {
@@ -70,6 +73,8 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     this.formGroup.patchValue({
       'information': event.information
     });
+
+    this.selectedClient = event;
   }
 
   unselectClient() {
@@ -153,6 +158,14 @@ export class NewSessionComponent implements OnInit, OnDestroy {
   }
 
   showModal() {
+    // Get the selected client
+    const selectedClient = this.formGroup.value.name;
+
+    // Create a deep copy of the inventory array to pass to the modal
+    const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
+
+    // Set the selected client
+    this.selectedClient = selectedClient;
     this.startTimer();
     this.displayModal = true;
   }
