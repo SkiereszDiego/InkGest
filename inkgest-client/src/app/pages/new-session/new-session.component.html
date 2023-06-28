@@ -37,7 +37,7 @@
           inputId="continuation-of-tattoo-session"
           formControlName="continuation"
         ></p-checkbox>
-        <label for="continuation-of-tattoo-session">Continuação de sessão anterior</label>
+        <label for="continuation-of-tattoo-session"> Continuação de sessão anterior</label>
       </div>
     </div>
     <div>
@@ -75,3 +75,46 @@
 <div class="start-session-container">
   <p-button label="Começar Sessão" (onClick)="updateClientInfo()"></p-button>
 </div>
+
+<p-dialog 
+  [(visible)]="displayModal" 
+  [style]="{ width: '60vw' }" 
+  [modal]="true" 
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+>
+    <ng-template pTemplate="header">
+      <h2>Sessão em andamento - Tempo decorrido: {{ timer }}</h2>
+      <h4>Cliente: {{ selectedClient.name }}</h4>
+    </ng-template>
+    <h2>Selecione o material utilizado na sessão</h2>
+    <ul *ngFor="let category of categories" class="category-list">
+      <li class="category-item-container">
+        <div class="category-name"><strong>{{ category }}</strong></div>
+        <ul class="description-list">
+          <ng-container *ngFor="let item of inventory">
+            <li *ngIf="item.category === category" class="select-item-container">
+              <div class="description">{{ item.description }}</div>
+              <div class="quantity-controls">
+                <p-inputNumber
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  inputId="horizontal"
+                  spinnerMode="horizontal"
+                  [step]="1"
+                  decrementButtonClass="p-button-danger"
+                  incrementButtonClass="p-button-success"
+                  incrementButtonIcon="pi pi-plus"
+                  decrementButtonIcon="pi pi-minus"
+                  (onInput)="item._id && $event.value && item.description ? addMaterial(item._id, $event.value, item.description) : null"
+                ></p-inputNumber>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </li>
+    </ul>
+      <ng-template pTemplate="footer">
+        <p-button styleClass="p-button-raised p-button-text custom-small-button" label="Cancelar" (click)="displayModal=false"></p-button>
+        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão"></p-button>
+      </ng-template>
+</p-dialog>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { timer, Subscription } from 'rxjs';
 
 import { InventoryService } from '../../shared/services/inventory.service';
 import { InventoryItem } from '../../models/inventory-item.model';
@@ -9,24 +10,28 @@ import { InventoryItem } from '../../models/inventory-item.model';
   templateUrl: './new-session.component.html',
   styleUrls: ['./new-session.component.scss']
 })
-export class NewSessionComponent implements OnInit {
+export class NewSessionComponent implements OnInit, OnDestroy {
   inventory: InventoryItem[] = [];
   formGroup!: FormGroup;
   filteredClients!: any[];
   categories: string[] = [];
 
+  displayModal: boolean = false;
+  timer: string = '0:00:00';
+  timerSubscription: Subscription | undefined;
+  selectedClient: any = {};
+
+
   clients: any[] = [
-    { 'name': 'Allan', 'information': 'Alergia a stress' },
-    { 'name': 'Diego', 'information': 'Alergia a zinco' },
-    { 'name': 'Alvaro', 'information': 'Hepatite' },
-    { 'name': 'Allana', 'information': 'Diabetes' },
+    { 'name': 'Allan Foppa', 'information': 'Alergia a stress' },
+    { 'name': 'Diego Skieresz', 'information': 'Alergia a zinco' },
+    { 'name': 'Alvaro Maia', 'information': 'Hepatite' },
+    { 'name': 'Allana Soares', 'information': 'Diabetes' },
   ];
 
-  constructor(
-    private inventoryService: InventoryService,
-  ) {}
+  constructor(private inventoryService: InventoryService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formGroup = new FormGroup({
       name: new FormControl('', [Validators.required]),
       information: new FormControl(''),
@@ -35,6 +40,13 @@ export class NewSessionComponent implements OnInit {
     });
 
     this.fetchInventoryFromBackend();
+
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
   }
 
   private fetchInventoryFromBackend(): void {
@@ -53,11 +65,6 @@ export class NewSessionComponent implements OnInit {
     );
   }
 
-  // TODO: TEMP CODE
-  updateClientInfo() {
-    console.log('[this.formGroup]', this.formGroup.value);
-  }
-
   selectClient(event: any) {
     this.getUserInfoEl().forEach((el) => {
       el.classList.remove('toggle-user-complement-info');
@@ -66,6 +73,8 @@ export class NewSessionComponent implements OnInit {
     this.formGroup.patchValue({
       'information': event.information
     });
+
+    this.selectedClient = event;
   }
 
   unselectClient() {
@@ -82,9 +91,7 @@ export class NewSessionComponent implements OnInit {
 
   getUserInfoEl() {
     return Array.from(
-      document.getElementsByClassName(
-        'user-complement-info'
-      ) as HTMLCollectionOf<HTMLElement>
+      document.getElementsByClassName('user-complement-info') as HTMLCollectionOf<HTMLElement>
     );
   }
 
@@ -137,9 +144,55 @@ export class NewSessionComponent implements OnInit {
     // Create a deep copy of the inventory array to pass to the modal
     const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
 
-    // Open the modal with the selected client name and inventory copy
+    // Start the timer
+    this.startTimer();
 
+    // Open the modal with the selected client name and inventory copy
     console.log('Selected Client:', selectedClient);
     console.log('Inventory Copy:', inventoryCopy);
+  }
+
+  updateClientInfo() {
+    console.log('[this.formGroup]', this.formGroup.value);
+    this.showModal();
+  }
+
+  showModal() {
+    // Get the selected client
+    const selectedClient = this.formGroup.value.name;
+
+    // Create a deep copy of the inventory array to pass to the modal
+    const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
+
+    // Set the selected client
+    this.selectedClient = selectedClient;
+    this.startTimer();
+    this.displayModal = true;
+  }
+
+  startTimer() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+
+    this.timerSubscription = timer(0, 1000).subscribe((d) => {
+      this.timer = this.formatTimer(d);
+    });
+  }
+
+  resetTimer() {
+    this.timer = '0:00:00';
+  }
+
+  formatTimer(timer: number): string {
+    const hours = Math.floor(timer / 3600);
+    const minutes = Math.floor((timer % 3600) / 60);
+    const seconds = timer % 60;
+
+    return `${this.formatTwoDigits(hours)}:${this.formatTwoDigits(minutes)}:${this.formatTwoDigits(seconds)}`;
+  }
+
+  formatTwoDigits(value: number): string {
+    return value.toString().padStart(2, '0');
   }
 }

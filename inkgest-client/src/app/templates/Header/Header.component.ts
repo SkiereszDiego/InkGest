@@ -17,4 +17,3 @@ export class HeaderComponent {
     this.router.navigate([path]);
   }
 }
-
