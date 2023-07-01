@@ -1,0 +1,79 @@
+[
+    {
+        "nomeCliente": "Brad Pitt",
+        "data": "2023-06-28",
+        "valorTotal": "150.00",
+        "tempo": "02h00min",
+        "materiais": "Agulha 3RL,1,50.00,50.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+    },
+    {
+        "nomeCliente": "Angelina Jolie",
+        "data": "2023-06-30",
+        "valorTotal": "200.00",
+        "tempo": "03h00min",
+        "materiais": "Agulha 5RL,2,60.00,120.00;Tinta colorida,2,40.00,80.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,1,15.00,15.00"
+    },
+    {
+        "nomeCliente": "Leonardo DiCaprio",
+        "data": "2023-07-02",
+        "valorTotal": "180.00",
+        "tempo": "02h00min",
+        "materiais": "Agulha 7RL,1,70.00,70.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+    },
+    {
+        "nomeCliente": "Jennifer Aniston",
+        "data": "2023-07-05",
+        "valorTotal": "220.00",
+        "tempo": "03h00min",
+        "materiais": "Agulha 9RL,2,90.00,180.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
+    },
+    {
+        "nomeCliente": "Tom Hanks",
+        "data": "2023-07-07",
+        "valorTotal": "190.00",
+        "tempo": "02h00min",
+        "materiais": "Agulha 5RL,1,60.00,60.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+    },
+    {
+        "nomeCliente": "Julia Roberts",
+        "data": "2023-07-10",
+        "valorTotal": "210.00",
+        "tempo": "03h00min",
+        "materiais": "Agulha 7RL,2,70.00,140.00;Tinta colorida,2,40.00,80.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,1,15.00,15.00"
+    },
+    {
+        "nomeCliente": "Robert Downey Jr.",
+        "data": "2023-07-12",
+        "valorTotal": "170.00",
+        "tempo": "02h00min",
+        "materiais": "Agulha 9RL,1,90.00,90.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+    },
+    {
+        "nomeCliente": "Scarlett Johansson",
+        "data": "2023-07-15",
+        "valorTotal": "230.00",
+        "tempo": "03h00min",
+        "materiais": "Agulha 5RL,2,60.00,120.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
+    },
+    {
+        "nomeCliente": "Denzel Washington",
+        "data": "2023-07-17",
+        "valorTotal": "200.00",
+        "tempo": "02h00min",
+        "materiais": "Agulha 7RL,1,70.00,70.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+    },
+    {
+        "nomeCliente": "Charlize Theron",
+        "data": "2023-07-20",
+        "valorTotal": "240.00",
+        "tempo": "03h00min",
+        "materiais": "Agulha 9RL,2,90.00,180.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
+    },
+    {
+        "nomeCliente": "Johnny Depp",
+        "data": "2023-07-22",
+        "valorTotal": "180.00",
+        "tempo": "02h00min",
+        "materiais": "Agulha 5RL,1,60.00,60.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+    }
+]
