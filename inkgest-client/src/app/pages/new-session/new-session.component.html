@@ -73,7 +73,7 @@
 </form>
 
 <div class="start-session-container">
-  <p-button label="Começar Sessão" (onClick)="updateClientInfo()"></p-button>
+  <p-button label="Começar Sessão" (onClick)="startSession()"></p-button>
 </div>
 
 <p-dialog 
@@ -84,7 +84,7 @@
 >
     <ng-template pTemplate="header">
       <h2>Sessão em andamento - Tempo decorrido: {{ timer }}</h2>
-      <h4>Cliente: {{ selectedClient.name }}</h4>
+      <h4>Cliente: {{ selectedClient?.name }}</h4>
     </ng-template>
     <h2>Selecione o material utilizado na sessão</h2>
     <ul *ngFor="let category of categories" class="category-list">
@@ -126,7 +126,7 @@
 >
     <ng-template pTemplate="header">
       <h2>Sessão finalizada - Tempo decorrido: {{ sessionElapsedTime }}</h2>
-      <h4>Cliente: {{ selectedClient.name }}</h4>
+      <h4>Cliente: {{ selectedClient?.name }}</h4>
     </ng-template>
     <ng-template pTemplate="content">
       <!-- Conteúdo do segundo modal -->
