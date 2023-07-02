@@ -73,7 +73,7 @@
 </form>
 
 <div class="start-session-container">
-  <p-button label="Começar Sessão" (onClick)="startSession()"></p-button>
+  <p-button label="Começar Sessão" (onClick)="startSession()" [disabled]="!formGroup.get('name')?.value"></p-button>
 </div>
 
 <p-dialog 
