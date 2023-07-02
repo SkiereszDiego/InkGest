@@ -17,7 +17,10 @@ export class NewSessionComponent implements OnInit, OnDestroy {
   categories: string[] = [];
 
   displayModal: boolean = false;
+  displayModal2: boolean = false;
+
   timer: string = '0:00:00';
+  sessionElapsedTime: string = '0:00:00';
   timerSubscription: Subscription | undefined;
   selectedClient: any = {};
 
@@ -108,7 +111,6 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     if (itemIndex !== -1) {
       // Update the quantity of the existing item
       const item = inventoryArray.at(itemIndex);
-      const currentQuantity = item.value.quantity;
       const updatedQuantity = Math.min(maxQuantity, value2);
       item.patchValue({ quantity: updatedQuantity });
       console.log(`Current quantity of ${material}: ${updatedQuantity}`);
@@ -170,6 +172,14 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     this.displayModal = true;
   }
 
+  showModal2() {
+    this.displayModal2 = true;
+  }
+
+  closeModal2() {
+    this.displayModal2 = false;
+  }
+
   startTimer() {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
@@ -178,6 +188,14 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     this.timerSubscription = timer(0, 1000).subscribe((d) => {
       this.timer = this.formatTimer(d);
     });
+  }
+
+  stopTimer() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+
+    this.sessionElapsedTime = this.timer;
   }
 
   resetTimer() {

@@ -115,6 +115,22 @@
     </ul>
       <ng-template pTemplate="footer">
         <p-button styleClass="p-button-raised p-button-text custom-small-button" label="Cancelar" (click)="displayModal=false"></p-button>
-        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão"></p-button>
+        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão" (click)="displayModal=false; displayModal2=true"></p-button>
       </ng-template>
+</p-dialog>
+<p-dialog 
+  [(visible)]="displayModal2" 
+  [style]="{ width: '60vw' }" 
+  [modal]="true" 
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+>
+    <ng-template pTemplate="header">
+      <h2>Sessão finalizada - Tempo decorrido: {{ sessionElapsedTime }}</h2>
+      <h4>Cliente: {{ selectedClient.name }}</h4>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <!-- Conteúdo do segundo modal -->
+      <h3>Material usado</h3>
+      <p-button label="Fechar" (click)="displayModal2=false;"></p-button>
+    </ng-template>
 </p-dialog>
