@@ -4,9 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { CustomButtonModule } from 'src/app/components/custom-button/custom-button.module';
 import { SessionsComponent } from './sessions.component';
-
-import { TableModule } from 'primeng/table';
-
+import { SessionTableModule } from 'src/app/components/session-table/session-table.module';
 
 
 @NgModule({
@@ -17,7 +15,7 @@ import { TableModule } from 'primeng/table';
     CommonModule,
     CustomButtonModule,
     FlexLayoutModule,
-    TableModule,
+    SessionTableModule
   ],
   exports: [
     SessionsComponent

@@ -1,79 +1,123 @@
 [
     {
-        "nomeCliente": "Brad Pitt",
-        "data": "2023-06-28",
-        "valorTotal": "150.00",
-        "tempo": "02h00min",
-        "materiais": "Agulha 3RL,1,50.00,50.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+        "id": "1",
+        "client": "Brad Pitt",
+        "date": "2023-06-28",
+        "tattoo": "Dragão",
+        "value": "250.00",
+        "tattooArtist": "John",
+        "duration": "02h00min",
+        "totalCost": "150.00",
+        "supplyUsed": "Agulha 3RL,1,50.00,50.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
     },
     {
-        "nomeCliente": "Angelina Jolie",
-        "data": "2023-06-30",
-        "valorTotal": "200.00",
-        "tempo": "03h00min",
-        "materiais": "Agulha 5RL,2,60.00,120.00;Tinta colorida,2,40.00,80.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,1,15.00,15.00"
+        "id": "2",
+        "client": "Angelina Jolie",
+        "date": "2023-06-30",
+        "tattoo": "Fênix",
+        "value": "350.00",
+        "tattooArtist": "Michael",
+        "duration": "03h00min",
+        "totalCost": "200.00",
+        "supplyUsed": "Agulha 5RL,2,60.00,120.00;Tinta colorida,2,40.00,80.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,1,15.00,15.00"
     },
     {
-        "nomeCliente": "Leonardo DiCaprio",
-        "data": "2023-07-02",
-        "valorTotal": "180.00",
-        "tempo": "02h00min",
-        "materiais": "Agulha 7RL,1,70.00,70.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+        "id": "3",
+        "client": "Leonardo DiCaprio",
+        "date": "2023-07-02",
+        "tattoo": "Lobo",
+        "value": "280.00",
+        "tattooArtist": "David",
+        "duration": "02h00min",
+        "totalCost": "180.00",
+        "supplyUsed": "Agulha 7RL,1,70.00,70.00;Tinta preta,1,30.00,30.00"
     },
     {
-        "nomeCliente": "Jennifer Aniston",
-        "data": "2023-07-05",
-        "valorTotal": "220.00",
-        "tempo": "03h00min",
-        "materiais": "Agulha 9RL,2,90.00,180.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
+        "id": "4",
+        "client": "Jennifer Aniston",
+        "date": "2023-07-05",
+        "tattoo": "Rosa",
+        "value": "420.00",
+        "tattooArtist": "Emily",
+        "duration": "03h00min",
+        "totalCost": "220.00",
+        "supplyUsed": "Agulha 9RL,2,90.00,180.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
     },
     {
-        "nomeCliente": "Tom Hanks",
-        "data": "2023-07-07",
-        "valorTotal": "190.00",
-        "tempo": "02h00min",
-        "materiais": "Agulha 5RL,1,60.00,60.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+        "id": "5",
+        "client": "Tom Hanks",
+        "date": "2023-07-07",
+        "tattoo": "Caveira",
+        "value": "300.00",
+        "tattooArtist": "Christopher",
+        "duration": "02h00min",
+        "totalCost": "190.00",
+        "supplyUsed": "Agulha 5RL,1,60.00,60.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
     },
     {
-        "nomeCliente": "Julia Roberts",
-        "data": "2023-07-10",
-        "valorTotal": "210.00",
-        "tempo": "03h00min",
-        "materiais": "Agulha 7RL,2,70.00,140.00;Tinta colorida,2,40.00,80.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,1,15.00,15.00"
+        "id": "6",
+        "client": "Julia Roberts",
+        "date": "2023-07-10",
+        "tattoo": "Flor",
+        "value": "380.00",
+        "tattooArtist": "Sophia",
+        "duration": "03h00min",
+        "totalCost": "210.00",
+        "supplyUsed": "Agulha 7RL,2,70.00,140.00;Tinta colorida,2,40.00,80.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,1,15.00,15.00"
     },
     {
-        "nomeCliente": "Robert Downey Jr.",
-        "data": "2023-07-12",
-        "valorTotal": "170.00",
-        "tempo": "02h00min",
-        "materiais": "Agulha 9RL,1,90.00,90.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+        "id": "7",
+        "client": "Robert Downey Jr.",
+        "date": "2023-07-12",
+        "tattoo": "Estrela",
+        "value": "260.00",
+        "tattooArtist": "Daniel",
+        "duration": "02h00min",
+        "totalCost": "170.00",
+        "supplyUsed": "Agulha 9RL,1,90.00,90.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
     },
     {
-        "nomeCliente": "Scarlett Johansson",
-        "data": "2023-07-15",
-        "valorTotal": "230.00",
-        "tempo": "03h00min",
-        "materiais": "Agulha 5RL,2,60.00,120.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
+        "id": "8",
+        "client": "Scarlett Johansson",
+        "date": "2023-07-15",
+        "tattoo": "Leão",
+        "value": "450.00",
+        "tattooArtist": "Olivia",
+        "duration": "03h00min",
+        "totalCost": "230.00",
+        "supplyUsed": "Agulha 5RL,2,60.00,120.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
     },
     {
-        "nomeCliente": "Denzel Washington",
-        "data": "2023-07-17",
-        "valorTotal": "200.00",
-        "tempo": "02h00min",
-        "materiais": "Agulha 7RL,1,70.00,70.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+        "id": "9",
+        "client": "Denzel Washington",
+        "date": "2023-07-17",
+        "tattoo": "Coroa",
+        "value": "400.00",
+        "tattooArtist": "Nathan",
+        "duration": "02h00min",
+        "totalCost": "200.00",
+        "supplyUsed": "Agulha 7RL,1,70.00,70.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
     },
     {
-        "nomeCliente": "Charlize Theron",
-        "data": "2023-07-20",
-        "valorTotal": "240.00",
-        "tempo": "03h00min",
-        "materiais": "Agulha 9RL,2,90.00,180.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
+        "id": "10",
+        "client": "Charlize Theron",
+        "date": "2023-07-20",
+        "tattoo": "Coração",
+        "value": "500.00",
+        "tattooArtist": "Victoria",
+        "duration": "03h00min",
+        "totalCost": "240.00",
+        "supplyUsed": "Agulha 9RL,2,90.00,180.00;Tinta colorida,3,40.00,120.00;Luvas descartáveis,1,10.00,10.00;Papel transfer,2,15.00,30.00"
     },
     {
-        "nomeCliente": "Johnny Depp",
-        "data": "2023-07-22",
-        "valorTotal": "180.00",
-        "tempo": "02h00min",
-        "materiais": "Agulha 5RL,1,60.00,60.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+        "id": "11",
+        "client": "Johnny Depp",
+        "date": "2023-07-22",
+        "tattoo": "Âncora",
+        "value": "280.00",
+        "tattooArtist": "Edward",
+        "duration": "02h00min",
+        "totalCost": "180.00",
+        "supplyUsed": "Agulha 5RL,1,60.00,60.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
     }
 ]
