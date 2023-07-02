@@ -6,6 +6,7 @@ const routeInventory = require('./routes/inventory_route');
 const routeUser = require('./routes/users_route');
 const routeLogin = require('./routes/login_route');
 const routeCliente = require('./routes/client_route');
+const routeSession = require('./routes/session_route');
 
 const logMiddleware = require('./middleware/log_middleware');
 const corsMiddleware = require('./middleware/cors');
@@ -53,6 +54,8 @@ app.use('/api/inventory', routeInventory);
 // app.use('/api/inventory', loginMiddleware.validateToken, routeInventory);
 
 app.use('/api/client', routeCliente);
+
+app.use('/api/session', routeSession);
 
 // Inicia o servidor
 app.listen(PORTA, () => {

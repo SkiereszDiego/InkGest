@@ -13,9 +13,8 @@ import { SearchModule } from './components/search/search.module';
 import { HeaderModule } from './templates/header/header.module';
 import { SideNavModule } from './templates/side-nav/side-nav.module';
 
-import { ProductService } from './shared/services/product.service';
-
 import { RippleModule } from 'primeng/ripple';
+import { InventoryService } from './shared/services/inventory.service';
 
 @NgModule({
   declarations: [
@@ -34,8 +33,8 @@ import { RippleModule } from 'primeng/ripple';
     BrowserAnimationsModule
   ],
   providers: [
-    ProductService,
-    DatePipe
+    DatePipe,
+    InventoryService
   ],
   bootstrap: [AppComponent]
 })

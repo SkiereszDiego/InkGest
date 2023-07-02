@@ -11,6 +11,7 @@ import { InventoryComponent } from './pages/inventory/inventory.component';
 import { NewSessionComponent } from './pages/new-session/new-session.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { SessionsComponent } from './pages/sessions/sessions.component';
 
 
 export const routes: Routes = [
@@ -78,6 +79,12 @@ export const routes: Routes = [
     component: AddItemComponent, 
     loadChildren: () =>
       import('./pages/add-item/add-item.module').then((m) => m.AddItemModule)
+  },
+  {
+    path: Path.SESSIONS, 
+    component: SessionsComponent, 
+    loadChildren: () =>
+      import('./pages/sessions/sessions.module').then((m) => m.SessionsModule)
   },
   {
     path: Path.PAGE_NOT_FOUND, 

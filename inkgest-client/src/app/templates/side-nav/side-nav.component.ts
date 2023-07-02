@@ -17,6 +17,7 @@ public agendaPath: any = Path.AGENDA;
 public clientsPath: any = Path.CLIENTS;
 public professionalsPath: any = Path.PROFESSIONALS;
 public inventoryPath: any = Path.INVENTORY;
+public sessionsPath: any = Path.SESSIONS;
 
   // As propriedades como dashboardPath, agendaPath, clientsPath, etc.,
   // estão sendo usadas para armazenar os caminhos das diferentes páginas

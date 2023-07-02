@@ -15,6 +15,8 @@ import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
+import { SessionService } from 'src/app/shared/services/session.service';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
   ],
   exports: [
     NewSessionComponent
+  ],
+  providers: [
+    SessionService
   ]
 })
 export class NewSessionModule { }

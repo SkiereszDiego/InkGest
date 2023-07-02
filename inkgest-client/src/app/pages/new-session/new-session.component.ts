@@ -3,7 +3,14 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { timer, Subscription } from 'rxjs';
 
 import { InventoryService } from '../../shared/services/inventory.service';
+import { SessionService } from '../../shared/services/session.service';
+
 import { InventoryItem } from '../../models/inventory-item.model';
+import { Session } from '../../models/session.model';
+interface Client {
+  name: string;
+  information: string;
+}
 
 @Component({
   selector: 'app-new-session',
@@ -13,40 +20,43 @@ import { InventoryItem } from '../../models/inventory-item.model';
 export class NewSessionComponent implements OnInit, OnDestroy {
   inventory: InventoryItem[] = [];
   formGroup!: FormGroup;
-  filteredClients!: any[];
+  filteredClients: Client[] = [];
   categories: string[] = [];
 
-  displayModal: boolean = false;
-  timer: string = '0:00:00';
+  displayModal = false;
+  displayModal2 = false;
+
+  timer = '0:00:00';
+  sessionElapsedTime = '0:00:00';
   timerSubscription: Subscription | undefined;
-  selectedClient: any = {};
+  selectedClient: Client | undefined;
 
-
-  clients: any[] = [
-    { 'name': 'Allan Foppa', 'information': 'Alergia a stress' },
-    { 'name': 'Diego Skieresz', 'information': 'Alergia a zinco' },
-    { 'name': 'Alvaro Maia', 'information': 'Hepatite' },
-    { 'name': 'Allana Soares', 'information': 'Diabetes' },
+  clients: Client[] = [
+    { name: 'Allan Foppa', information: 'Alergia a stress' },
+    { name: 'Diego Skieresz', information: 'Alergia a zinco' },
+    { name: 'Alvaro Maia', information: 'Hepatite' },
+    { name: 'Allana Soares', information: 'Diabetes' },
   ];
 
-  constructor(private inventoryService: InventoryService) {}
+  constructor(
+    private inventoryService: InventoryService,
+    private sessionService: SessionService
+  ) {}
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       name: new FormControl('', [Validators.required]),
       information: new FormControl(''),
       continuation: new FormControl(false),
-      inventory: new FormArray([])
+      inventory: new FormArray([]),
+      sessionElapsedTime: new FormControl('')
     });
 
     this.fetchInventoryFromBackend();
-
   }
 
   ngOnDestroy(): void {
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
+    this.stopTimer();
   }
 
   private fetchInventoryFromBackend(): void {
@@ -59,23 +69,26 @@ export class NewSessionComponent implements OnInit, OnDestroy {
   }
 
   filterClient(event: any) {
-    let query = event.query;
+    const query = event.query;
     this.filteredClients = this.clients.filter(client =>
       client.name.toLowerCase().startsWith(query.toLowerCase())
     );
   }
 
   selectClient(event: any) {
-    this.getUserInfoEl().forEach((el) => {
-      el.classList.remove('toggle-user-complement-info');
-    });
-
-    this.formGroup.patchValue({
-      'information': event.information
-    });
-
-    this.selectedClient = event;
+    if (event) {
+      this.getUserInfoEl().forEach((el) => {
+        el.classList.remove('toggle-user-complement-info');
+      });
+  
+      this.formGroup.patchValue({
+        'information': event.information
+      });
+  
+      this.selectedClient = event;
+    }
   }
+  
 
   unselectClient() {
     this.getUserInfoEl().forEach((el) => {
@@ -83,22 +96,19 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     });
 
     this.formGroup.patchValue({
-      'name': '',
-      'information': '',
-      'continuation': false
+      name: '',
+      information: '',
+      continuation: false
     });
   }
 
-  getUserInfoEl() {
-    return Array.from(
-      document.getElementsByClassName('user-complement-info') as HTMLCollectionOf<HTMLElement>
-    );
+  getUserInfoEl(): HTMLElement[] {
+    return Array.from(document.getElementsByClassName('user-complement-info') as HTMLCollectionOf<HTMLElement>);
   }
 
   addMaterial(id: string, value2: any, material: string) {
     const inventoryArray = this.formGroup.get('inventory') as FormArray<any>;
 
-    // Find the item in the inventory array
     const itemIndex = inventoryArray.controls.findIndex((control) => {
       return control.value._id === id;
     });
@@ -106,14 +116,11 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     const maxQuantity = this.getMaxQuantity(id);
 
     if (itemIndex !== -1) {
-      // Update the quantity of the existing item
       const item = inventoryArray.at(itemIndex);
-      const currentQuantity = item.value.quantity;
       const updatedQuantity = Math.min(maxQuantity, value2);
       item.patchValue({ quantity: updatedQuantity });
       console.log(`Current quantity of ${material}: ${updatedQuantity}`);
     } else {
-      // Add a new item to the inventory array
       const control = new FormGroup({
         _id: new FormControl(id),
         quantity: new FormControl(Math.min(maxQuantity, value2))
@@ -138,36 +145,75 @@ export class NewSessionComponent implements OnInit, OnDestroy {
   }
 
   startSession() {
-    // Get the selected client
     const selectedClient = this.formGroup.value.name;
-
-    // Create a deep copy of the inventory array to pass to the modal
     const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
 
-    // Start the timer
     this.startTimer();
 
-    // Open the modal with the selected client name and inventory copy
-    console.log('Selected Client:', selectedClient);
-    console.log('Inventory Copy:', inventoryCopy);
+    this.openModal(selectedClient, inventoryCopy);
   }
 
-  updateClientInfo() {
-    console.log('[this.formGroup]', this.formGroup.value);
-    this.showModal();
-  }
-
-  showModal() {
-    // Get the selected client
-    const selectedClient = this.formGroup.value.name;
-
-    // Create a deep copy of the inventory array to pass to the modal
-    const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
-
-    // Set the selected client
+  openModal(selectedClient: Client | undefined, inventoryCopy: any) {
     this.selectedClient = selectedClient;
     this.startTimer();
     this.displayModal = true;
+  }
+
+  showModal2() {
+    this.stopTimer();
+    this.formGroup.patchValue({ sessionElapsedTime: this.timer });
+  
+    const sessionData: Session = {
+      client: this.formGroup.value.name,
+      date: new Date().toISOString(),
+      duration: this.formGroup.value.sessionElapsedTime,
+      totalCost: this.calculateTotalCost().toString(),
+      supplyUsed: this.generateSupplyUsed()
+    };
+  
+    // Verificar os dados antes de enviar para o serviço SessionService
+    console.log('Dados da sessão:', sessionData);
+  
+    // Enviar o objeto sessionData para o serviço SessionService
+    this.sessionService.createSession(sessionData).subscribe(() => {
+      console.log('A sessão foi armazenada com sucesso.');
+    });
+  
+    this.displayModal2 = true;
+  }
+  
+
+  calculateTotalCost(): number {
+    const inventoryItems = this.formGroup.value.inventory;
+    let totalCost = 0;
+  
+    inventoryItems.forEach((item: any) => {
+      const selectedItem = this.inventory.find((inventoryItem) => inventoryItem._id === item._id);
+      if (selectedItem) {
+        totalCost += selectedItem.price * item.quantity;
+      }
+    });
+  
+    return totalCost;
+  }
+  
+  generateSupplyUsed(): string {
+    const inventoryItems = this.formGroup.value.inventory;
+    let supplyUsed = '';
+  
+    inventoryItems.forEach((item: any) => {
+      const selectedItem = this.inventory.find((inventoryItem) => inventoryItem._id === item._id);
+      if (selectedItem) {
+        const itemCost = selectedItem.price * item.quantity;
+        supplyUsed += `${selectedItem.name} - Quantidade: ${item.quantity}, Valor: ${itemCost}\n`;
+      }
+    });
+  
+    return supplyUsed;
+  }
+  
+  closeModal2() {
+    this.displayModal2 = false;
   }
 
   startTimer() {
@@ -178,6 +224,14 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     this.timerSubscription = timer(0, 1000).subscribe((d) => {
       this.timer = this.formatTimer(d);
     });
+  }
+
+  stopTimer() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+
+    this.sessionElapsedTime = this.timer;
   }
 
   resetTimer() {
