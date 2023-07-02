@@ -9,17 +9,25 @@
         [globalFilterFields]="['client', 'date', 'tattoo', 'tattooArtist']"
     >
     <ng-template pTemplate="caption">
-        <div class="p-d-flex p-flex-row p-justify-between p-align-center"> 
-            <button pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-raised p-button-text p-button-success" (click)="openNew()"></button>
-            <span class="p-input-icon-left p-mr-2">
-                <i class="pi pi-search"></i>
-                <input
-                pInputText type="text"
-                (input)="sessionTable.filterGlobal($any($event.target).value, 'contains')"
-                placeholder="Pesquisar"
-                style="min-width:25rem"
-                />
-            </span>
+        <div fxLayoutGap="50rem">
+                <span>
+                    <i class="pi pi-search"></i>
+                    <input
+                    pInputText
+                    type="text"
+                    (input)="sessionTable.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Pesquisar"
+                    style="min-width: 25rem"
+                    />
+                </span>
+                <button
+                    pButton
+                    pRipple
+                    label="Adicionar"
+                    icon="pi pi-plus"
+                    class="p-button-raised p-button-text p-button-success"
+                    (click)="openNew()"
+                ></button>
         </div>
     </ng-template>
         <ng-template pTemplate="header">

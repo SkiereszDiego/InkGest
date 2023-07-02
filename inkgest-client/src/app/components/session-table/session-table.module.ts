@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 import { SessionTableComponent } from './session-table.component';
@@ -43,6 +44,7 @@ import { SessionService } from 'src/app/shared/services/session.service';
     DividerModule,
     DynamicDialogModule,
     FieldsetModule,
+    FlexLayoutModule,
     FormsModule,
     InputTextModule,
     ListboxModule,
