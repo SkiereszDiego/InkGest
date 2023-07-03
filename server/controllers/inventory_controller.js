@@ -113,25 +113,22 @@ exports.updateItemsQuantity = async (req, res) => {
     try {
         const updatedItems = [];
 
-        console.log("itemsToUpdate:", itemsToUpdate);
-        
         for (const item of itemsToUpdate) {
-            const { _id, quantity } = item;
-        
-            const updatedItem = await Inventory.findByIdAndUpdate(
-                _id,
-                { quantity },
-                { new: true }
-            );
-        
-            if (updatedItem) {
-                updatedItems.push(updatedItem);
-            }
+        const { _id, quantity } = item;
+
+        const updatedItem = await Inventory.findByIdAndUpdate(
+            _id,
+            { quantity },
+            { new: true }
+        );
+
+        if (updatedItem) {
+            updatedItems.push(updatedItem);
         }
+        }
+
         return res.json(updatedItems);
     } catch (err) {
         return res.status(500).json({ Error: err });
     }
 };
-
-
