@@ -1,0 +1,175 @@
+<div class="card">
+    <p-toast></p-toast>
+    <p-table
+        #clientTable
+        dataKey="client"
+        [rowHover]="true"
+        [value]="clients"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [paginator]="true" [rows]="5"
+        [globalFilterFields]="['client', 'email', 'celphone', 'cpf']"
+    >
+    <ng-template pTemplate="caption">
+        <div fxLayoutGap="50rem">
+                <span>
+                    <i class="pi pi-search"></i>
+                    <input
+                    pInputText
+                    type="text"
+                    (input)="clientTable.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Pesquisar"
+                    style="min-width: 25rem"
+                    />
+                </span>
+                <button
+                    pButton
+                    pRipple
+                    label="Adicionar"
+                    icon="pi pi-plus"
+                    class="p-button-raised p-button-text p-button-success"
+                    (click)="openNew()"
+                ></button>
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 5rem"></th>
+                <th pSortableColumn="client" style="min-width:15rem">Cliente <p-sortIcon field="client"></p-sortIcon></th>
+                <th pSortableColumn="email" style="min-width:15rem">Email<p-sortIcon field="email"></p-sortIcon></th>
+                <th pSortableColumn="celphone"style="min-width:10rem">Celular<p-sortIcon field="celphone"></p-sortIcon></th>
+                <th pSortableColumn="socialMidia" style="min-width:10rem">Midia Social<p-sortIcon field="socialMidia"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-client let-expanded="expanded">
+            <tr>
+                <td>
+                    <button type="button" pButton pRipple [pRowToggler]="client" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
+                <td>{{ client.client }}</td>
+                <td>{{ client.tattoo }}</td>
+                <td>{{ client.duration }}</td>
+                <td>{{ client.totalCost }}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editClient(client)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteClient(client)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-client>
+            <tr>
+                <td colspan="7">
+                    <div class="p-3">
+                        <p-table [value]="client.personal" dataKey="id">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="cpf" style="min-width:15rem">CPF<p-sortIcon field="cpf"></p-sortIcon></th>
+                                    <th pSortableColumn="dob" style="min-width:15rem">Data de Nascimento <p-sortIcon field="dob"></p-sortIcon></th>
+                                    <th pSortableColumn="address" style="min-width:20rem">Endereço <p-sortIcon field="address"></p-sortIcon></th>
+                                    <th pSortableColumn="healthHistoric" style="min-width:15rem">Historico de Saúde <p-sortIcon field="healthHistoric"></p-sortIcon></th>
+                                    <th style="width: 4rem"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-personal >
+                                <tr>
+                                    <td>{{ personal.totalCost }}</td>
+                                    <td>{{ personal.date }}</td>
+                                    <td>{{ personal.tattooArtist }}</td>
+                                    <td>{{ personal.value }}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="6">There are no information for this client yet.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog 
+    [(visible)]="clientDialog"
+    [style]="{ width: '450px' }"
+    header="client Details"
+    [modal]="true"
+    styleClass="p-grid  p-fluid"
+>
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="client">Cliente</label>
+            <input type="text" pInputText id="client" [(ngModel)]="client.client" required autofocus />
+            <small class="p-error" *ngIf="submitted && !client.client">Cliente é obrigatório.</small>
+        </div>
+        <div class="field">
+            <label for="client_date">Data da Sessão</label>
+            <input type="text" pInputText id="client_date" [(ngModel)]="client.client_date" required autofocus />
+            <small class="p-error" *ngIf="submitted && !client.client_date">Data da sessão é obrigatória.</small>
+        </div>
+        <div class="p-grid p-fluid">
+            <div class="p-col-6">
+                <label for="tattoo">Tatuagem</label>
+                <input type="text" pInputText id="tattoo" [(ngModel)]="client.tattoo" required autofocus />
+                <small class="p-error" *ngIf="submitted && !client.tattoo">Tatuagem é obrigatória.</small>
+            </div>
+            <div class="p-col-6">
+                <label for="value">Valor da tatuagem</label>
+                <p-inputNumber id="value" [(ngModel)]="client.value" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="mb-3">Tatuador</label>
+            <div class="tatuador-grid">
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="category1" name="category" value="Diego Skieresz" [(ngModel)]="client.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist1">Diego Skieresz</label>
+                </div>
+                </div>
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="tattooArtist2" name="tattooArtist" value="Jean" [(ngModel)]="client.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist2">Jean</label>
+                </div>
+                </div>
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="tattooArtist3" name="tattooArtist" value="Paulo Bach" [(ngModel)]="client.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist3">Paulo Bach</label>
+                </div>
+                </div>
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="tattooArtist4" name="tattooArtist" value="Zelda" [(ngModel)]="client.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist4">Zelda</label>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="duration">Duração</label>
+                <input type="text" pInputText id="duration" [(ngModel)]="client.duration" required autofocus />
+                <small class="p-error" *ngIf="submitted && !client.duration">Duração é obrigatória.</small>
+            </div>
+            <div class="field col">
+                <label for="totalCost">Custo total da sessão</label>
+                <p-inputNumber id="value" [(ngModel)]="client.totalCost" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveClient()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+
+

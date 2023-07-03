@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TableModule } from './components/table/table.module';
 import { SearchModule } from './components/search/search.module';
 
 import { HeaderModule } from './templates/header/header.module';
@@ -27,7 +26,6 @@ import { InventoryService } from './shared/services/inventory.service';
     RippleModule,
     HeaderModule,
     RouterModule,
-    TableModule,
     SideNavModule,
     SearchModule ,
     BrowserAnimationsModule

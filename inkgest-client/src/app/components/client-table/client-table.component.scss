@@ -1,0 +1,16 @@
+@import '../../app.component.scss';
+
+:host ::ng-deep .p-dialog .product-image {
+    width: 150px;
+    margin: 0 auto 2rem auto;
+    display: block;
+}
+
+.tatuador-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+}
+.tatuador-item {
+    margin-bottom: 1rem;
+}
