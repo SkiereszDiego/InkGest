@@ -73,9 +73,9 @@
             <small class="p-error" *ngIf="submitted && !session.client">Cliente é obrigatório.</small>
         </div>
         <div class="field">
-            <label for="date">Data da Sessão</label>
-            <input type="text" pInputText id="date" [(ngModel)]="session.date" required autofocus />
-            <small class="p-error" *ngIf="submitted && !session.date">Data da sessão é obrigatória.</small>
+            <label for="session_date">Data da Sessão</label>
+            <input type="text" pInputText id="session_date" [(ngModel)]="session.session_date" required autofocus />
+            <small class="p-error" *ngIf="submitted && !session.session_date">Data da sessão é obrigatória.</small>
         </div>
         <div class="p-grid p-fluid">
             <div class="p-col-6">

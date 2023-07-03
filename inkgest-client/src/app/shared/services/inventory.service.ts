@@ -57,6 +57,10 @@ export class InventoryService {
     return this.http.delete(url, { headers });
   }
 
+  updateItemById(itemId: string, item: InventoryItem): Observable<InventoryItem> {
+    const url = `${this.apiUrl}/${itemId}`;
+    return this.http.put<InventoryItem>(url, item);
+  }
 
   getSuggestions(query: string): Observable<string[]> {
     const suggestions: string[] = ['Agulhas RL', 'Agulhas RS', 'Agulhas MG', 'Tinta', 'Batoque', 'Luvas'];

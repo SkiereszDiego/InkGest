@@ -14,6 +14,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TableModule } from 'primeng/table';
 
 import { SessionService } from 'src/app/shared/services/session.service';
 
@@ -35,7 +36,8 @@ import { SessionService } from 'src/app/shared/services/session.service';
     PageTitleModule,
     PageSubtitleModule,
     DialogModule,
-    CustomButtonModule
+    CustomButtonModule,
+    TableModule
   ],
   exports: [
     NewSessionComponent

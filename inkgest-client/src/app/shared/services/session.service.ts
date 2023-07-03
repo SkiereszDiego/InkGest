@@ -19,13 +19,7 @@ export class SessionService {
       return Promise.resolve(this.getSessionsData());
   }
 
-  createSession(item: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
-    });
-
-    return this.http.post(this.apiUrl, item, { headers });
+  createSession(sessionData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, sessionData);
   }
-
 }

@@ -2,7 +2,7 @@
     {
         "id": "1",
         "client": "Brad Pitt",
-        "date": "2023-06-28",
+        "session_date": "2023-06-28",
         "tattoo": "Dragão",
         "value": "250.00",
         "tattooArtist": "John",
@@ -13,7 +13,7 @@
     {
         "id": "2",
         "client": "Angelina Jolie",
-        "date": "2023-06-30",
+        "session_date": "2023-06-30",
         "tattoo": "Fênix",
         "value": "350.00",
         "tattooArtist": "Michael",
@@ -24,7 +24,7 @@
     {
         "id": "3",
         "client": "Leonardo DiCaprio",
-        "date": "2023-07-02",
+        "session_date": "2023-07-02",
         "tattoo": "Lobo",
         "value": "280.00",
         "tattooArtist": "David",
@@ -35,7 +35,7 @@
     {
         "id": "4",
         "client": "Jennifer Aniston",
-        "date": "2023-07-05",
+        "session_date": "2023-07-05",
         "tattoo": "Rosa",
         "value": "420.00",
         "tattooArtist": "Emily",
@@ -46,7 +46,7 @@
     {
         "id": "5",
         "client": "Tom Hanks",
-        "date": "2023-07-07",
+        "session_date": "2023-07-07",
         "tattoo": "Caveira",
         "value": "300.00",
         "tattooArtist": "Christopher",
@@ -57,7 +57,7 @@
     {
         "id": "6",
         "client": "Julia Roberts",
-        "date": "2023-07-10",
+        "session_date": "2023-07-10",
         "tattoo": "Flor",
         "value": "380.00",
         "tattooArtist": "Sophia",
@@ -68,7 +68,7 @@
     {
         "id": "7",
         "client": "Robert Downey Jr.",
-        "date": "2023-07-12",
+        "session_date": "2023-07-12",
         "tattoo": "Estrela",
         "value": "260.00",
         "tattooArtist": "Daniel",
@@ -79,7 +79,7 @@
     {
         "id": "8",
         "client": "Scarlett Johansson",
-        "date": "2023-07-15",
+        "session_date": "2023-07-15",
         "tattoo": "Leão",
         "value": "450.00",
         "tattooArtist": "Olivia",
@@ -90,7 +90,7 @@
     {
         "id": "9",
         "client": "Denzel Washington",
-        "date": "2023-07-17",
+        "session_date": "2023-07-17",
         "tattoo": "Coroa",
         "value": "400.00",
         "tattooArtist": "Nathan",
@@ -101,7 +101,7 @@
     {
         "id": "10",
         "client": "Charlize Theron",
-        "date": "2023-07-20",
+        "session_date": "2023-07-20",
         "tattoo": "Coração",
         "value": "500.00",
         "tattooArtist": "Victoria",
@@ -112,7 +112,7 @@
     {
         "id": "11",
         "client": "Johnny Depp",
-        "date": "2023-07-22",
+        "session_date": "2023-07-22",
         "tattoo": "Âncora",
         "value": "280.00",
         "tattooArtist": "Edward",

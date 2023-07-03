@@ -3,7 +3,7 @@ export interface InventoryItem {
   name: string;
   category: string;
   subcategory?: string;
-  description?: string;
+  description: string;
   price: number;
   purchase_date: Date;
   quantity: number;
