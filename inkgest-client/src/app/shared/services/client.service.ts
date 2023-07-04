@@ -9,7 +9,7 @@ export class ClientService {
 
   private apiUrl = 'http://localhost:3000/api/session/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getClientsData() {
     return this.http.get<any>('assets/client-list.json');

@@ -5,11 +5,11 @@ import { InventoryItem } from '../../models/inventory-item.model';
 
 import { map } from 'rxjs/operators';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
+  
   private apiUrl = 'http://localhost:3000/api/inventory/';
 
   constructor(private http: HttpClient) {}

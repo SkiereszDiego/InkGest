@@ -88,7 +88,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
             this.inventory = data;
             console.log('Inventory items:', this.inventory);
             // Crie uma matriz de categorias única com base nos itens do inventário
-            this.categories = Array.from(new Set(this.inventory.map(item => item.category)));
+            this.categories = Array.from(new Set(this.inventory.map(item => item.category))).filter(category => category !== undefined) as string[];
         });
     }
 
@@ -166,18 +166,22 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     getMaxQuantity(id: string): number {
         const items = (this.formGroup.get('inventory') as FormArray<any>).controls;
         let totalQuantity = 0;
-
+    
         // Calcular a quantidade total para o item com base no ID
         for (const item of items) {
             if (item.value._id === id) {
                 totalQuantity += item.value.quantity;
             }
         }
-
+    
         // Obter o item selecionado com base no ID e retornar a quantidade máxima permitida
         const selectedItem = this.inventory.find((item) => item._id === id);
-        return selectedItem ? selectedItem.quantity : totalQuantity;
+        return selectedItem?.quantity ?? 0;
     }
+    
+    
+    
+    
 
     startSession() {
         const selectedClient = this.formGroup.value.name;
