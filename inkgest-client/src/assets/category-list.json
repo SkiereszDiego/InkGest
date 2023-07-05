@@ -1,0 +1,11 @@
+{
+    "id": "1",
+    "client": "Brad Pitt",
+    "session_date": "2023-06-28",
+    "tattoo": "Dragão",
+    "value": "250.00",
+    "tattooArtist": "John",
+    "duration": "02h00min",
+    "totalCost": "150.00",
+    "supplyUsed": "Agulha 3RL,1,50.00,50.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+}

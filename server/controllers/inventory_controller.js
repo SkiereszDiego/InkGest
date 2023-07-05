@@ -71,14 +71,11 @@ exports.updateItemById = async (req, res) => {
 
     if (
         !inventoryAlterar ||
-        !inventoryAlterar.category ||
-        !inventoryAlterar.subcategory ||
-        !inventoryAlterar.description ||
-        !inventoryAlterar.quantity ||
-        !inventoryAlterar.price
+        !inventoryAlterar._id ||
+        !inventoryAlterar.quantity
     ) {
         return res.status(400).json({
-            Erro: "Category e/ou price são obrigatórios"
+            Erro: "_id e/ou quantity são obrigatórios"
         });
     }
 
@@ -94,6 +91,7 @@ exports.updateItemById = async (req, res) => {
     }
 };
 
+
 exports.deleteItemById = async (req, res) => {
     const id = req.params.id;
 
@@ -106,5 +104,31 @@ exports.deleteItemById = async (req, res) => {
         }
     } catch (err) {
         res.status(500).json({ Erro: err });
+    }
+};
+
+exports.updateItemsQuantity = async (req, res) => {
+    const itemsToUpdate = req.body;
+
+    try {
+        const updatedItems = [];
+
+        for (const item of itemsToUpdate) {
+        const { _id, quantity } = item;
+
+        const updatedItem = await Inventory.findByIdAndUpdate(
+            _id,
+            { quantity },
+            { new: true }
+        );
+
+        if (updatedItem) {
+            updatedItems.push(updatedItem);
+        }
+        }
+
+        return res.json(updatedItems);
+    } catch (err) {
+        return res.status(500).json({ Error: err });
     }
 };

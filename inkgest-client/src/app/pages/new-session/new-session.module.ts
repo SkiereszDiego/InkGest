@@ -14,6 +14,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TableModule } from 'primeng/table';
+
+import { SessionService } from 'src/app/shared/services/session.service';
 
 
 @NgModule({
@@ -33,10 +36,14 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     PageTitleModule,
     PageSubtitleModule,
     DialogModule,
-    CustomButtonModule
+    CustomButtonModule,
+    TableModule
   ],
   exports: [
     NewSessionComponent
+  ],
+  providers: [
+    SessionService
   ]
 })
 export class NewSessionModule { }

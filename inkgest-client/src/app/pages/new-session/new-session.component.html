@@ -40,40 +40,11 @@
         <label for="continuation-of-tattoo-session"> Continuação de sessão anterior</label>
       </div>
     </div>
-    <div>
-      <app-page-subtitle pageSubTitle="Selecione o material a ser utilizado na sessão"></app-page-subtitle>
-      <ul *ngFor="let category of categories" class="category-list">
-        <li class="category-item-container">
-          <div class="category-name"><strong>{{ category }}</strong></div>
-          <ul class="description-list">
-            <ng-container *ngFor="let item of inventory">
-              <li *ngIf="item.category === category" class="select-item-container">
-                <div class="description">{{ item.description }}</div>
-                <div class="quantity-controls">
-                  <p-inputNumber
-                    [showButtons]="true"
-                    buttonLayout="horizontal"
-                    inputId="horizontal"
-                    spinnerMode="horizontal"
-                    [step]="1"
-                    decrementButtonClass="p-button-danger"
-                    incrementButtonClass="p-button-success"
-                    incrementButtonIcon="pi pi-plus"
-                    decrementButtonIcon="pi pi-minus"
-                    (onInput)="item._id && $event.value && item.description ? addMaterial(item._id, $event.value, item.description) : null"
-                  ></p-inputNumber>
-                </div>
-              </li>
-            </ng-container>
-          </ul>
-        </li>
-      </ul>
-    </div>
   </section>
 </form>
 
 <div class="start-session-container">
-  <p-button label="Começar Sessão" (onClick)="updateClientInfo()"></p-button>
+  <p-button label="Começar Sessão" (onClick)="startSession()" [disabled]="!formGroup.get('name')?.value"></p-button>
 </div>
 
 <p-dialog 
@@ -84,7 +55,7 @@
 >
     <ng-template pTemplate="header">
       <h2>Sessão em andamento - Tempo decorrido: {{ timer }}</h2>
-      <h4>Cliente: {{ selectedClient.name }}</h4>
+      <h4>Cliente: {{ selectedClient?.name }}</h4>
     </ng-template>
     <h2>Selecione o material utilizado na sessão</h2>
     <ul *ngFor="let category of categories" class="category-list">
@@ -115,6 +86,45 @@
     </ul>
       <ng-template pTemplate="footer">
         <p-button styleClass="p-button-raised p-button-text custom-small-button" label="Cancelar" (click)="displayModal=false"></p-button>
-        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão"></p-button>
+        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão" (click)="closeSession()"></p-button>
       </ng-template>
+</p-dialog>
+
+<p-dialog 
+  [(visible)]="displayModal2" 
+  [style]="{ width: '60vw' }" 
+  [modal]="true" 
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+>
+  <!-- Cabeçalho -->
+  <ng-template pTemplate="header">
+    <h2>Sessão finalizada - Tempo decorrido: {{ sessionElapsedTime }}</h2>
+    <h3>Cliente: {{ selectedClient?.name }}</h3>
+  </ng-template>
+
+  <!-- Conteúdo -->
+  <ng-template pTemplate="content">
+    <p-table [value]="selectedClientData?.inventory">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Material usado</th>
+          <th>Quantidade</th>
+          <th>Preço unitário</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.description }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+  <ul>
+  </ul>
+  <!-- Rodapé -->
+  <ng-template pTemplate="footer">
+    <p-button label="Fechar" (click)="displayModal2=false;" ></p-button>
+  </ng-template>
 </p-dialog>

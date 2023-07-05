@@ -1,70 +1,160 @@
-<p-table [value]="inventory" [style]="{ 'min-width': '50rem', 'font-size': '12px' }">
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Categorias</th>
-            <th [style]="{'max-width': '5rem'}">Sub categorias</th>
-            <th>Descrição</th>
-            <th>Data Compra</th>
-            <th>Validade</th>
-            <th>Alertas</th>
-            <th>Quantidades</th>
-            <th *ngIf="editMode"></th>
-            <th>Ações</th>
-        </tr>
+<div class="card">
+    <p-toast></p-toast>
+    <p-table
+        #inventoryTable
+        [rowHover]="true"
+        [value]="inventories"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [paginator]="true" [rows]="5"
+        [globalFilterFields]="['category', 'subCategory', 'description']"
+    >
+    <ng-template pTemplate="caption">
+        <div fxLayoutGap="50rem">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input
+                    pInputText
+                    type="text"
+                    (input)="inventoryTable.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Pesquisar"
+                    style="min-width: 25rem"
+                    />
+                </span>
+                <button
+                    pButton
+                    pRipple
+                    label="Adicionar"
+                    icon="pi pi-plus"
+                    class="p-button-raised p-button-text p-button-success"
+                    (click)="openNew()"
+                ></button>
+        </div>
     </ng-template>
-    <ng-template pTemplate="body" let-product>
-        <tr [ngClass]="{
-            'low-stock': isLowStock(product.quantity),
-            'near-expiration': isNearExpiration(product.expiry_date)
-        }">
-            <td>{{ product.category }}</td>
-            <td>{{ product.subcategory }}</td>
-            <td>{{ product.description }}</td>
-            <td>{{ product.purchase_date | date:'dd-MM-yyyy' }}</td>
-            <td>{{ product.expiry_date | date:'dd-MM-yyyy' }}</td>
-            <td [style]="{'min-width': '5rem'}">
-                <ng-container *ngIf="isLowStock(product.quantity); else expirationAlert">
-                    <p-tag value="Baixo estoque, repor." severity="warning" class="inventory-alert"></p-tag>
-                </ng-container>
-                <ng-template #expirationAlert>
-                    <ng-container *ngIf="isNearExpiration(product.expiry_date); else defaultAlert">
-                        <p-tag value="Próximo do Vencimento" severity="danger" class="inventory-alert"></p-tag>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="category" style="min-width:10rem">Categoria <p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="subCategory" style="min-width:11rem">Sub categoria <p-sortIcon field="subCategory"></p-sortIcon></th>
+                <th pSortableColumn="description" style="min-width:10rem">Descrição <p-sortIcon field="description"></p-sortIcon></th>
+                <th pSortableColumn="purchaseDate" style="min-width:10rem">Data Compra <p-sortIcon field="purchaseDate"></p-sortIcon></th>
+                <th pSortableColumn="expirationDate" style="min-width:10rem">Validade <p-sortIcon field="expirationDate"></p-sortIcon></th>
+                <th pSortableColumn="price" style="min-width:10rem">Preço <p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="alerts" style="min-width:10rem">Alertas <p-sortIcon field="alerts"></p-sortIcon></th>
+                <th pSortableColumn="quantity" style="min-width:10rem">Quantidade <p-sortIcon field="quantity"></p-sortIcon></th>
+                <th style="min-width:10rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.category }}</td>
+                <td>{{ product.subcategory }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.purchase_date | date:'dd-MM-yyyy' }}</td>
+                <td>{{ product.expiry_date | date:'dd-MM-yyyy'  }}</td>
+                <td>{{ product.price }}</td>
+                <td [style]="{'min-width': '5rem'}">
+                    <ng-container *ngIf="isLowStock(product.quantity); else expirationAlert">
+                        <p-tag value="Baixo estoque, repor." severity="warning" class="inventory-alert"></p-tag>
                     </ng-container>
-                    <ng-template #defaultAlert>
-                        <p-tag value=""></p-tag>
+                    <ng-template #expirationAlert>
+                        <ng-container *ngIf="isNearExpiration(product.expiry_date); else defaultAlert">
+                            <p-tag value="Próximo do Vencimento" severity="danger" class="inventory-alert"></p-tag>
+                        </ng-container>
+                        <ng-template #defaultAlert>
+                            <p-tag value=""></p-tag>
+                        </ng-template>
                     </ng-template>
-                </ng-template>
-            </td>
-            <td class="quantity-cell">
-                <div class="quantity-container" *ngIf="editMode; else displayQuantity">
-                    <p-inputNumber
-                        *ngIf="product"
-                        [(ngModel)]="product.quantity"
-                        [showButtons]="true"
-                        buttonLayout="horizontal"
-                        incrementButtonIcon="pi pi-plus"
-                        decrementButtonIcon="pi pi-minus"
-                        [step]="1"
-                        incrementButtonClass="p-button-success"
-                        decrementButtonClass="p-button-danger"
-                        inputStyleClass="custom-input-number p-inputnumber-sm"
-                    ></p-inputNumber>
+                </td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editProduct(inventory)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteProduct(inventory)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog 
+    [(visible)]="inventoryDialog"
+    [style]="{ width: '450px' }"
+    header="Detalhes do Produto"
+    [modal]="true"
+    styleClass="p-grid  p-fluid"
+>
+    <ng-template pTemplate="content">
+        <!-- TODO mudar para um dropbox o categoria -->
+        <div class="field">
+            <label class="mb-3">Categoria</label>
+            <div class="tatuador-grid">
+                <div class="p-col-6">
+                    <div class="tatuador-item">
+                        <p-radioButton id="category1" name="category" value="Agulhas" [(ngModel)]="inventory.category"></p-radioButton>
+                        <label for="category1">Agulhas</label>
+                    </div>
                 </div>
-                <ng-template #displayQuantity>
-                    {{ product.quantity }}
-                </ng-template>
-            </td>
-            <td class="actions-cell">
-                <p-button icon="pi pi-pencil" styleClass="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised"></p-button>
-                <p-toast></p-toast>
-                <p-dialog header="Deletar" [(visible)]="showConfirmDialog" [modal]="true" [responsive]="true" [style]="{ width: '50vw' }">
-                    <p-footer>
-                        <button type="button" pButton icon="pi pi-times" label="Não" class="p-button-danger" (click)="showConfirmDialog = false"></button>
-                        <button type="button" pButton icon="pi pi-check" label="Sim" class="p-button-success" (click)="deleteItem(product)"></button>
-                    </p-footer>
-                </p-dialog>
-                <p-button (click)="confirmDelete(product)" icon="pi pi-trash" styleClass="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised"></p-button>
-            </td>         
-        </tr>
+                <div class="p-col-6">
+                    <div class="tatuador-item">
+                        <p-radioButton id="category2" name="category" value="Tintas" [(ngModel)]="inventory.category"></p-radioButton>
+                        <label for="category2">Tintas</label>
+                    </div>
+                </div>
+                <div class="p-col-6">
+                    <div class="tatuador-item">
+                        <p-radioButton id="category3" name="category" value="PBatoque" [(ngModel)]="inventory.category"></p-radioButton>
+                        <label for="category3">Batoque</label>
+                    </div>
+                </div>
+                <div class="p-col-6">
+                    <div class="tatuador-item">
+                        <p-radioButton id="category4" name="category" value="Outros" [(ngModel)]="inventory.category"></p-radioButton>
+                        <label for="category4">Outros</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label for="subCategory">Sub Categoria</label>
+            <input type="text" pInputText id="subCategory" [(ngModel)]="inventory.subcategory" required autofocus />
+            <small class="p-error" *ngIf="submitted && !inventory.subcategory">Sub Categoria é obrigatório.</small>
+        </div>
+        <div class="field">
+            <label for="description">Descrição</label>
+            <input type="text" pInputText id="description" [(ngModel)]="inventory.description" required autofocus />
+            <small class="p-error" *ngIf="submitted && !inventory.description">Descrição é obrigatório.</small>
+        </div>
+        <div class="p-grid p-fluid">
+            <div class="p-col-6">
+                <label for="purchaseDate">Dade de compra</label>
+                <input type="text" pInputText id="purchaseDate" [(ngModel)]="inventory.purchase_date" required autofocus />
+                <small class="p-error" *ngIf="submitted && !inventory.purchase_date">Dade de compra é obrigatória.</small>
+            </div>
+            <div class="p-col-6">
+                <label for="expirationDate">Dade de validade</label>
+                <input type="text" pInputText id="expirationDate" [(ngModel)]="inventory.expiry_date" required autofocus />
+                <small class="p-error" *ngIf="submitted && !inventory.purchase_date">Dade de validade é obrigatória.</small>
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="price">Preço unitário</label>
+                <p-inputNumber id="price" [(ngModel)]="inventory.price" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+            </div>
+            <div class="field col">
+                <label for="quantity">Quantidade</label>
+                <input type="text" pInputText id="quantity" [(ngModel)]="inventory.quantity" required autofocus />
+                <small class="p-error" *ngIf="submitted && !inventory.quantity">Quantidade é obrigatória.</small>
+            </div>
+        </div>
+
     </ng-template>
-</p-table>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+
+

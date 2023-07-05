@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { ProductServiceMock } from '../../shared/services/product-mock.service';
+import { InventoryService } from '../../shared/services/inventory.service'
 
 @Component({
   selector: 'app-search',
@@ -11,10 +11,10 @@ export class SearchComponent {
   searchText: string = '';
   filteredItems: string[] = [];
 
-  constructor(private productServiceMock: ProductServiceMock) {}
+  constructor(private InventoryService: InventoryService) {}
 
   search(event: any): void {
-    this.productServiceMock.getSuggestions(event.query).subscribe((suggestions: string[]) => {
+    this.InventoryService.getSuggestions(event.query).subscribe((suggestions: string[]) => {
       this.filteredItems = suggestions;
     });
   }

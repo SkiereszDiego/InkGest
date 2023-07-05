@@ -1,9 +1,8 @@
-import { InventoryTableComponent } from './inventory-table.component';
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { ClientTableComponent } from './client-table.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
@@ -21,48 +20,46 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
-
 import { CustomButtonModule } from '../custom-button/custom-button.module';
-import { InventoryService } from 'src/app/shared/services/inventory.service';
+import { ClientService } from 'src/app/shared/services/client.service';
+
+
 
 @NgModule({
-    declarations: [
-        InventoryTableComponent
-    ],
-    exports: [
-        InventoryTableComponent
-    ],
-    imports: [
-        ButtonModule,
-        CommonModule,
-        ConfirmDialogModule,
-        CustomButtonModule,
-        DataViewModule,
-        DialogModule,
-        DividerModule,
-        DynamicDialogModule,
-        FieldsetModule,
-        FlexLayoutModule,
-        FormsModule,
-        InputTextModule,
-        ListboxModule,
-        MessageModule,
-        MessagesModule,
-        OrderListModule,
-        OrganizationChartModule,
-        OverlayPanelModule,
-        PaginatorModule,
-        RadioButtonModule,
-        ReactiveFormsModule,
-        TableModule,
-        TagModule,
-        ToastModule
-    ],
-    providers: [
-        InventoryService,
-        DatePipe
-    ]
+  declarations: [
+    ClientTableComponent
+  ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    ConfirmDialogModule,
+    CustomButtonModule,
+    DataViewModule,
+    DialogModule,
+    DividerModule,
+    DynamicDialogModule,
+    FieldsetModule,
+    FlexLayoutModule,
+    FormsModule,
+    InputTextModule,
+    ListboxModule,
+    MessageModule,
+    MessagesModule,
+    OrderListModule,
+    OrganizationChartModule,
+    OverlayPanelModule,
+    PaginatorModule,
+    RadioButtonModule,
+    ReactiveFormsModule,
+    TableModule,
+    ToastModule
+  ],
+  exports: [
+    ClientTableComponent
+  ],
+  providers: [
+    ClientService
+  ]
 })
-export class InventoryTableModule { }
+export class ClientTableModule { }

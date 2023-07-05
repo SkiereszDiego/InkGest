@@ -7,5 +7,7 @@ export const enum Path {
     INVENTORY = 'inventory',
     NEW_SESSION = 'new-session',
     ADD_ITEM = 'add-item',
-    LOGIN = 'login'
+    LOGIN = 'login',
+    SESSIONS = 'page-not-found',
+    PAGE_NOT_FOUND = 'page-not-found'
 }

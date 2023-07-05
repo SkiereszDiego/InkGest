@@ -4,7 +4,8 @@ import { SearchComponent } from './search.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { CustomButtonModule } from '../custom-button/custom-button.module';
-import { ProductServiceMock } from '../../shared/services/product-mock.service'; 
+import { InventoryService } from 'src/app/shared/services/inventory.service';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { ProductServiceMock } from '../../shared/services/product-mock.service';
     SearchComponent
   ],
   providers: [
-    ProductServiceMock
+    InventoryService
   ]
 })
 export class SearchModule { }

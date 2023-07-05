@@ -1,0 +1,144 @@
+<div class="card">
+    <p-toast></p-toast>
+    <p-table
+        #sessionTable
+        [rowHover]="true"
+        [value]="sessions"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [paginator]="true" [rows]="5"
+        [globalFilterFields]="['client', 'date', 'tattoo', 'tattooArtist']"
+    >
+    <ng-template pTemplate="caption">
+        <div fxLayoutGap="50rem">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input
+                    pInputText
+                    type="text"
+                    (input)="sessionTable.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Pesquisar"
+                    style="min-width: 25rem"
+                    />
+                </span>
+                <button
+                    pButton
+                    pRipple
+                    label="Adicionar"
+                    icon="pi pi-plus"
+                    class="p-button-raised p-button-text p-button-success"
+                    (click)="openNew()"
+                ></button>
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="client" style="min-width:15rem">Cliente <p-sortIcon field="client"></p-sortIcon></th>
+                <th pSortableColumn="date">Data da Sessão <p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="tattoo" style="min-width:10rem">Tatuagem <p-sortIcon field="tattoo"></p-sortIcon></th>
+                <th pSortableColumn="value">Valor da Tatuagem <p-sortIcon field="value"></p-sortIcon></th>
+                <th pSortableColumn="tattooArtist" style="min-width:10rem">Tatuador <p-sortIcon field="tattooArtist"></p-sortIcon></th>
+                <th pSortableColumn="duration" style="min-width:10rem">Duração <p-sortIcon field="duration"></p-sortIcon></th>
+                <th pSortableColumn="totalCost">Custo da Sessão <p-sortIcon field="totalCost"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-session>
+            <tr>
+                <td>{{ session.client }}</td>
+                <td>{{ session.date }}</td>
+                <td>{{ session.tattoo }}</td>
+                <td>{{ session.value }}</td>
+                <td>{{ session.tattooArtist }}</td>
+                <td>{{ session.duration }}</td>
+                <td>{{ session.totalCost }}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editSession(session)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteSession(session)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog 
+    [(visible)]="sessionDialog"
+    [style]="{ width: '450px' }"
+    header="Session Details"
+    [modal]="true"
+    styleClass="p-grid  p-fluid"
+>
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="client">Cliente</label>
+            <input type="text" pInputText id="client" [(ngModel)]="session.client" required autofocus />
+            <small class="p-error" *ngIf="submitted && !session.client">Cliente é obrigatório.</small>
+        </div>
+        <div class="field">
+            <label for="session_date">Data da Sessão</label>
+            <input type="text" pInputText id="session_date" [(ngModel)]="session.session_date" required autofocus />
+            <small class="p-error" *ngIf="submitted && !session.session_date">Data da sessão é obrigatória.</small>
+        </div>
+        <div class="p-grid p-fluid">
+            <div class="p-col-6">
+                <label for="tattoo">Tatuagem</label>
+                <input type="text" pInputText id="tattoo" [(ngModel)]="session.tattoo" required autofocus />
+                <small class="p-error" *ngIf="submitted && !session.tattoo">Tatuagem é obrigatória.</small>
+            </div>
+            <div class="p-col-6">
+                <label for="value">Valor da tatuagem</label>
+                <p-inputNumber id="value" [(ngModel)]="session.value" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="mb-3">Tatuador</label>
+            <div class="tatuador-grid">
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="category1" name="category" value="Diego Skieresz" [(ngModel)]="session.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist1">Diego Skieresz</label>
+                </div>
+                </div>
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="tattooArtist2" name="tattooArtist" value="Jean" [(ngModel)]="session.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist2">Jean</label>
+                </div>
+                </div>
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="tattooArtist3" name="tattooArtist" value="Paulo Bach" [(ngModel)]="session.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist3">Paulo Bach</label>
+                </div>
+                </div>
+                <div class="p-col-6">
+                <div class="tatuador-item">
+                    <p-radioButton id="tattooArtist4" name="tattooArtist" value="Zelda" [(ngModel)]="session.tattooArtist"></p-radioButton>
+                    <label for="tattooArtist4">Zelda</label>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="duration">Duração</label>
+                <input type="text" pInputText id="duration" [(ngModel)]="session.duration" required autofocus />
+                <small class="p-error" *ngIf="submitted && !session.duration">Duração é obrigatória.</small>
+            </div>
+            <div class="field col">
+                <label for="totalCost">Custo total da sessão</label>
+                <p-inputNumber id="value" [(ngModel)]="session.totalCost" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveSession()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+
+

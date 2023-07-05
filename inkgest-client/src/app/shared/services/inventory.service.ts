@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { InventoryItem } from '../../models/inventory-item.model';
+
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
+  
   private apiUrl = 'http://localhost:3000/api/inventory/';
 
   constructor(private http: HttpClient) {}
@@ -52,5 +55,32 @@ export class InventoryService {
     const url = `${this.apiUrl}/${id}`; // Adicione a rota de exclusão do item ao URL
 
     return this.http.delete(url, { headers });
+  }
+
+  updateItemById(itemId: string, item: InventoryItem): Observable<InventoryItem> {
+    const url = `${this.apiUrl}/${itemId}`;
+    return this.http.put<InventoryItem>(url, item);
+  }
+
+  getSuggestions(query: string): Observable<string[]> {
+    const suggestions: string[] = ['Agulhas RL', 'Agulhas RS', 'Agulhas MG', 'Tinta', 'Batoque', 'Luvas'];
+
+    return of(suggestions);
+  }
+
+  getProductsMini(): Observable<InventoryItem[]> {
+    return this.getInventory().pipe(
+      map(items => items.slice(0, 5))
+    );
+  }
+  
+  getProductsSmall(): Observable<InventoryItem[]> {
+    return this.getInventory().pipe(
+      map(items => items.slice(0, 10))
+    );
+  }
+  
+  getProducts(): Observable<InventoryItem[]> {
+    return this.getInventory();
   }
 }
