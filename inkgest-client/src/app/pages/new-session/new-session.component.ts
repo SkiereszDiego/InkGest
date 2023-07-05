@@ -207,12 +207,6 @@ export class NewSessionComponent implements OnInit, OnDestroy {
             return item;
         });
 
-        // Definir os dados do cliente selecionado e inventário modificado
-        this.selectedClientData = {
-            client: this.formGroup.get('name')?.value,
-            inventory: modifiedInventory
-        };
-
         // Iniciar o timer
         this.startTimer();
 
@@ -244,9 +238,6 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     }
 
     showModal2() {
-        // Parar o timer
-        this.stopTimer();
-
         // Obter os dados da sessão com base no cliente selecionado e inventário utilizado
         const sessionData: Session = {
             client: this.selectedClientData?.client || '',
@@ -267,9 +258,6 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     }
 
     openModal2() {
-        // Parar o timer
-        this.stopTimer();
-
         // Obter os dados da sessão com base no cliente selecionado e inventário utilizado
         const sessionData: Session = {
             client: this.selectedClientData?.client || '',
@@ -283,14 +271,9 @@ export class NewSessionComponent implements OnInit, OnDestroy {
 
         // Exibir o loader ou indicador de carregamento aqui
 
-        // Atualizar os dados do inventário com base nos materiais utilizados
-        this.selectedClientData = {
-            client: this.selectedClientData?.client || '',
-            inventory: this.materialUsed
-        };
-
         // Exibir o Modal 2
         this.displayModal2 = true;
+        this.displayModal = false;
     }
 
 
@@ -346,6 +329,31 @@ export class NewSessionComponent implements OnInit, OnDestroy {
             // Trate o erro de acordo com as necessidades da sua aplicação
             }
         );
+    }
+
+    closeSession(): void {
+        this.stopTimer();
+        this.updateClientData()
+        this.showModal2();
+    }
+
+    updateClientData(): void {
+        const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
+        console.log('PRIMEIRO', this.selectedClientData?.inventory, inventoryCopy )
+
+        // Adicionar description e price aos itens do inventário
+        const modifiedInventory = inventoryCopy.map((item: any) => {
+            const selectedItem = this.inventory.find((inventoryItem) => inventoryItem._id === item._id);
+            if (selectedItem) {
+                const { description, price } = selectedItem;
+                return { ...item, description, price };
+            }
+            return item;
+        });
+
+        this.selectedClientData = {}
+        this.selectedClientData['client'] = this.formGroup.get('name')?.value;
+        this.selectedClientData['inventory'] = modifiedInventory; 
     }
         
 }

@@ -86,7 +86,7 @@
     </ul>
       <ng-template pTemplate="footer">
         <p-button styleClass="p-button-raised p-button-text custom-small-button" label="Cancelar" (click)="displayModal=false"></p-button>
-        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão" (click)="stopTimer(); displayModal=false; displayModal2=true"></p-button>
+        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão" (click)="closeSession()"></p-button>
       </ng-template>
 </p-dialog>
 
@@ -121,22 +121,8 @@
       </ng-template>
     </p-table>
   </ng-template>
-  <!-- <ul>
-    Antes do LOOP - {{ selectedClientData?.inventory }}
-    <br/>
-    selectedClientData definido corretamente?: {{ selectedClientData | json }}
-    <br/>
-    <li *ngFor="let item of selectedClientData?.inventory">
-      Descrição: {{ item.description }} - Quantidade: {{ item.quantity }} - Preço unitário: {{ item.price }}
-    </li>
-    <br/>
-    inventory definido corretamente?:
-    {{ selectedClientData?.inventory }}
-    <li *ngFor="let item of selectedClientData?.inventory">
-      {{ item | json }}
-    </li>
-
-  </ul> -->
+  <ul>
+  </ul>
   <!-- Rodapé -->
   <ng-template pTemplate="footer">
     <p-button label="Fechar" (click)="displayModal2=false;" ></p-button>
