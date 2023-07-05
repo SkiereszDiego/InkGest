@@ -62,6 +62,17 @@ export class InventoryService {
     return this.http.put<InventoryItem>(url, item);
   }
 
+  updateItemQuantities(itemQuantities: { _id: string, quantity: number }[]): Observable<any> {
+    const url = `${this.apiUrl}/update-items-quantity`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
+    });
+  
+    return this.http.patch(url, itemQuantities, { headers });
+  }
+  
+
   getSuggestions(query: string): Observable<string[]> {
     const suggestions: string[] = ['Agulhas RL', 'Agulhas RS', 'Agulhas MG', 'Tinta', 'Batoque', 'Luvas'];
 
