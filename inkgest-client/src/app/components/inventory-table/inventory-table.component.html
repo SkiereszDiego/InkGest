@@ -66,8 +66,8 @@
                 </td>
                 <td>{{ product.quantity }}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editProduct(inventory)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteProduct(inventory)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editProduct(product._id)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteProduct(product._id)"></button>
                 </td>
             </tr>
         </ng-template>

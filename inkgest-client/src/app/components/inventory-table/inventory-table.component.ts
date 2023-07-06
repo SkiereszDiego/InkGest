@@ -15,7 +15,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class InventoryTableComponent implements OnInit, OnChanges{
   inventoryDialog: boolean = false
 
-  inventories: InventoryItem[] = [];
+  inventories: any = [];
 
   inventory!: InventoryItem;
 
@@ -27,10 +27,12 @@ export class InventoryTableComponent implements OnInit, OnChanges{
     subcategory: [''],
     description: ['', Validators.required],
     price: [0, Validators.required],
-    purchase_date: [new Date().toISOString(), Validators.required],
-    expiry_date: [new Date().toISOString()],
+    purchase_date: [new Date(), Validators.required],
+    expiry_date: [new Date()],
     quantity: [0, Validators.required],
   });
+
+
 
   selectedProduct: any = null;
   
@@ -80,17 +82,32 @@ export class InventoryTableComponent implements OnInit, OnChanges{
         header: 'Confirme',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.inventories = this.inventories.filter((val) => val._id !== inventories._id);
+            this.inventories = this.inventories.filter((val: { _id: string | undefined; }) => val._id !== inventories._id);
             this.inventory = {};
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         }
     });
   }
 
-  editProduct(inventories: InventoryItem) {
-    this.selectedProduct = { ...inventories };
+  editProduct(idProduct: any) {
+    let target = this.inventories.filter((t: { _id: any; }) => idProduct == t._id);
+    console.log('target',  target)
+
+    this.productForm.patchValue({
+      name: target[0].name,
+      category: target[0].category || '',
+      subcategory: target[0].subcategory || '',
+      description: target[0].description  || '',
+      price: target[0].pric || '',
+      purchase_date:target[0].purchase_date || '',
+      expiry_date: target[0].expiry_date || '',
+      quantity: target[0].quantity || '',
+    });
+
+
+    console.log('AAAAtarget',  target.name, target['name'])
+
     this.inventoryDialog = true;
-    console.log('selectedProduct', this.selectedProduct, inventories)
   }
 
   hideDialog() {
