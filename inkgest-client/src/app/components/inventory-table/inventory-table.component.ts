@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { InventoryItem } from '../../models/inventory-item.model';
 import { InventoryService } from '../../shared/services/inventory.service';
@@ -12,7 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./inventory-table.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class InventoryTableComponent implements OnInit {
+export class InventoryTableComponent implements OnInit, OnChanges{
   inventoryDialog: boolean = false
 
   inventories: InventoryItem[] = [];
@@ -31,6 +31,8 @@ export class InventoryTableComponent implements OnInit {
     expiry_date: [new Date().toISOString()],
     quantity: [0, Validators.required],
   });
+
+  selectedProduct: any = null;
   
   constructor(
     private fb: FormBuilder,
@@ -57,6 +59,14 @@ export class InventoryTableComponent implements OnInit {
     });
   }
 
+  ngOnChanges() {
+    if(this.selectedProduct) {
+      this.productForm.patchValue(this.selectedProduct);
+    } else {
+      this.productForm.reset();
+    }
+  }
+
   openNew() {
     this.inventory = {};
     this.submitted = false;
@@ -64,22 +74,23 @@ export class InventoryTableComponent implements OnInit {
   }
 
 
-  deleteProduct(inventory: InventoryItem) {
+  deleteProduct(inventories: InventoryItem) {
     this.confirmationService.confirm({
-        message: 'Tem certeza de que quer excluir esta sessão?' + inventory.category + '?',
+        message: 'Tem certeza de que quer excluir esta sessão?' + inventories.category + '?',
         header: 'Confirme',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.inventories = this.inventories.filter((val) => val._id !== inventory._id);
+            this.inventories = this.inventories.filter((val) => val._id !== inventories._id);
             this.inventory = {};
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         }
     });
   }
 
-  editProduct(inventory: InventoryItem) {
-    this.inventory = { ...inventory };
+  editProduct(inventories: InventoryItem) {
+    this.selectedProduct = { ...inventories };
     this.inventoryDialog = true;
+    console.log('selectedProduct', this.selectedProduct, inventories)
   }
 
   hideDialog() {
