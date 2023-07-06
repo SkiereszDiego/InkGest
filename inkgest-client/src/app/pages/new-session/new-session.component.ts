@@ -89,9 +89,9 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     private fetchInventoryFromBackend(): void {
         // Obtenha os dados do inventário do serviço de inventário
         this.inventoryService.getInventory().subscribe((data: InventoryItem[]) => {
-            console.log('Data received from the backend:', data);
-            this.inventory = data;
-            console.log('Inventory items:', this.inventory);
+            this.inventory = data.map(item => ({
+                ...item
+            }));;
             // Crie uma matriz de categorias única com base nos itens do inventário
             this.categories = Array.from(new Set(this.inventory.map(item => item.category))).filter(category => category !== undefined) as string[];
         });
@@ -249,7 +249,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
 
         // WIP Exibir o loader ou indicador de carregamento aqui
 
-        this.createSession();
+        // this.createSession();
 
         // Abrir o Modal 2
         this.openModal2();
@@ -313,32 +313,84 @@ export class NewSessionComponent implements OnInit, OnDestroy {
         this.showModal2();
     }
 
+    
     closeSession() {
-        const inventoryPatch = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
-        console.error('Valor na modal-=-=-', inventoryPatch)
-        // Perform the PATCH request to update the inventory items' quantities
-        this.inventoryService.updateItemQuantities(inventoryPatch)
-            .pipe(
-                catchError((error) => {
-                    console.error('Error updating inventory quantities:', error);
-                    return throwError('Error updating inventory quantities');
-                })
-            )
-            .subscribe(
-                (response) => {
-                    console.log('Inventory quantities updated successfully:', response);
-                    this.displayModal2 = false; // Close the second dialog after the quantities are updated
-                },
-                (error) => {
-                    console.error('Error updating inventory quantities:', error);
+        console.log('INVENTORY Close Session:', this.inventory);
+        
+        console.log('client data INVENTORY Close Session:', this.selectedClientData['inventory']);
+
+        this.inventory.forEach((inventoryItem: any) => {
+            let itemUsed = this.selectedClientData['inventory'].find((usedItem: { _id: any; }) => {
+                return usedItem._id == inventoryItem._id;
+            });
+
+            if (itemUsed) {
+                console.log('Item Used:', itemUsed);
+                inventoryItem.quantity = Math.abs(inventoryItem.quantity - itemUsed.quantity);
+    
+                console.log('Updated inventory session item:', inventoryItem);
+    
+                // Validate the request payload before sending it to the server
+                // Add any necessary validations or checks based on your requirements
+    
+                // Check if the quantity is a positive number
+                if (inventoryItem.quantity < 0) {
+                    console.error('Invalid quantity:', inventoryItem.quantity);
+                    return; // Skip this item and move to the next one
                 }
-            );
+
+                const payload = {
+                    _id: inventoryItem._id,
+                    quantity: inventoryItem.quantity
+                }
+    
+                console.log('Sending request payload to update inventory quantities:', inventoryItem);
+    
+                this.inventoryService.updateItemQuantities([payload])
+                    .pipe(
+                        catchError((error) => {
+                            console.error('Error updating inventory quantities:', error);
+                            return throwError('Error updating inventory quantities');
+                        })
+                    )
+                    .subscribe(
+                        (response) => {
+                            console.log('Inventory quantities updated successfully:', response);
+                            this.displayModal2 = false; // Close the second dialog after the quantities are updated
+                        },
+                        (error) => {
+                            console.error('Error updating inventory quantities:', error);
+                        }
+                    );
+            }
+        });
     }
+    
+
+        // const inventoryPatch = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
+        // console.error('Valor na modal-=-=-', inventoryPatch)
+        // // Perform the PATCH request to update the inventory items' quantities
+        // this.inventoryService.updateItemQuantities(inventoryPatch)
+        //     .pipe(
+        //         catchError((error) => {
+        //             console.error('Error updating inventory quantities:', error);
+        //             return throwError('Error updating inventory quantities');
+        //         })
+        //     )
+        //     .subscribe(
+        //         (response) => {
+        //             console.log('Inventory quantities updated successfully:', response);
+        //             this.displayModal2 = false; // Close the second dialog after the quantities are updated
+        //         },
+        //         (error) => {
+        //             console.error('Error updating inventory quantities:', error);
+        //         }
+        //     );
+    // }
 
 
     updateClientData(): void {
         const inventoryPatch = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
-        console.log('PRIMEIRO', this.selectedClientData?.inventory, inventoryPatch )
 
         // Adicionar description e price aos itens do inventário
         const inventorySession = inventoryPatch.map((item: any) => {

@@ -4,6 +4,7 @@ import { InventoryItem } from '../../models/inventory-item.model';
 import { InventoryService } from '../../shared/services/inventory.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, map, of } from 'rxjs';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-inventory-table',
@@ -20,13 +21,34 @@ export class InventoryTableComponent implements OnInit {
 
   submitted: boolean = false;
 
-
+  productForm = this.fb.group({
+    name: ['', Validators.required],
+    category: ['', Validators.required],
+    subcategory: [''],
+    description: ['', Validators.required],
+    price: [0, Validators.required],
+    purchase_date: [new Date().toISOString(), Validators.required],
+    expiry_date: [new Date().toISOString()],
+    quantity: [0, Validators.required],
+  });
+  
   constructor(
+    private fb: FormBuilder,
     private inventoryService: InventoryService,
     private datePipe: DatePipe,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
+  categories = [
+      { label: 'Agulhas', value: 'Agulhas' },
+      { label: 'Tintas', value: 'Tintas' },
+      { label: 'Batoques', value: 'Batoques' },
+      { label: 'Transfers', value: 'Transfers' },
+      { label: 'Outro', value: 'Outro' }
+  ];
+
+  
+  
 
   async ngOnInit() {
     const data = await this.fetchInventoryFromBackend();
@@ -63,25 +85,26 @@ export class InventoryTableComponent implements OnInit {
   hideDialog() {
     this.inventoryDialog = false;
     this.submitted = false;
+    this.productForm.reset();
   }
 
   saveProduct() {
-    this.submitted = true;
-
-    if (this.inventory.category?.trim()) {
-        if (this.inventory._id) {
-            this.inventories[this.findIndexById(this.inventory._id)] = this.inventory;
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-        } else {
-            this.inventory._id = this.createId();
-            this.inventories.push(this.inventory);
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-        }
-
-        this.inventories = [...this.inventories];
+    console.log(this.productForm.value)
+    this.inventoryService.saveProduct(this.productForm.value).subscribe(
+      response => {
+        console.log('Resposta do servidor ao criar novo item:', response);
+        this.productForm.reset();
         this.inventoryDialog = false;
-        this.inventory = {};
-    }
+        this.fetchInventoryFromBackend().subscribe((inventories: InventoryItem[]) => {
+          this.inventories = inventories;
+        });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+      },
+      (error) => {
+        console.error('Erro ao criar novo item:', error);
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao criar novo item.' });
+      }
+    )
   }
 
   findIndexById(id: string): number {

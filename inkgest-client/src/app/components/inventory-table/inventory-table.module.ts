@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
@@ -26,6 +27,7 @@ import { ToastModule } from 'primeng/toast';
 
 import { CustomButtonModule } from '../custom-button/custom-button.module';
 import { InventoryService } from 'src/app/shared/services/inventory.service';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
     declarations: [
@@ -36,6 +38,7 @@ import { InventoryService } from 'src/app/shared/services/inventory.service';
     ],
     imports: [
         ButtonModule,
+        CalendarModule,
         CommonModule,
         ConfirmDialogModule,
         CustomButtonModule,
@@ -46,6 +49,7 @@ import { InventoryService } from 'src/app/shared/services/inventory.service';
         FieldsetModule,
         FlexLayoutModule,
         FormsModule,
+        InputNumberModule,
         InputTextModule,
         ListboxModule,
         MessageModule,
