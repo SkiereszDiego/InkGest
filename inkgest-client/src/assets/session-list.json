@@ -119,5 +119,16 @@
         "duration": "02h00min",
         "totalCost": "180.00",
         "supplyUsed": "Agulha 5RL,1,60.00,60.00;Tinta preta,1,30.00,30.00;Luvas descartáveis,1,10.00,10.00"
+    },
+    {
+        "id": "12",
+        "client": "Diego Skieresz",
+        "session_date": "2023-07-07",
+        "tattoo": "",
+        "value": "280.00",
+        "tattooArtist": "Edward",
+        "duration": "02h00min",
+        "totalCost": "180.00",
+        "supplyUsed": "Agulha RL 8mm,2,11.00,22.00;Batoque Silicone Azul,1,0.07,0.07;Tinta para traçado,3,0.35,0.95"
     }
 ]
