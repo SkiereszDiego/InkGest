@@ -32,7 +32,8 @@ export class InventoryTableComponent implements OnInit, OnChanges{
     quantity: [0, Validators.required],
   });
 
-
+  isCreateOrUpdate = 0;
+  updateItemId = '';
 
   selectedProduct: any = null;
   
@@ -69,43 +70,58 @@ export class InventoryTableComponent implements OnInit, OnChanges{
     }
   }
 
-  openNew() {
+  addNew() {
+    this.isCreateOrUpdate = 1;
     this.inventory = {};
     this.submitted = false;
     this.inventoryDialog = true;
   }
 
 
-  deleteProduct(inventories: InventoryItem) {
+  deleteProduct(idProduct: any) {
     this.confirmationService.confirm({
-        message: 'Tem certeza de que quer excluir esta sessão?' + inventories.category + '?',
+        message: 'Tem certeza de que quer excluir?',
         header: 'Confirme',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.inventories = this.inventories.filter((val: { _id: string | undefined; }) => val._id !== inventories._id);
-            this.inventory = {};
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+          this.inventoryService.deleteItem(idProduct).subscribe(
+            response => {
+              console.log('Resposta do servidor ao criar novo item:', response);
+              this.productForm.reset();
+              this.inventoryDialog = false;
+              this.fetchInventoryFromBackend().subscribe((inventories: InventoryItem[]) => {
+                this.inventories = inventories;
+              });
+              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+            },
+            (error) => {
+              console.error('Erro ao criar novo item:', error);
+              this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao criar novo item.' });
+            }
+          )
         }
     });
+
+
   }
 
   editProduct(idProduct: any) {
+    this.isCreateOrUpdate = 2;
     let target = this.inventories.filter((t: { _id: any; }) => idProduct == t._id);
     console.log('target',  target)
-
+    
+    this.updateItemId = idProduct
+    
     this.productForm.patchValue({
       name: target[0].name,
       category: target[0].category || '',
       subcategory: target[0].subcategory || '',
       description: target[0].description  || '',
-      price: target[0].pric || '',
+      price: target[0].price || '',
       purchase_date:target[0].purchase_date || '',
       expiry_date: target[0].expiry_date || '',
       quantity: target[0].quantity || '',
     });
-
-
-    console.log('AAAAtarget',  target.name, target['name'])
 
     this.inventoryDialog = true;
   }
@@ -117,7 +133,46 @@ export class InventoryTableComponent implements OnInit, OnChanges{
   }
 
   saveProduct() {
-    console.log(this.productForm.value)
+    if(this.isCreateOrUpdate == 1) {
+      this.insertProduct()
+    } else {
+      this.updateProduct();
+    }
+  }
+
+  updateProduct() {
+    
+    let item: InventoryItem = {
+      _id: this.updateItemId,
+      name: this.productForm.value.name || '',
+      category: this.productForm.value.category || '',
+      subcategory: this.productForm.value.subcategory || '',
+      description: this.productForm.value.description  || '',
+      price: this.productForm.value.price || 0,
+      purchase_date:this.productForm.value.purchase_date || new Date,
+      expiry_date: this.productForm.value.expiry_date || new Date,
+      quantity: this.productForm.value.quantity || 0,
+    }
+
+    this.inventoryService.updateItemById(this.updateItemId, item).subscribe(
+      response => {
+        console.log('Resposta do servidor ao criar novo item:', response);
+        this.productForm.reset();
+        this.inventoryDialog = false;
+        this.fetchInventoryFromBackend().subscribe((inventories: InventoryItem[]) => {
+          this.inventories = inventories;
+        });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+      },
+      (error) => {
+        console.error('Erro ao criar novo item:', error);
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao criar novo item.' });
+      }
+    )
+  }
+
+  insertProduct() {
+    console.log("ALGO-=-=-=--",this.productForm.value)
     this.inventoryService.saveProduct(this.productForm.value).subscribe(
       response => {
         console.log('Resposta do servidor ao criar novo item:', response);

@@ -47,9 +47,9 @@
                     <button type="button" pButton pRipple [pRowToggler]="client" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                 </td>
                 <td>{{ client.client }}</td>
-                <td>{{ client.tattoo }}</td>
-                <td>{{ client.duration }}</td>
-                <td>{{ client.totalCost }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.social_media }}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editClient(client)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteClient(client)"></button>
@@ -72,10 +72,10 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-personal >
                                 <tr>
-                                    <td>{{ personal.totalCost }}</td>
-                                    <td>{{ personal.date }}</td>
-                                    <td>{{ personal.tattooArtist }}</td>
-                                    <td>{{ personal.value }}</td>
+                                    <td>{{ personal.cpf }}</td>
+                                    <td>{{ personal.birthdate | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{ personal.address }}</td>
+                                    <td>{{ personal.health_history }}</td>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="emptymessage">

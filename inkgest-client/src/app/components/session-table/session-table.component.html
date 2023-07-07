@@ -45,12 +45,12 @@
         <ng-template pTemplate="body" let-session>
             <tr>
                 <td>{{ session.client }}</td>
-                <td>{{ session.date }}</td>
+                <td>{{ session.session_date  | date:'dd-MM-yyyy' }}</td>
                 <td>{{ session.tattoo }}</td>
                 <td>{{ session.value }}</td>
                 <td>{{ session.tattooArtist }}</td>
                 <td>{{ session.duration }}</td>
-                <td>{{ session.totalCost }}</td>
+                <td>{{ session.totalCost | currency:'BRL' }}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editSession(session)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteSession(session)"></button>
