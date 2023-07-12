@@ -55,16 +55,26 @@ export class SessionTableComponent implements OnInit{
     this.sessionDialog = true;
   }
 
-
-  deleteSession(session: Session) {
+  deleteSession(idSession: any) {
     this.confirmationService.confirm({
-        message: 'Tem certeza de que quer excluir esta sessão?' + session.client + '?',
-        header: 'Confirme',
+      message: 'Tem certeza de que quer excluir esta sessão?',
+      header: 'Confirme',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.sessions = this.sessions.filter((val) => val.id !== session.id);
-            this.session = {};
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'session Deleted', life: 3000 });
+          this.sessionService.deleteItem(idSession).subscribe(
+            response => {
+              console.log('Resposta do servidor ao criar novo item:', response);
+              this.sessionForm.reset();
+              this.sessionService.getSessions().subscribe((sessions: Session[]) => {
+                this.sessions = sessions;
+              });
+              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+            },
+            (error) => {
+              console.error('Erro ao criar novo item:', error);
+              this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao criar novo item.' });
+            }
+          )
         }
     });
   }
