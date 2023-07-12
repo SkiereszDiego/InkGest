@@ -1,10 +1,12 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { FormBuilder, Validators } from '@angular/forms';
+
 import { InventoryItem } from '../../models/inventory-item.model';
 import { InventoryService } from '../../shared/services/inventory.service';
+
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Observable, map, of } from 'rxjs';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-inventory-table',
@@ -51,9 +53,6 @@ export class InventoryTableComponent implements OnInit, OnChanges{
       { label: 'Transfers', value: 'Transfers' },
       { label: 'Outro', value: 'Outro' }
   ];
-
-  
-  
 
   async ngOnInit() {
     const data = await this.fetchInventoryFromBackend();

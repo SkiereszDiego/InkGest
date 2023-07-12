@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { FormBuilder, Validators } from '@angular/forms';
+
 import { SessionService } from '../../shared/services/session.service'
 import { Session } from '../../models/session.model'
+
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @Component({
@@ -20,8 +23,20 @@ export class SessionTableComponent implements OnInit{
 
   submitted: boolean = false;
 
+  sessionForm = this.fb.group({
+    client: ['', Validators.required],
+    session_date: [new Date(), Validators.required],
+    tattoo: [''],
+    value: [0, Validators.required],
+    tattooArtist: ['', Validators.required],
+    duration: ['', Validators.required],
+    totalCost: 0,
+    supplyUsed: '',
+  });
+
 
   constructor(
+    private fb: FormBuilder,
     private sessionService: SessionService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
@@ -29,7 +44,7 @@ export class SessionTableComponent implements OnInit{
   
   async ngOnInit() {
     const data = await this.sessionService.getSessions();
-    data.subscribe((sessions) => {
+    data.subscribe((sessions: Session[]) => {
       this.sessions = sessions;
     });
   }
