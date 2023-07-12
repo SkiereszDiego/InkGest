@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Session } from '../../models/session.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,16 @@ export class SessionService {
 
   constructor(private http: HttpClient) { }
 
-  getSessionsData() {
-    return this.http.get<any>('assets/session-list.json');
+  getSessions(): Observable<Session[]> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
+    });
+    return this.http.get<Session[]>(this.apiUrl, { headers });
   }
 
-  getSessions() {
-      return Promise.resolve(this.getSessionsData());
-  }
+  //   return this.http.get<InventoryItem[]>(this.apiUrl, { headers });
+  // }
 
   createSession(sessionData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, sessionData);

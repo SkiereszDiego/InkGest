@@ -86,7 +86,7 @@
     </ul>
       <ng-template pTemplate="footer">
         <p-button styleClass="p-button-raised p-button-text custom-small-button" label="Cancelar" (click)="displayModal=false"></p-button>
-        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão" (click)="closeSession()"></p-button>
+        <p-button styleClass="p-button-raised p-button-text p-button-success custom-small-button" label="Finalizar Sessão" (click)="finishSession()"></p-button>
       </ng-template>
 </p-dialog>
 
@@ -116,7 +116,7 @@
         <tr>
           <td>{{ item.description }}</td>
           <td>{{ item.quantity }}</td>
-          <td>{{ item.price }}</td>
+          <td>{{ item.price | currency:'BRL' }}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -125,6 +125,6 @@
   </ul>
   <!-- Rodapé -->
   <ng-template pTemplate="footer">
-    <p-button label="Fechar" (click)="displayModal2=false;" ></p-button>
+    <p-button label="Fechar" (click)="closeSession()" ></p-button>
   </ng-template>
 </p-dialog>

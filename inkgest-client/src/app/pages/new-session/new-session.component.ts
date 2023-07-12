@@ -1,3 +1,7 @@
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormBuilder , Validators } from '@angular/forms';
 import { timer, Subscription } from 'rxjs';
@@ -45,7 +49,8 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     constructor(
         private inventoryService: InventoryService,
         private formBuilder: FormBuilder,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private http: HttpClient
     ) {
         // Inicialize o FormGroup usando o FormBuilder
         this.formGroup = this.formBuilder.group({
@@ -84,9 +89,9 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     private fetchInventoryFromBackend(): void {
         // Obtenha os dados do inventário do serviço de inventário
         this.inventoryService.getInventory().subscribe((data: InventoryItem[]) => {
-            console.log('Data received from the backend:', data);
-            this.inventory = data;
-            console.log('Inventory items:', this.inventory);
+            this.inventory = data.map(item => ({
+                ...item
+            }));;
             // Crie uma matriz de categorias única com base nos itens do inventário
             this.categories = Array.from(new Set(this.inventory.map(item => item.category))).filter(category => category !== undefined) as string[];
         });
@@ -178,27 +183,20 @@ export class NewSessionComponent implements OnInit, OnDestroy {
         const selectedItem = this.inventory.find((item) => item._id === id);
         return selectedItem?.quantity ?? 0;
     }
-    
-    
-    
-    
+
 
     startSession() {
         const selectedClient = this.formGroup.value.name;
-        const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
-
-        // Iniciar o timer
-        this.startTimer();
-
+        const inventoryPatch = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
         // Abrir o Modal com os dados do cliente e inventário
-        this.openModal(selectedClient, inventoryCopy);
+        this.openModal(selectedClient, inventoryPatch);
     }
 
-    openModal(selectedClient: Client | undefined, inventoryCopy: any) {
+    openModal(selectedClient: Client | undefined, inventoryPatch: any) {
         this.selectedClient = selectedClient;
 
         // Adicionar description e price aos itens do inventário
-        const modifiedInventory = inventoryCopy.map((item: any) => {
+        const inventorySession = inventoryPatch.map((item: any) => {
             const selectedItem = this.inventory.find((inventoryItem) => inventoryItem._id === item._id);
             if (selectedItem) {
                 const { description, price } = selectedItem;
@@ -251,7 +249,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
 
         // WIP Exibir o loader ou indicador de carregamento aqui
 
-        this.createSession();
+        // this.createSession();
 
         // Abrir o Modal 2
         this.openModal2();
@@ -275,28 +273,6 @@ export class NewSessionComponent implements OnInit, OnDestroy {
         this.displayModal2 = true;
         this.displayModal = false;
     }
-
-
-    finalizarSessao() {
-        // Obter os valores do FormGroup
-        const { description, quantity, price } = this.formGroup.value;
-
-        // Criar um objeto com os valores do item
-        const item = {
-            description: description,
-            quantity: quantity,
-            price: price
-        };
-
-        // Atribuir o objeto item à propriedade selectedClientData
-        this.selectedClientData = {
-            inventory: [item] // Se você tiver mais de um item, adicione-os a um array
-        };
-
-        // Exibir a tabela com os dados do item
-        this.displayModal2 = true;
-    }
-
 
     stopTimer() {
         // Verificar se há uma inscrição ativa e cancelá-la
@@ -331,18 +307,93 @@ export class NewSessionComponent implements OnInit, OnDestroy {
         );
     }
 
-    closeSession(): void {
+    finishSession(): void {
         this.stopTimer();
         this.updateClientData()
         this.showModal2();
     }
 
+    
+    closeSession() {
+        console.log('INVENTORY Close Session:', this.inventory);
+        
+        console.log('client data INVENTORY Close Session:', this.selectedClientData['inventory']);
+
+        this.inventory.forEach((inventoryItem: any) => {
+            let itemUsed = this.selectedClientData['inventory'].find((usedItem: { _id: any; }) => {
+                return usedItem._id == inventoryItem._id;
+            });
+
+            if (itemUsed) {
+                console.log('Item Used:', itemUsed);
+                inventoryItem.quantity = Math.abs(inventoryItem.quantity - itemUsed.quantity);
+    
+                console.log('Updated inventory session item:', inventoryItem);
+    
+                // Validate the request payload before sending it to the server
+                // Add any necessary validations or checks based on your requirements
+    
+                // Check if the quantity is a positive number
+                if (inventoryItem.quantity < 0) {
+                    console.error('Invalid quantity:', inventoryItem.quantity);
+                    return; // Skip this item and move to the next one
+                }
+
+                const payload = {
+                    _id: inventoryItem._id,
+                    quantity: inventoryItem.quantity
+                }
+    
+                console.log('Sending request payload to update inventory quantities:', inventoryItem);
+    
+                this.inventoryService.updateItemQuantities([payload])
+                    .pipe(
+                        catchError((error) => {
+                            console.error('Error updating inventory quantities:', error);
+                            return throwError('Error updating inventory quantities');
+                        })
+                    )
+                    .subscribe(
+                        (response) => {
+                            console.log('Inventory quantities updated successfully:', response);
+                            this.displayModal2 = false; // Close the second dialog after the quantities are updated
+                        },
+                        (error) => {
+                            console.error('Error updating inventory quantities:', error);
+                        }
+                    );
+            }
+        });
+    }
+    
+
+        // const inventoryPatch = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
+        // console.error('Valor na modal-=-=-', inventoryPatch)
+        // // Perform the PATCH request to update the inventory items' quantities
+        // this.inventoryService.updateItemQuantities(inventoryPatch)
+        //     .pipe(
+        //         catchError((error) => {
+        //             console.error('Error updating inventory quantities:', error);
+        //             return throwError('Error updating inventory quantities');
+        //         })
+        //     )
+        //     .subscribe(
+        //         (response) => {
+        //             console.log('Inventory quantities updated successfully:', response);
+        //             this.displayModal2 = false; // Close the second dialog after the quantities are updated
+        //         },
+        //         (error) => {
+        //             console.error('Error updating inventory quantities:', error);
+        //         }
+        //     );
+    // }
+
+
     updateClientData(): void {
-        const inventoryCopy = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
-        console.log('PRIMEIRO', this.selectedClientData?.inventory, inventoryCopy )
+        const inventoryPatch = JSON.parse(JSON.stringify(this.formGroup.value.inventory));
 
         // Adicionar description e price aos itens do inventário
-        const modifiedInventory = inventoryCopy.map((item: any) => {
+        const inventorySession = inventoryPatch.map((item: any) => {
             const selectedItem = this.inventory.find((inventoryItem) => inventoryItem._id === item._id);
             if (selectedItem) {
                 const { description, price } = selectedItem;
@@ -353,7 +404,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
 
         this.selectedClientData = {}
         this.selectedClientData['client'] = this.formGroup.get('name')?.value;
-        this.selectedClientData['inventory'] = modifiedInventory; 
+        this.selectedClientData['inventory'] = inventorySession; 
     }
         
 }
