@@ -52,8 +52,8 @@
                 <td>{{ session.duration }}</td>
                 <td>{{ session.totalCost | currency:'BRL' }}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editSession(session)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteSession(session)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-info p-button-text p-button-raised" (click)="editSession(session._id)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteSession(session._id)"></button>
                 </td>
             </tr>
         </ng-template>
