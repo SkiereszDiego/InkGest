@@ -64,7 +64,7 @@ export class InventoryService {
   updateItemQuantities(itemQuantities: { _id: string, quantity: number }[]): Observable<any> {
     // const url = 'http://localhost:3000/api/inventory/update-items-quantity';
     const url = `${this.apiUrl}update-items-quantity`;
-    console.log('ITEM Quantities: ', itemQuantities)
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)

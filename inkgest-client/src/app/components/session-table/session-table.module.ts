@@ -9,6 +9,7 @@ import { SessionTableComponent } from './session-table.component';
 import { CustomButtonModule } from '../custom-button/custom-button.module';
 
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
@@ -36,6 +37,7 @@ import { SessionService } from 'src/app/shared/services/session.service';
   ],
   imports: [
     ButtonModule,
+    CalendarModule,
     CommonModule,
     ConfirmDialogModule,
     CustomButtonModule,

@@ -62,75 +62,103 @@
 <p-dialog 
     [(visible)]="sessionDialog"
     [style]="{ width: '450px' }"
-    header="Session Details"
+    header="Detalhes da Sessão"
     [modal]="true"
     styleClass="p-grid  p-fluid"
 >
     <ng-template pTemplate="content">
-        <div class="field">
-            <label for="client">Cliente</label>
-            <input type="text" pInputText id="client" [(ngModel)]="session.client" required autofocus />
-            <small class="p-error" *ngIf="submitted && !session.client">Cliente é obrigatório.</small>
-        </div>
-        <div class="field">
-            <label for="session_date">Data da Sessão</label>
-            <input type="text" pInputText id="session_date" [(ngModel)]="session.session_date" required autofocus />
-            <small class="p-error" *ngIf="submitted && !session.session_date">Data da sessão é obrigatória.</small>
-        </div>
-        <div class="p-grid p-fluid">
-            <div class="p-col-6">
+        <form [formGroup]="sessionForm">
+            <div class="field">
+                <label for="client">Nome do cliente</label>
+                <input type="text" pInputText id="client" formControlName="client" required autofocus />
+                <small
+                    class="p-error"
+                    *ngIf="
+                    sessionForm.controls['client'].invalid &&
+                    sessionForm.controls['client'].dirty"
+                    >Cliente é obrigatório.
+                </small>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="form-row">
+                    <label for="session_date">Data da sessão</label>
+                    <div class="form-input">
+                        <p-calendar 
+                            id="session_date"
+                            formControlName="session_date"
+                            appendTo="body"
+                            [showButtonBar]="true"
+                            placeholder="{{sessionForm.value.session_date  | date:'dd.MM.yy'}}"
+                            dateFormat="dd.MM.yy"
+                            inputStyleClass="small-input"
+                        ></p-calendar>
+                    </div>
+                    <small
+                        class="p-error"
+                        *ngIf="
+                            sessionForm.controls['session_date'].invalid &&
+                            sessionForm.controls['session_date'].dirty"
+                        >Data da compra é obrigatória.
+                    </small>
+                </div>
+            </div>
+            <div class="field">
                 <label for="tattoo">Tatuagem</label>
-                <input type="text" pInputText id="tattoo" [(ngModel)]="session.tattoo" required autofocus />
-                <small class="p-error" *ngIf="submitted && !session.tattoo">Tatuagem é obrigatória.</small>
+                <input type="text" pInputText id="tattoo" formControlName="tattoo" required autofocus />
+                <small
+                    class="p-error"
+                    *ngIf="
+                    sessionForm.controls['tattoo'].invalid &&
+                    sessionForm.controls['tattoo'].dirty"
+                    >Tatuagem é obrigatório.
+                </small>
             </div>
-            <div class="p-col-6">
+            <div class="field">
                 <label for="value">Valor da tatuagem</label>
-                <p-inputNumber id="value" [(ngModel)]="session.value" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                <input type="text" pInputText id="value" formControlName="value" required autofocus />
+                <small
+                    class="p-error"
+                    *ngIf="
+                    sessionForm.controls['value'].invalid &&
+                    sessionForm.controls['value'].dirty"
+                    >Valor da tatuagem é obrigatório.
+                </small>
             </div>
-        </div>
-
-        <div class="field">
-            <label class="mb-3">Tatuador</label>
-            <div class="tatuador-grid">
-                <div class="p-col-6">
-                <div class="tatuador-item">
-                    <p-radioButton id="category1" name="category" value="Diego Skieresz" [(ngModel)]="session.tattooArtist"></p-radioButton>
-                    <label for="tattooArtist1">Diego Skieresz</label>
-                </div>
-                </div>
-                <div class="p-col-6">
-                <div class="tatuador-item">
-                    <p-radioButton id="tattooArtist2" name="tattooArtist" value="Jean" [(ngModel)]="session.tattooArtist"></p-radioButton>
-                    <label for="tattooArtist2">Jean</label>
-                </div>
-                </div>
-                <div class="p-col-6">
-                <div class="tatuador-item">
-                    <p-radioButton id="tattooArtist3" name="tattooArtist" value="Paulo Bach" [(ngModel)]="session.tattooArtist"></p-radioButton>
-                    <label for="tattooArtist3">Paulo Bach</label>
-                </div>
-                </div>
-                <div class="p-col-6">
-                <div class="tatuador-item">
-                    <p-radioButton id="tattooArtist4" name="tattooArtist" value="Zelda" [(ngModel)]="session.tattooArtist"></p-radioButton>
-                    <label for="tattooArtist4">Zelda</label>
-                </div>
+            <div class="field">
+                <label for="duration">Duração da tatuagem</label>
+                <input type="text" pInputText id="duration" formControlName="duration" required autofocus />
+                <small
+                    class="p-error"
+                    *ngIf="
+                    sessionForm.controls['duration'].invalid &&
+                    sessionForm.controls['duration'].dirty"
+                    >Duração é obrigatório.
+                </small>
+            </div>
+            <div class="field row">
+                <div class="field col">
+                    <label for="totalCost">Valor total dos materiais</label>
+                    <p-inputNumber
+                        id="totalCost"
+                        formControlName="totalCost"
+                        mode="currency"
+                        currency="BRL"
+                        locale="pt-BR"
+                    ></p-inputNumber>
                 </div>
             </div>
-        </div>
-
-        <div class="formgrid grid">
-            <div class="field col">
-                <label for="duration">Duração</label>
-                <input type="text" pInputText id="duration" [(ngModel)]="session.duration" required autofocus />
-                <small class="p-error" *ngIf="submitted && !session.duration">Duração é obrigatória.</small>
+            <div class="field">
+                <label for="supplyUsed">Lista de materiais</label>
+                <input type="text" pInputText id="supplyUsed" formControlName="supplyUsed" required autofocus />
+                <small
+                    class="p-error"
+                    *ngIf="
+                    sessionForm.controls['supplyUsed'].invalid &&
+                    sessionForm.controls['supplyUsed'].dirty"
+                    >Lista de materiais é obrigatório.
+                </small>
             </div>
-            <div class="field col">
-                <label for="totalCost">Custo total da sessão</label>
-                <p-inputNumber id="value" [(ngModel)]="session.totalCost" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
-            </div>
-        </div>
-
+        </form>
     </ng-template>
 
     <ng-template pTemplate="footer">
