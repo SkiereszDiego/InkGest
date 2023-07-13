@@ -20,11 +20,18 @@ export class SessionService {
     return this.http.get<Session[]>(this.apiUrl, { headers });
   }
 
-  //   return this.http.get<InventoryItem[]>(this.apiUrl, { headers });
-  // }
+  saveSession(postData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
+    });
 
-  createSession(sessionData: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, sessionData);
+    return this.http.post(this.apiUrl, postData, { headers });
+  }
+
+  updateSessionById(itemId: string, item: Session): Observable<Session> {
+    const url = `${this.apiUrl}/${itemId}`;
+    return this.http.put<Session>(url, item);
   }
 
   confirmDelete(id: string): Observable<any> {

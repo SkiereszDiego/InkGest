@@ -1,5 +1,4 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { InventoryItem } from '../../models/inventory-item.model';
@@ -42,7 +41,6 @@ export class InventoryTableComponent implements OnInit, OnChanges{
   constructor(
     private fb: FormBuilder,
     private inventoryService: InventoryService,
-    private datePipe: DatePipe,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
@@ -107,8 +105,7 @@ export class InventoryTableComponent implements OnInit, OnChanges{
   editProduct(idProduct: any) {
     this.isCreateOrUpdate = 2;
     let target = this.inventories.filter((t: { _id: any; }) => idProduct == t._id);
-    console.log('target',  target)
-    
+
     this.updateItemId = idProduct
     
     this.productForm.patchValue({

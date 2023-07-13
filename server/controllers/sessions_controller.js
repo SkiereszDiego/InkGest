@@ -30,20 +30,13 @@ exports.createSession = async (req, res) => {
 
     // Validate the data
     if (
-        sessionRequest &&
-        sessionRequest.tattoo &&
-        sessionRequest.value &&
-        sessionRequest.tattooArtist &&
-        sessionRequest.duration &&
-        sessionRequest.totalCost &&
-        sessionRequest.supplyUsed
+        !sessionRequest ||
+        !sessionRequest.tattoo ||
+        !sessionRequest.value ||
+        !sessionRequest.tattooArtist ||
+        !sessionRequest.duration ||
+        !sessionRequest.totalCost
     ) {
-        // If valid, create the session and return status 201
-        console.log('Session Request:', sessionRequest);
-        
-        // Log the value of sessionRequest.session_date
-        console.log('Session Date:', sessionRequest.session_date);
-        
         const formattedSessionRequest = {
             ...sessionRequest,
             session_date: new Date(sessionRequest.session_date),
@@ -62,9 +55,8 @@ exports.createSession = async (req, res) => {
             res.status(500).json({ Error: err });
         }
     } else {
-        // Otherwise, return status 400
         return res.status(400).json({
-            Error: "Client and/or session date are required"
+            Error: "Todos os campos obrigatórios devem ser fornecidos."
         });
     }
 };
@@ -85,7 +77,7 @@ exports.updateSessionById = async (req, res) => {
         !sessionToUpdate.totalCost
     ) {
         return res.status(400).json({
-            Error: "Client and/or session date are required"
+            Error: "Client date are required"
         });
     }
 
