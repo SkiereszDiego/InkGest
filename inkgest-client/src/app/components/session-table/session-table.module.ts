@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -42,6 +43,7 @@ import { SessionService } from 'src/app/shared/services/session.service';
     ConfirmDialogModule,
     CustomButtonModule,
     DataViewModule,
+    DatePipe,
     DialogModule,
     DividerModule,
     DynamicDialogModule,

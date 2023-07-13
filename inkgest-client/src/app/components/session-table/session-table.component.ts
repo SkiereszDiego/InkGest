@@ -25,7 +25,7 @@ export class SessionTableComponent implements OnInit, OnChanges{
 
   sessionForm = this.fb.group({
     client: ['', Validators.required],
-    session_date: [null, Validators.required],
+    session_date: [new Date(), Validators.required],
     tattoo: [''],
     value: [''],
     tattooArtist: ['', Validators.required],
@@ -102,27 +102,31 @@ export class SessionTableComponent implements OnInit, OnChanges{
 
   editSession(idSession: any) {
     this.isCreateOrUpdate = 2;
-    let target = this.sessions.filter((t: { id: any; }) => idSession == t.id);
+    let target = this.sessions.filter((t: { _id: any; }) => idSession == t._id);
     
-    this.updateSessionId = idSession
-    
-    this.sessionForm.patchValue({
-      client: target[0].client,
-      session_date: target[0].session_date || '',
-      tattoo: target[0].tattoo || '',
-      value: target[0].value || '',
-      duration: target[0].duration  || '',
-      totalCost: target[0].totalCost || '',
-      supplyUsed:target[0].supplyUsed || '',
-    });
+    if (target !== undefined) {
+      this.updateSessionId = idSession
+      
+      this.sessionForm.patchValue({
+        client: target[0].client || '',
+        session_date: target[0].session_date || '',
+        tattoo: target[0].tattoo || '',
+        value: target[0].value || '',
+        duration: target[0].duration  || '',
+        totalCost: target[0].totalCost || 0,
+        supplyUsed:target[0].supplyUsed || '',
+      });
 
-    this.sessionDialog = true;
+      this.sessionDialog = true;
+    } else {
+      console.error('Sessão não encontrada.');
+    }
   }
 
   updateSession() {
     
     let item: Session = {
-      id: this.updateSessionId,
+      _id: this.updateSessionId,
       client: this.sessionForm.value.client || '',
       session_date: this.sessionForm.value.session_date || new Date,
       tattoo: this.sessionForm.value.tattoo || '',
@@ -174,10 +178,10 @@ export class SessionTableComponent implements OnInit, OnChanges{
     )
   }
 
-  findIndexById(id: string): number {
+  findIndexById(_id: string): number {
     let index = -1;
     for (let i = 0; i < this.sessions.length; i++) {
-        if (this.sessions[i].id === id) {
+        if (this.sessions[i]._id === _id) {
             index = i;
             break;
         }
@@ -187,11 +191,11 @@ export class SessionTableComponent implements OnInit, OnChanges{
   }
 
   createId(): string {
-    let id = '';
+    let _id = '';
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (var i = 0; i < 5; i++) {
-        id += chars.charAt(Math.floor(Math.random() * chars.length));
+        _id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return id;
+    return _id;
   }
 }

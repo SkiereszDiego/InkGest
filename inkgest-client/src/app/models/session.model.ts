@@ -1,5 +1,5 @@
 export interface Session {
-    id?: string;
+    _id?: string;
     client?: string;
     session_date?: Date;
     tattoo?: string;

@@ -33,7 +33,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="client" style="min-width:15rem">Cliente <p-sortIcon field="client"></p-sortIcon></th>
-                <th pSortableColumn="date">Data da Sessão <p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="date">Data da Sessão <p-sortIcon field="date"></p-sortIcon></th>    
                 <th pSortableColumn="tattoo" style="min-width:10rem">Tatuagem <p-sortIcon field="tattoo"></p-sortIcon></th>
                 <th pSortableColumn="value">Valor da Tatuagem <p-sortIcon field="value"></p-sortIcon></th>
                 <th pSortableColumn="tattooArtist" style="min-width:10rem">Tatuador <p-sortIcon field="tattooArtist"></p-sortIcon></th>
@@ -88,7 +88,7 @@
                             formControlName="session_date"
                             appendTo="body"
                             [showButtonBar]="true"
-                            placeholder="{{sessionForm.value.session_date  | date:'dd.MM.yy'}}"
+                            placeholder="{{ sessionForm.value.session_date | date:'dd.MM.yy' }}"
                             dateFormat="dd.MM.yy"
                             inputStyleClass="small-input"
                         ></p-calendar>

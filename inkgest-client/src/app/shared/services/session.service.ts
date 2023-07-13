@@ -30,7 +30,9 @@ export class SessionService {
   }
 
   updateSessionById(itemId: string, item: Session): Observable<Session> {
-    const url = `${this.apiUrl}/${itemId}`;
+    const url = `${this.apiUrl}${itemId}`;
+    console.log('URL da requisição PUT:', url);
+    console.log('Dados enviados no corpo da requisição PUT:', item);
     return this.http.put<Session>(url, item);
   }
 
@@ -53,7 +55,7 @@ export class SessionService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
     });
-    const url = `${this.apiUrl}/${id}`; // Adicione a rota de exclusão do item ao URL
+    const url = `${this.apiUrl}${id}`; // Adicione a rota de exclusão do item ao URL
 
     return this.http.delete(url, { headers });
   }
