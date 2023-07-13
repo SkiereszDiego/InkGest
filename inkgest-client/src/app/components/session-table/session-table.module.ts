@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -9,6 +10,7 @@ import { SessionTableComponent } from './session-table.component';
 import { CustomButtonModule } from '../custom-button/custom-button.module';
 
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
@@ -36,10 +38,12 @@ import { SessionService } from 'src/app/shared/services/session.service';
   ],
   imports: [
     ButtonModule,
+    CalendarModule,
     CommonModule,
     ConfirmDialogModule,
     CustomButtonModule,
     DataViewModule,
+    DatePipe,
     DialogModule,
     DividerModule,
     DynamicDialogModule,

@@ -91,7 +91,7 @@
                     *ngIf="
                     productForm.controls['name'].invalid &&
                     productForm.controls['name'].dirty"
-                    >Sub Categoria é obrigatório.
+                    >Nome do produto é obrigatório.
                 </small>
             </div>
             <div class="field">
@@ -149,8 +149,8 @@
                             formControlName="purchase_date"
                             appendTo="body"
                             [showButtonBar]="true"
-                            placeholder="{{productForm.value.purchase_date  | date:'dd.MM.yy'}}"
-                            dateFormat="dd.mm.yy"
+                            placeholder="{{productForm.value.purchase_date  | date:'dd-MM-yy'}}"
+                            dateFormat="dd-mm-yy"
                             inputStyleClass="small-input"
                         ></p-calendar>
                     </div>
@@ -204,7 +204,6 @@
                 </div>
             </div>
         </form>
-        
     </ng-template>
 
     <ng-template pTemplate="footer">

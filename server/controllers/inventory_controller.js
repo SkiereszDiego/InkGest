@@ -75,7 +75,7 @@ exports.updateItemById = async (req, res) => {
         !inventoryAlterar.quantity
     ) {
         return res.status(400).json({
-            Erro: "_id e/ou quantity são obrigatórios"
+            Erro: "Quantity é obrigatório"
         });
     }
 

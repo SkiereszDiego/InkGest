@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { SessionService } from '../../shared/services/session.service'
@@ -14,10 +14,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   providers: [MessageService, ConfirmationService]
 })
 
-export class SessionTableComponent implements OnInit{
+export class SessionTableComponent implements OnInit, OnChanges{
   sessionDialog: boolean = false
 
-  sessions: Session[] = [];
+  sessions: any = [];
 
   session!: Session;
 
@@ -27,13 +27,17 @@ export class SessionTableComponent implements OnInit{
     client: ['', Validators.required],
     session_date: [new Date(), Validators.required],
     tattoo: [''],
-    value: [0, Validators.required],
+    value: [''],
     tattooArtist: ['', Validators.required],
     duration: ['', Validators.required],
-    totalCost: 0,
+    totalCost: [0, Validators.required],
     supplyUsed: '',
   });
 
+  isCreateOrUpdate = 0;
+  updateSessionId = '';
+
+  selectedSession: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -49,59 +53,135 @@ export class SessionTableComponent implements OnInit{
     });
   }
 
+  ngOnChanges() {
+    if(this.selectedSession) {
+      this.sessionForm.patchValue(this.selectedSession);
+    } else {
+      this.sessionForm.reset();
+    }
+  }
+
   openNew() {
+    this.isCreateOrUpdate = 1;
     this.session = {};
     this.submitted = false;
     this.sessionDialog = true;
   }
 
+  saveSession() {
+    if(this.isCreateOrUpdate == 1) {
+      this.insertSession()
+    } else {
+      this.updateSession();
+    }
+  }
 
-  deleteSession(session: Session) {
+  deleteSession(idSession: any) {
     this.confirmationService.confirm({
-        message: 'Tem certeza de que quer excluir esta sessão?' + session.client + '?',
-        header: 'Confirme',
+      message: 'Tem certeza de que quer excluir esta sessão?',
+      header: 'Confirme',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.sessions = this.sessions.filter((val) => val.id !== session.id);
-            this.session = {};
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'session Deleted', life: 3000 });
+          this.sessionService.deleteItem(idSession).subscribe(
+            response => {
+              console.log('Resposta do servidor ao criar novo item:', response);
+              this.sessionForm.reset();
+              this.sessionService.getSessions().subscribe((sessions: Session[]) => {
+                this.sessions = sessions;
+              });
+              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Session Deleted', life: 3000 });
+            },
+            (error) => {
+              console.error('Erro ao criar novo item:', error);
+              this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao criar novo item.' });
+            }
+          )
         }
     });
   }
 
-  editSession(session: Session) {
-    this.session = { ...session };
-    this.sessionDialog = true;
+  editSession(idSession: any) {
+    this.isCreateOrUpdate = 2;
+    let target = this.sessions.filter((t: { _id: any; }) => idSession == t._id);
+    
+    if (target !== undefined) {
+      this.updateSessionId = idSession
+      
+      this.sessionForm.patchValue({
+        client: target[0].client || '',
+        session_date: target[0].session_date || '',
+        tattoo: target[0].tattoo || '',
+        value: target[0].value || '',
+        duration: target[0].duration  || '',
+        totalCost: target[0].totalCost || 0,
+        supplyUsed:target[0].supplyUsed || '',
+      });
+
+      this.sessionDialog = true;
+    } else {
+      console.error('Sessão não encontrada.');
+    }
+  }
+
+  updateSession() {
+    
+    let item: Session = {
+      _id: this.updateSessionId,
+      client: this.sessionForm.value.client || '',
+      session_date: this.sessionForm.value.session_date || new Date,
+      tattoo: this.sessionForm.value.tattoo || '',
+      value: this.sessionForm.value.value || '',
+      duration: this.sessionForm.value.duration  || '',
+      totalCost: this.sessionForm.value.totalCost || 0,
+      supplyUsed:this.sessionForm.value.supplyUsed || '',
+    }
+
+    this.sessionService.updateSessionById(this.updateSessionId, item).subscribe(
+      response => {
+        console.log('Resposta do servidor ao editar nova sessao:', response);
+        this.sessionForm.reset();
+        this.sessionDialog = false;
+        this.sessionService.getSessions().subscribe((sessions: Session[]) => {
+          this.sessions = sessions;
+        });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Sessão editada', life: 3000 });
+      },
+      (error) => {
+        console.error('Erro ao esitar nova sessão:', error);
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao editar nova sessão.' });
+      }
+    )
   }
 
   hideDialog() {
     this.sessionDialog = false;
     this.submitted = false;
+    this.sessionForm.reset();
   }
 
-  saveSession() {
-    this.submitted = true;
+  insertSession() {
 
-    if (this.session.client?.trim()) {
-        if (this.session.id) {
-            this.sessions[this.findIndexById(this.session.id)] = this.session;
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Session Updated', life: 3000 });
-        } else {
-            this.session.id = this.createId();
-            this.sessions.push(this.session);
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Session Created', life: 3000 });
-        }
-
-        this.sessions = [...this.sessions];
+    this.sessionService.saveSession(this.sessionForm.value).subscribe(
+      response => {
+        console.log('Resposta do servidor ao criar nova sessão:', response);
+        this.sessionForm.reset();
         this.sessionDialog = false;
-        this.session = {};
-    }
+        this.sessionService.getSessions().subscribe((sessions: Session[]) => {
+          this.sessions = sessions;
+        });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Session Created', life: 3000 });
+      },
+      (error) => {
+        console.error('Erro ao criar nova sessão:', error);
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao criar nova sessão.' });
+      }
+    )
   }
 
-  findIndexById(id: string): number {
+  findIndexById(_id: string): number {
     let index = -1;
     for (let i = 0; i < this.sessions.length; i++) {
-        if (this.sessions[i].id === id) {
+        if (this.sessions[i]._id === _id) {
             index = i;
             break;
         }
@@ -111,11 +191,11 @@ export class SessionTableComponent implements OnInit{
   }
 
   createId(): string {
-    let id = '';
+    let _id = '';
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (var i = 0; i < 5; i++) {
-        id += chars.charAt(Math.floor(Math.random() * chars.length));
+        _id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return id;
+    return _id;
   }
 }

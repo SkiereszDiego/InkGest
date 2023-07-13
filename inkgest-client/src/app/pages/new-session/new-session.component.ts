@@ -36,7 +36,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
     timerSubscription: Subscription | undefined;
     selectedClient: Client | undefined;
     selectedClientData: any;
-    materialUsed: { _id: string; description: string; quantity: number; price: number }[] = [];
+    materialUsed: any;
 
 
     clients: Client[] = [
@@ -239,7 +239,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
         // Obter os dados da sessão com base no cliente selecionado e inventário utilizado
         const sessionData: Session = {
             client: this.selectedClientData?.client || '',
-            session_date: new Date().toISOString(),
+            session_date: new Date(),
             duration: this.sessionElapsedTime,
             supplyUsed: this.materialUsed
         };
@@ -259,7 +259,7 @@ export class NewSessionComponent implements OnInit, OnDestroy {
         // Obter os dados da sessão com base no cliente selecionado e inventário utilizado
         const sessionData: Session = {
             client: this.selectedClientData?.client || '',
-            session_date: new Date().toISOString(),
+            session_date: new Date(),
             duration: this.sessionElapsedTime,
             supplyUsed: this.materialUsed
         };
@@ -286,16 +286,16 @@ export class NewSessionComponent implements OnInit, OnDestroy {
         const sessionData = {
             // Preencha os dados da sessão com base nos valores do formulário
             client: this.selectedClientData.client.toString(),
-            session_date: new Date().toISOString(),
+            session_date: new Date(),
             tattoo: "ND",
             value: "0",
             tattooArtist: 'ND',
             duration: this.sessionElapsedTime.toString(),
             totalCost: '',
-            supplyUsed: this.materialUsed.toString()
+            supplyUsed: ''
         };
         
-        this.sessionService.createSession(sessionData).subscribe(
+        this.sessionService.saveSession(sessionData).subscribe(
             (response) => {
             console.log('Nova sessão criada:', response);
             // Realize as ações necessárias após a criação da sessão

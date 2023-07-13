@@ -71,19 +71,22 @@ export const routes: Routes = [
     path: Path.NEW_SESSION, 
     component: NewSessionComponent,
     loadChildren: () =>
-      import('./pages/new-session/new-session.module').then((m) => m.NewSessionModule) // Import the new module
+      import('./pages/new-session/new-session.module')
+      .then((m) => m.NewSessionModule) // Import the new module
   },
   {
     path: Path.SESSIONS, 
     component: SessionsComponent, 
     loadChildren: () =>
-      import('./pages/sessions/sessions.module').then((m) => m.SessionsModule)
+      import('./pages/sessions/sessions.module')
+      .then((m) => m.SessionsModule)
   },
   {
     path: Path.PAGE_NOT_FOUND, 
     component: PageNotFoundComponent,
     loadChildren: () =>
-    import('./pages/page-not-found/page-not-found.module').then((m) => m.PageNotFoundModule)
+    import('./pages/page-not-found/page-not-found.module')
+    .then((m) => m.PageNotFoundModule)
   }
 ]
 

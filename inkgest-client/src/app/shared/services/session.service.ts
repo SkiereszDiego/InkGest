@@ -20,10 +20,43 @@ export class SessionService {
     return this.http.get<Session[]>(this.apiUrl, { headers });
   }
 
-  //   return this.http.get<InventoryItem[]>(this.apiUrl, { headers });
-  // }
+  saveSession(postData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
+    });
 
-  createSession(sessionData: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, sessionData);
+    return this.http.post(this.apiUrl, postData, { headers });
+  }
+
+  updateSessionById(itemId: string, item: Session): Observable<Session> {
+    const url = `${this.apiUrl}${itemId}`;
+    console.log('URL da requisição PUT:', url);
+    console.log('Dados enviados no corpo da requisição PUT:', item);
+    return this.http.put<Session>(url, item);
+  }
+
+  confirmDelete(id: string): Observable<any> {
+    return new Observable(observer => {
+      this.deleteItem(id).subscribe(
+        () => {
+          observer.next(); // Envie um valor vazio para indicar sucesso
+          observer.complete(); // Complete o Observable
+        },
+        error => {
+          observer.error(error); // Envie o erro para o consumidor do Observable
+        }
+      );
+    });
+  }
+
+  public deleteItem(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*' // Configuração para permitir qualquer origem (apenas para desenvolvimento)
+    });
+    const url = `${this.apiUrl}${id}`; // Adicione a rota de exclusão do item ao URL
+
+    return this.http.delete(url, { headers });
   }
 }
